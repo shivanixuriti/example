@@ -1,21 +1,16 @@
-
-
 import 'package:dio/dio.dart';
 
-
 class DioClient {
-  final String baseUrl = "https://biz.xuriti.app/api";
-  //"https://uat.xuriti.app/api";
-
-
+  //final String baseUrl = "https://biz.xuriti.app/api";
+  final String baseUrl = "https://uat.xuriti.app/api";
 
   postFormData(String url, FormData data, String? token) async {
     BaseOptions options = new BaseOptions(
-        baseUrl: "https://biz.xuriti.app/api",
+        baseUrl: baseUrl,
         receiveDataWhenStatusError: true,
         connectTimeout: 60 * 1000, // 60 seconds
         receiveTimeout: 120 * 1000 // 60 seconds
-    );
+        );
     var dio = Dio(options);
     try {
       if (token == null) {
@@ -24,7 +19,6 @@ class DioClient {
         return response.data;
       }
       if (token != null) {
-
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
@@ -35,6 +29,7 @@ class DioClient {
       print(e);
     }
   }
+
   post(String endUrl, Map<String, dynamic> data, String? token) async {
     var dio = Dio();
     String url = baseUrl + endUrl;
@@ -52,12 +47,11 @@ class DioClient {
     } catch (e) {}
   }
 
-
-
   get(String endUrl, {String? token}) async {
     var dio = Dio();
     String url = baseUrl + endUrl;
     try {
+      print(token.toString());
       if (token == null) {
         Response response = await dio.get(url);
         return response.data;

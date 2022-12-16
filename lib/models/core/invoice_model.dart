@@ -1,4 +1,3 @@
-
 class Invoices {
   List<Invoice>? invoice;
   bool? status;
@@ -49,35 +48,35 @@ class Invoice {
 
   Invoice(
       {this.billDetails,
-        this.sId,
-        this.outstandingAmount,
-        this.itemizedData,
-        this.invoiceStatus,
-        // this.extraCreditFlag,
-        this.invoiceFile,
-        this.emandateRaised,
-        this.invoiceNumber,
-        this.createdAt,
-        this.updatedAt,
-        // this.iV,
-        this.buyer,
-        this.buyerGst,
-        this.invoiceAmount,
-        this.invoiceDate,
-        this.invoiceDueDate,
-        this.invoiceType,
-        this.seller,
-        this.sellerGst});
+      this.sId,
+      this.outstandingAmount,
+      this.itemizedData,
+      this.invoiceStatus,
+      // this.extraCreditFlag,
+      this.invoiceFile,
+      this.emandateRaised,
+      this.invoiceNumber,
+      this.createdAt,
+      this.updatedAt,
+      // this.iV,
+      this.buyer,
+      this.buyerGst,
+      this.invoiceAmount,
+      this.invoiceDate,
+      this.invoiceDueDate,
+      this.invoiceType,
+      this.seller,
+      this.sellerGst});
 
   Invoice.fromJson(Map<String, dynamic> json) {
     billDetails = json['bill_details'] != null
-        ? new BillDetails.fromJson(json['bill_details'])
+        ? BillDetails.fromJson(json['bill_details'])
         : null;
     sId = json['_id'];
     outstandingAmount = json['outstanding_amount'].toString();
-    itemizedData =
-        ( json['itemized_data']==null) ? json['itemized_data']:
-        json['itemized_data'].cast<String>();
+    itemizedData = (json['itemized_data'] == null)
+        ? json['itemized_data']
+        : json['itemized_data'].cast<String>();
     invoiceStatus = json['invoice_status'];
     // extraCreditFlag = json['extra_credit_flag'];
     invoiceFile = json['invoice_file'];
@@ -123,6 +122,7 @@ class Invoice {
     return data;
   }
 }
+
 class BillDetails {
   GstSummary? gstSummary;
   DiscountSummary? discountSummary;
@@ -190,9 +190,9 @@ class DiscountSummary {
 
   DiscountSummary(
       {this.cashDiscount,
-        this.specialDiscount,
-        this.inBillDiscount,
-        this.totalDiscount});
+      this.specialDiscount,
+      this.inBillDiscount,
+      this.totalDiscount});
 
   DiscountSummary.fromJson(Map<String, dynamic> json) {
     cashDiscount = json['cash_discount'];
@@ -229,6 +229,7 @@ class TaxSummary {
     return data;
   }
 }
+
 class Buyer {
   String? sId;
   String? gstin;
@@ -260,32 +261,32 @@ class Buyer {
 
   Buyer(
       {this.sId,
-        this.gstin,
-        this.companyName,
-        this.address,
-        this.district,
-        this.state,
-        this.pincode,
-        this.companyMobile,
-        this.companyEmail,
-        this.pan,
-        this.cin,
-        this.tan,
-        this.status,
-        this.createdBy,
-        this.createdAt,
-        this.updatedAt,
-        this.adminMobile,
-        this.adminEmail,
-        this.adminName,
-        this.creditLimit,
-        this.availCredit,
-        // this.optimizecredit,
-        // this.iV,
-        this.presignedurl,
-        this.annualTurnover,
-        this.industryType,
-        this.interest});
+      this.gstin,
+      this.companyName,
+      this.address,
+      this.district,
+      this.state,
+      this.pincode,
+      this.companyMobile,
+      this.companyEmail,
+      this.pan,
+      this.cin,
+      this.tan,
+      this.status,
+      this.createdBy,
+      this.createdAt,
+      this.updatedAt,
+      this.adminMobile,
+      this.adminEmail,
+      this.adminName,
+      this.creditLimit,
+      this.availCredit,
+      // this.optimizecredit,
+      // this.iV,
+      this.presignedurl,
+      this.annualTurnover,
+      this.industryType,
+      this.interest});
 
   Buyer.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -307,10 +308,12 @@ class Buyer {
     adminMobile = json['admin_mobile'];
     adminEmail = json['admin_email'];
     adminName = json['admin_name'];
-    json['creditLimit'] == null ? "" :
-    creditLimit = json['creditLimit'].toString();
-    json['avail_credit'] == null ? "" :
-    availCredit = json['avail_credit'].toString();
+    json['creditLimit'] == null
+        ? ""
+        : creditLimit = json['creditLimit'].toString();
+    json['avail_credit'] == null
+        ? ""
+        : availCredit = json['avail_credit'].toString();
     // json['optimizecredit'] == null ? "" :
     // optimizecredit = json['optimizecredit'].toString();
     // iV = json['__v'];

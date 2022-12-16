@@ -144,9 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           InkWell(
                             onTap: () async {
-
-
-
                               progress?.show();
                               Map<String, dynamic> isLogin =
                                   await getIt<AuthManager>()
@@ -154,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           email: emailController.text,
                                           password: passwordController.text);
 
-                              progress!.dismiss();
+                              progress?.dismiss();
                               if (isLogin['status'] == true) {
                                 getIt<SharedPreferences>().setString(
                                     'password', passwordController.text.trim());

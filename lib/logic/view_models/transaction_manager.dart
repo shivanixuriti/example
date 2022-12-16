@@ -108,7 +108,9 @@ class TransactionManager extends ChangeNotifier {
   getCompanyList(String? id, String? token) async {
     String url = "/entity/entities/$id";
     companyList = [];
+    print(url);
     dynamic responseData = await getIt<DioClient>().get(url, token: token);
+    print(responseData.toString());
     if (responseData != null &&
         responseData['company'] != null &&
         responseData['company'].length > 0) {
@@ -120,6 +122,9 @@ class TransactionManager extends ChangeNotifier {
           companyList.add(singleCompany);
         }
       }
+    } else {
+      print("failed");
+      //print(responseData.toString());
     }
     return companyList;
   }

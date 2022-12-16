@@ -23,6 +23,7 @@ class _HomeCompanyListState extends State<HomeCompanyList> {
   Widget build(BuildContext context) {
     String? id = getIt<SharedPreferences>().getString("id");
     String? token = getIt<SharedPreferences>().getString('token');
+    print(token.toString());
 
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;

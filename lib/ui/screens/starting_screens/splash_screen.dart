@@ -21,12 +21,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {}
 
-
   _navigateLogin() async {
     var delay = await Future.delayed(const Duration(milliseconds: 3000), () {});
     // await initPlatformState();
     if (getIt<SharedPreferences>().getString('onboardViewed') == 'true') {
-      if (getIt<SharedPreferences>().getString('token') == null &&
+      if (getIt<SharedPreferences>().getString('token') == null ||
           getIt<SharedPreferences>().getString('id') == null) {
         Navigator.pushReplacementNamed(context, getStarted);
       } else {
@@ -34,7 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
         String? userId = getIt<SharedPreferences>().getString('id');
         UserDetails? userInfo = await getIt<AuthManager>().getUInfo(userId);
-
       }
     } else {
       Navigator.pushNamed(context, onBoard);
@@ -50,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             const SizedBox(height: 180),
             Container(
                 width: 158.016,
@@ -66,8 +63,6 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 50,
               height: 50,
               child: SvgPicture.asset("assets/images/logo1.svg"),
-
-
             ),
             const SizedBox(
               height: 70,
