@@ -26,7 +26,8 @@ class AuthManager extends ChangeNotifier {
   String? userName;
   String platformVersion = 'Unknown';
   String? appdata = 'Unknown';
-  String sdkBaseUrl = "https://dev.xuriti.app";
+  //String sdkBaseUrl = "https://dev.xuriti.app/api";
+  // String sdkBaseUrl = "https://uat.xuriti.app/api";
   String? fcmToken;
 
   void reset() {
@@ -137,7 +138,8 @@ class AuthManager extends ChangeNotifier {
 
         getIt<SharedPreferences>().setString('id', user["_id"]);
         getIt<SharedPreferences>().setString('email', user["email"]);
-        getIt<SharedPreferences>().setString('phoneNumber', user["mobile_number"]);
+        getIt<SharedPreferences>()
+            .setString('phoneNumber', user["mobile_number"]);
 
         userDetails = UserDetails.fromJson(responseData);
 
@@ -150,7 +152,6 @@ class AuthManager extends ChangeNotifier {
           String? useName = userDetails!.user!.name;
           getIt<SharedPreferences>().setString('token', responseData["token"]);
           getIt<SharedPreferences>().setString('userName', useName!);
-
 
           return responseData;
           // Map<String, dynamic> sdkResponse = {};
@@ -288,13 +289,13 @@ class AuthManager extends ChangeNotifier {
   }
 
   getIPAddress(String url) async {
-    try{
+    try {
       String finalUrl = "https://biz.xuriti.app/api";
       String urlLink = finalUrl + url;
       final response = await getIt<DioClient>().get(urlLink);
       return response.statusCode == 200 ? response.body : null;
-    }catch (e){
-        return null;
+    } catch (e) {
+      return null;
     }
   }
 }

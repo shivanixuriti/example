@@ -186,8 +186,7 @@ class _TotalPaymentState extends State<TotalPayment> {
                                               color: Colours.paleGrey,
                                               borderRadius:
                                                   BorderRadius.circular(6)),
-                                          child:
-                                          DropdownButtonHideUnderline(
+                                          child: DropdownButtonHideUnderline(
                                             child: DropdownButton(
                                               value: params.chosenSellerId,
                                               // isExpanded: true,
@@ -515,7 +514,7 @@ class _TotalPaymentState extends State<TotalPayment> {
                                                                               TextStyles.textStyle131,
                                                                         ),
                                                                         Text(
-                                                                          "₹${params.payableAmount.toString()}",
+                                                                          "₹${(double.parse(params.payableAmount ?? '0') - double.parse(params.revisedDiscount ?? '0')).toStringAsFixed(2)}",
                                                                           style:
                                                                               TextStyles.textStyle132,
                                                                         ),
@@ -590,9 +589,16 @@ class _TotalPaymentState extends State<TotalPayment> {
                                                                   companyId,
                                                               sellerId: params
                                                                   .chosenSellerId,
-                                                              orderAmount:
-                                                                  temResponse[
-                                                                          'payableAmount']
+                                                              orderAmount: (params
+                                                                          .payableAmount
+                                                                          .toString() !=
+                                                                      '0')
+                                                                  ? (double.parse(params.payableAmount ??
+                                                                              '0') -
+                                                                          double.parse(params.revisedDiscount ??
+                                                                              '0'))
+                                                                      .toString()
+                                                                  : payable
                                                                       .toString(),
                                                               discount: temResponse[
                                                                   'revisedDiscount'],
@@ -614,6 +620,31 @@ class _TotalPaymentState extends State<TotalPayment> {
                                                               if (sendPayment[
                                                                       'status'] ==
                                                                   true) {
+                                                                // ScaffoldMessenger.of(
+                                                                //         context)
+                                                                //     .showSnackBar(
+                                                                //         SnackBar(
+                                                                //             behavior:
+                                                                //                 SnackBarBehavior.floating,
+                                                                //             content: Text(
+                                                                //               sendPayment['message'],
+                                                                //               style: TextStyle(color: Colors.green),
+                                                                //             )));
+
+                                                                // if (sendPayment[
+                                                                //         'payment_link'] !=
+                                                                //     null) {
+                                                                String url =
+                                                                    sendPayment[
+                                                                        'message'];
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder: (context) =>
+                                                                            PaymentUrl(
+                                                                              paymentUrl: url,
+                                                                            )));
+                                                              } else {
                                                                 ScaffoldMessenger.of(
                                                                         context)
                                                                     .showSnackBar(
@@ -621,64 +652,42 @@ class _TotalPaymentState extends State<TotalPayment> {
                                                                             behavior:
                                                                                 SnackBarBehavior.floating,
                                                                             content: Text(
-                                                                              sendPayment['message'],
-                                                                              style: TextStyle(color: Colors.green),
+                                                                              "could not launch the url",
+                                                                              style: TextStyle(color: Colors.red),
                                                                             )));
-
-                                                                if (sendPayment[
-                                                                        'payment_link'] !=
-                                                                    null) {
-                                                                  String url =
-                                                                      sendPayment[
-                                                                          'payment_link'];
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) => PaymentUrl(
-                                                                                paymentUrl: url,
-                                                                              )));
-                                                                } else {
-                                                                  ScaffoldMessenger.of(
-                                                                          context)
-                                                                      .showSnackBar(SnackBar(
-                                                                          behavior: SnackBarBehavior.floating,
-                                                                          content: Text(
-                                                                            "could not launch the url",
-                                                                            style:
-                                                                                TextStyle(color: Colors.red),
-                                                                          )));
-                                                                }
                                                               }
-                                                            } else {
-                                                              ScaffoldMessenger
-                                                                      .of(
-                                                                          context)
-                                                                  .showSnackBar(
-                                                                      SnackBar(
-                                                                          behavior: SnackBarBehavior
-                                                                              .floating,
-                                                                          content:
-                                                                              Text(
-                                                                            sendPayment!['message'],
-                                                                            style:
-                                                                                TextStyle(color: Colors.green),
-                                                                          )));
                                                             }
-                                                          } else {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                                    SnackBar(
-                                                                        behavior:
-                                                                            SnackBarBehavior
-                                                                                .floating,
-                                                                        content:
-                                                                            Text(
-                                                                          "Please select the seller",
-                                                                          style:
-                                                                              TextStyle(color: Colors.red),
-                                                                        )));
                                                           }
+                                                          //    else {
+                                                          //     ScaffoldMessenger
+                                                          //             .of(
+                                                          //                 context)
+                                                          //         .showSnackBar(
+                                                          //             SnackBar(
+                                                          //                 behavior: SnackBarBehavior
+                                                          //                     .floating,
+                                                          //                 content:
+                                                          //                     Text(
+                                                          //                   sendPayment!['message'],
+                                                          //                   style:
+                                                          //                       TextStyle(color: Colors.green),
+                                                          //                 )));
+                                                          //   }
+                                                          // } else {
+                                                          //   ScaffoldMessenger
+                                                          //           .of(context)
+                                                          //       .showSnackBar(
+                                                          //           SnackBar(
+                                                          //               behavior:
+                                                          //                   SnackBarBehavior
+                                                          //                       .floating,
+                                                          //               content:
+                                                          //                   Text(
+                                                          //                 "Please select the seller",
+                                                          //                 style:
+                                                          //                     TextStyle(color: Colors.red),
+                                                          //               )));
+                                                          // }
                                                         },
                                                         //  },
                                                         child: Container(

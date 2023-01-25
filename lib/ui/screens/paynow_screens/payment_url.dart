@@ -47,26 +47,23 @@ class _PaymentUrlState extends State<PaymentUrl> {
 
     _onStateChanged =
         flutterWebviewPlugin.onStateChanged.listen((WebViewStateChanged state) {
-      if (mounted) {
-
-      }
+      if (mounted) {}
     });
 
     _onUrlChanged = flutterWebviewPlugin.onUrlChanged.listen((String url) {
       if (mounted) {
-
         // if (url.contains("login") || url.contains("redirect")) {
         //         Navigator.pushNamed(context, landing);
         //         flutterWebviewPlugin.close();
         // } else
-          if ( url.contains("uat.xuriti.app") ) {
+        if (url.contains("uat.xuriti.app")) {
           counter++;
           print("counter");
           print(counter);
           print("url changed 2 $url");
 
-          if ( counter >= 3 ) {
-           // print("url changed 2 $url");
+          if (counter >= 3) {
+            // print("url changed 2 $url");
 
             counter = 0;
             print("counter close");
@@ -75,8 +72,6 @@ class _PaymentUrlState extends State<PaymentUrl> {
             flutterWebviewPlugin.close();
           }
         }
-
-
       }
     });
   }
@@ -85,8 +80,9 @@ class _PaymentUrlState extends State<PaymentUrl> {
   didChangeDependencies() {
     super.didChangeDependencies();
   }
+
   Widget build(BuildContext context) {
-   // print("paymentUrl: ${widget.paymentUrl}");
+    // print("paymentUrl: ${widget.paymentUrl}");
     return WebviewScaffold(
         url: widget.paymentUrl,
         appBar: AppBar(

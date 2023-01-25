@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/models/core/CompanyInfo_model.dart';
@@ -247,6 +249,15 @@ class CompanyDetailsManager extends ChangeNotifier {
 
       if (responseData != null && responseData['status'] == true) {
         tempData['payableAmount'] = responseData['paybaleAmount'] ?? 0;
+        // double tempOutstanding =
+        //     double.parse(sellerInfo!.totalOutstanding ?? '0').toDouble();
+        // tempOutstanding -=
+        //     double.parse(responseData['total_discount'].toString());
+        // tempOutstanding +=
+        //     double.parse(responseData['total_interest'].toString());
+
+        // print('${tempOutstanding} ------------>>>>>');
+
         tempData['revisedDiscount'] = ((responseData['total_discount'] != null)
             ? responseData['total_discount'].toString()
             : 0) as String?;
@@ -257,6 +268,8 @@ class CompanyDetailsManager extends ChangeNotifier {
               .toStringAsFixed(2);
           payableAmount = double.parse(tempData['payableAmount'].toString())
               .toStringAsFixed(2);
+          // tempData['payableAmount'] =
+          // double.parse(tempOutstanding.toString()).toStringAsFixed(2);
           revisedInterest =
               double.parse(tempData['interest'].toString()).toStringAsFixed(2);
           notifyListeners();
@@ -265,7 +278,7 @@ class CompanyDetailsManager extends ChangeNotifier {
         if (sellerInfo != null && sellerInfo!.totalOutstanding != null) {
           tempData['revisedTotalOutstandingAmount'] =
               double.parse(sellerInfo!.totalOutstanding!) -
-                  tempData['payableAmount'];
+                  (tempData['payableAmount'] ?? 0);
         }
       }
     }
@@ -285,13 +298,13 @@ class CompanyDetailsManager extends ChangeNotifier {
     required String discount,
     required String settle_amount,
   }) async {
-    String url = "/payment/send-payment";
+    String url = "/payment/vouch_payment";
     String? token = getIt<SharedPreferences>().getString("token");
 
     Map<String, dynamic> data = {
       "buyerid": buyerId,
       "sellerid": sellerId,
-      "order_currency": "ruppee",
+      "order_currency": "INR",
       "settle_amount": settle_amount,
       "order_amount": orderAmount,
       "outstanding_amount": outStandingAmount,
@@ -304,7 +317,7 @@ class CompanyDetailsManager extends ChangeNotifier {
     };
 
     dynamic responseData = await getIt<DioClient>().post(url, data, token);
-
+    print('Data.....${responseData}');
     return responseData;
   }
 }
