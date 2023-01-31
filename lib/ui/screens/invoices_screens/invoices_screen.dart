@@ -17,7 +17,10 @@ import 'all_sellers_screens/all_sellers_screen.dart';
 import 'pending_invoices_screen/paid_invoices_screen.dart';
 
 class InvoicesScreen extends StatefulWidget {
-  const InvoicesScreen({Key? key}) : super(key: key);
+  const InvoicesScreen({Key? key, required this.refreshingFunction})
+      : super(key: key);
+
+  final Function refreshingFunction;
 
   @override
   State<InvoicesScreen> createState() => _InvoicesScreenState();
@@ -35,8 +38,8 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
           Provider.of<TransactionManager>(context).companyList[indexOfCompany];
     }
 
-    List<Widget> screens = const [
-      PInvoices(),
+    List<Widget> screens = [
+      PInvoices(refreshingFunction: widget.refreshingFunction),
       PaidInvoices(),
       PHistory(),
       AllSellers(),
@@ -50,7 +53,6 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
       double w10p = maxWidth * 0.1;
       return Scaffold(
           backgroundColor: Colours.black,
-
           body: Column(
             children: [
               Container(

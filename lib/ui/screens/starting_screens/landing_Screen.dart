@@ -29,6 +29,10 @@ class _LandingScreenState extends State<LandingScreen> {
     super.initState();
   }
 
+  void refreshFutureToGetInvoicesList() {
+    setState(() {});
+  }
+
   @override
   // void didChangeDependencies() {
   //   print("dependency called");
@@ -62,7 +66,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
     List<Widget> screens = [
       const BhomeScreen(),
-      const InvoicesScreen(),
+      InvoicesScreen(refreshingFunction: refreshFutureToGetInvoicesList),
     ];
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;

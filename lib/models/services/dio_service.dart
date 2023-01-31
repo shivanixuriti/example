@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 class DioClient {
   //final String baseUrl = "https://biz.xuriti.app/api";
-  final String baseUrl = "https://uat.xuriti.app/api";
+  final String baseUrl = "https://dev.xuriti.app/api";
+  // final String baseUrl = "https://uat.xuriti.app/api";
 
   postFormData(String url, FormData data, String? token) async {
     BaseOptions options = new BaseOptions(
@@ -12,6 +16,12 @@ class DioClient {
         receiveTimeout: 120 * 1000 // 60 seconds
         );
     var dio = Dio(options);
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     try {
       if (token == null) {
         Response response = await dio.post(url, data: data);
@@ -32,6 +42,13 @@ class DioClient {
 
   post(String endUrl, Map<String, dynamic> data, String? token) async {
     var dio = Dio();
+
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     String url = baseUrl + endUrl;
     try {
       if (token == null) {
@@ -49,6 +66,12 @@ class DioClient {
 
   get(String endUrl, {String? token}) async {
     var dio = Dio();
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     String url = baseUrl + endUrl;
     try {
       print(token.toString());
@@ -69,6 +92,12 @@ class DioClient {
 
   put(endUrl, data, {String? token}) async {
     var dio = Dio();
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     String url = baseUrl + endUrl;
     try {
       if (token == null) {
@@ -86,6 +115,12 @@ class DioClient {
 
   Future<dynamic> patch(endUrl, data, {String? token}) async {
     var dio = Dio();
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     String url = baseUrl + endUrl;
 
     try {

@@ -7,8 +7,10 @@ import 'package:xuriti/ui/screens/bhome_screens/savemore_screens/savemore_detail
 import 'package:xuriti/ui/screens/bhome_screens/upcoming_screens/upcoming_details.dart';
 import 'package:xuriti/ui/screens/guide_screen/guide_details.dart';
 import 'package:xuriti/ui/screens/invoices_screens/payment_history/interest_payment_details.dart';
+import 'package:xuriti/ui/screens/invoices_screens/pending_invoices_screen/all_pending_invoices.dart';
 import 'package:xuriti/ui/screens/invoices_screens/pending_invoices_screen/paidInvoice_detais.dart';
 import 'package:xuriti/ui/screens/invoices_screens/pending_invoices_screen/pending_invoice_report.dart';
+import 'package:xuriti/ui/screens/kyc_screens/aadhaar_card_screen.dart';
 import 'package:xuriti/ui/screens/kyc_screens/address_proof.dart';
 import 'package:xuriti/ui/screens/kyc_screens/banking_details.dart';
 import 'package:xuriti/ui/screens/kyc_screens/bussiness_proof_screen.dart';
@@ -41,10 +43,11 @@ import 'package:xuriti/ui/screens/starting_screens/landing_Screen.dart';
 import 'package:xuriti/ui/screens/starting_screens/onboard_screen.dart';
 import 'package:xuriti/ui/screens/starting_screens/splash_screen.dart';
 import 'package:xuriti/wrapper.dart';
-
+import '../screens/kyc_screens/kycVerification_secondScreen.dart';
 import '../screens/guide_screen/all_guide_screen.dart';
 import '../screens/invoices_screens/all_sellers_screens/sellers_details.dart';
 import '../screens/invoices_screens/payment_history/all_payment_details.dart';
+import '../screens/invoices_screens/pending_invoices_screen/pending_invoices_screen.dart';
 import '../screens/signup_and_login_screens/foget_password2_screen.dart';
 import '../screens/signup_and_login_screens/forget_password_screen.dart';
 import '../screens/starting_screens/company_register_screen.dart';
@@ -134,10 +137,15 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const VintageProof());
       case '/addressProof':
         return MaterialPageRoute(builder: (_) => const AddressProof());
+      case '/aadhaarCard':
+        return MaterialPageRoute(builder: (_) => const AadhaarCard());
       case '/finGstDetails':
         return MaterialPageRoute(builder: (_) => const FinancialGstDetails());
       case '/kycSubmission':
         return MaterialPageRoute(builder: (_) => const kycSubmission());
+      case '/kycnextstep':
+        return MaterialPageRoute(
+            builder: (_) => const KycVerificationNextStep());
       case '/homeCompanyList':
         return MaterialPageRoute(builder: (_) => const HomeCompanyList());
       case '/addCompany':
@@ -152,6 +160,19 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const CompanyRegisterScreen());
       case '/paidInvoiceDetails':
         return MaterialPageRoute(builder: (_) => const PaidInvoiceDetails());
+      // case '/allPendingInvoices':
+      //   return MaterialPageRoute(
+      //       builder: (_) => AllPendingInvoiceWidget(
+      //             amount: '',
+      //             companyName: '',
+      //             dayCount: '',
+      //             maxHeight: 100,
+      //             maxWidth: 10,
+      //             savedAmount: '',
+      //           ));
+      case '/pInvoices':
+        return MaterialPageRoute(builder: (_) => const PInvoices());
+
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

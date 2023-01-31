@@ -10,8 +10,6 @@ import '../../../widgets/payment_history_widgets/invoiceamt_savedamt.dart';
 import '../../../widgets/payment_history_widgets/leading.dart';
 import '../../../widgets/profile/profile_widget.dart';
 
-
-
 class PendingInvoiceReport extends StatefulWidget {
   const PendingInvoiceReport({Key? key}) : super(key: key);
 
@@ -32,7 +30,6 @@ class _PendingInvoiceReportState extends State<PendingInvoiceReport> {
       double w10p = maxWidth * 0.1;
       return Scaffold(
           key: ssk,
-
           backgroundColor: Colours.black,
           appBar: AppBar(
             elevation: 0,
@@ -50,7 +47,9 @@ class _PendingInvoiceReportState extends State<PendingInvoiceReport> {
                     topRight: Radius.circular(26),
                   )),
               child: ListView(children: [
-                 LeadingWidget(heading: "Back",),
+                LeadingWidget(
+                  heading: "Back",
+                ),
                 // CompanyDetailsWidget(
                 //   maxHeight: maxHeight,
                 //   maxWidth: maxWidth,
@@ -59,7 +58,14 @@ class _PendingInvoiceReportState extends State<PendingInvoiceReport> {
                 //   creditLimit: "Credit Limit : ₹ 98,000",
                 // ),
                 const InvoiceId(),
-                InvoiceDueDateWidget(maxWidth: maxWidth,maxHeight: maxHeight,invoiceDate:"12.Jun.2022",companyName: "Company Name",dueDate: "28.Jun.2022",companyNameDue: "Company Name",),
+                InvoiceDueDateWidget(
+                  maxWidth: maxWidth,
+                  maxHeight: maxHeight,
+                  invoiceDate: "12.Jun.2022",
+                  companyName: "Company Name",
+                  dueDate: "28.Jun.2022",
+                  companyNameDue: "Company Name",
+                ),
                 const InvoiceSavedAmtWidget(
                   heading1: "11,800",
                   heading2: "You Saved",
@@ -74,7 +80,6 @@ class _PendingInvoiceReportState extends State<PendingInvoiceReport> {
                     maxHeight: maxHeight,
                     maxWidth: maxWidth,
                     heading: "Bill Details"),
-
               ])));
     });
   }

@@ -356,6 +356,9 @@ class _PHistoryState extends State<PHistory> {
                                         if (params
                                                 .paymentDetails!.trancDetail !=
                                             null) {
+                                          // invoiceAmount = params.paymentDetails!
+                                          //     .trancDetail![index].orderAmount;
+
                                           invoiceAmount = params.paymentDetails!
                                               .trancDetail![index].orderAmount;
 

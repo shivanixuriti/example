@@ -16,8 +16,7 @@ class PaynowScreen extends StatefulWidget {
 class _PaynowScreenState extends State<PaynowScreen> {
   @override
   Widget build(BuildContext context) {
-    return
-      LayoutBuilder(builder: (context, constraints) {
+    return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
       double maxWidth = constraints.maxWidth;
       double h1p = maxHeight * 0.01;
@@ -26,18 +25,16 @@ class _PaynowScreenState extends State<PaynowScreen> {
       return SafeArea(
           child: Scaffold(
         backgroundColor: Colours.black,
-            appBar: AppBar(
-              elevation: 0,
-                automaticallyImplyLeading: false,
-                toolbarHeight: h10p * .8,
-                flexibleSpace:  AppbarWidget()),
-
+        appBar: AppBar(
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            toolbarHeight: h10p * .8,
+            flexibleSpace: AppbarWidget()),
         body: Column(
           children: [
             Expanded(
               child: Container(
                   width: maxWidth,
-
                   decoration: const BoxDecoration(
                       color: Colours.white,
                       borderRadius: BorderRadius.only(
@@ -54,8 +51,7 @@ class _PaynowScreenState extends State<PaynowScreen> {
                           },
                           child: Row(
                             children: [
-                              SvgPicture.asset(
-                                  "assets/images/arrowLeft.svg"),
+                              SvgPicture.asset("assets/images/arrowLeft.svg"),
                               SizedBox(
                                 width: w10p * .3,
                               ),
@@ -131,7 +127,7 @@ class _PaynowScreenState extends State<PaynowScreen> {
                         child: Card(
                           elevation: 1,
                           child: GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               Navigator.pushNamed(context, applyCoupon);
                             },
                             child: Container(
@@ -189,7 +185,8 @@ class _PaynowScreenState extends State<PaynowScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -227,7 +224,8 @@ class _PaynowScreenState extends State<PaynowScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0,right: 8.0,top: 5.0),
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8.0, top: 5.0),
                         child: Card(
                           elevation: 2,
                           child: Container(
@@ -243,7 +241,8 @@ class _PaynowScreenState extends State<PaynowScreen> {
                                     width: w10p * .2,
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: const [
                                       SizedBox(
                                         height: 4,
@@ -262,7 +261,6 @@ class _PaynowScreenState extends State<PaynowScreen> {
                                       ),
                                     ],
                                   ),
-
                                   SizedBox(
                                     width: w10p * 2.2,
                                   ),
@@ -270,7 +268,6 @@ class _PaynowScreenState extends State<PaynowScreen> {
                                   SizedBox(
                                     width: w10p * 2,
                                   ),
-
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: const [
@@ -297,9 +294,8 @@ class _PaynowScreenState extends State<PaynowScreen> {
                           ),
                         ),
                       ),
-
                       Padding(
-                        padding: const EdgeInsets.only(left: 20,top: 10),
+                        padding: const EdgeInsets.only(left: 20, top: 10),
                         child: Container(
                           height: 130,
                           width: 360,
@@ -381,7 +377,10 @@ class _PaynowScreenState extends State<PaynowScreen> {
                           ),
                         ),
                       ),
-                      BillDetailsWidget(maxWidth: maxWidth, maxHeight: maxHeight, heading: "Bill Details"),
+                      BillDetailsWidget(
+                          maxWidth: maxWidth,
+                          maxHeight: maxHeight,
+                          heading: "Bill Details"),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0, top: 140),
                         child: Padding(

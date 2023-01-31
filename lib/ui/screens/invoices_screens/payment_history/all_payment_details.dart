@@ -29,8 +29,7 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
   @override
   Widget build(BuildContext context) {
     TrancDetail? transDetail = getIt<TransHistoryManager>().transDetail;
-    String companyName =
-        transDetail!.sellerName ?? '';
+    String companyName = transDetail!.sellerName ?? '';
     String invoiceId = transDetail.invoiceNumber ?? '';
 
     String invoiceD = transDetail.createdAt ?? "";
@@ -45,7 +44,9 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
     String invoiceDate = DateFormat("dd-MMM-yyyy").format(idate);
     String dueDate = DateFormat("dd-MMM-yyyy").format(ddate);
     String paymentDate = DateFormat("dd-MMM-yyyy").format(pdate);
-    String invAmount = double.parse(transDetail.orderAmount ?? "").toStringAsFixed(2);
+    String invAmount =
+        double.parse(transDetail.orderAmount ?? "").toStringAsFixed(2);
+    String orderStatus = transDetail.orderStatus ?? "";
 
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
@@ -125,7 +126,7 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                   child: Container(
                     decoration: BoxDecoration(color: Colours.offWhite),
                     child: Padding(
-                      padding:  EdgeInsets.symmetric(vertical: h1p * 1),
+                      padding: EdgeInsets.symmetric(vertical: h1p * 1),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -146,11 +147,11 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "Invoice Amount",
+                                "Payment Status",
                                 style: TextStyles.textStyle62,
                               ),
                               Text(
-                                "₹ $invAmount",
+                                "$orderStatus",
                                 style: TextStyles.textStyle56,
                               ),
                             ],

@@ -21,8 +21,8 @@ import '../../../../models/core/credit_limit_model.dart';
 import '../../../theme/constants.dart';
 
 class PInvoices extends StatefulWidget {
-  const PInvoices({Key? key}) : super(key: key);
-
+  const PInvoices({Key? key, this.refreshingFunction}) : super(key: key);
+  final Function? refreshingFunction;
   @override
   State<PInvoices> createState() => _PInvoicesState();
 }
@@ -183,6 +183,7 @@ class _PInvoicesState extends State<PInvoices> {
                             Buyer? seller = pendingInvoice[index].seller;
 
                             return PendingInvoiceWidget(
+                              refreshingMethod: widget.refreshingFunction,
                               maxWidth: maxWidth,
                               maxHeight: maxHeight,
                               amount: pendingInvoice[index]

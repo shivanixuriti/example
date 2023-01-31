@@ -7,8 +7,6 @@ import 'package:xuriti/models/core/invoice_model.dart';
 import '../../../theme/constants.dart';
 import '../../../widgets/pending_invoices_widget/paid_invoice_widget.dart';
 
-
-
 class PaidInvoices extends StatefulWidget {
   const PaidInvoices({Key? key}) : super(key: key);
 
@@ -20,7 +18,8 @@ class _PInvoicesState extends State<PaidInvoices> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      List<Invoice> paidInvoice = Provider.of<TransactionManager>(context).paidInvoices;
+      List<Invoice> paidInvoice =
+          Provider.of<TransactionManager>(context).paidInvoices;
       if (paidInvoice.isNotEmpty) {
         paidInvoice.sort((b, a) {
           String newA = a.invoiceDate ?? '';
@@ -54,134 +53,145 @@ class _PInvoicesState extends State<PaidInvoices> {
                     topLeft: Radius.circular(26),
                     topRight: Radius.circular(26),
                   )),
-              child:
-              paidInvoice.isEmpty?
-              Column(
-                children: [
-                  Padding(
-                    padding:
-                    EdgeInsets.symmetric(vertical:h1p * 4,horizontal: w10p * .3),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: paidInvoice.isEmpty
+                  ? Column(
                       children: [
-                        const Text("All Paid Invoices",
-                            style: TextStyles.textStyle38),
-                        // Row(
-                        //   children: [
-                        //     Text(
-                        //       "Filters     ",
-                        //       style: TextStyles.textStyle38,
-                        //     ),
-                        //     SvgPicture.asset("assets/images/filterRight.svg"),
-                        //   ],
-                        // )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal:w10p *  .6,vertical: h1p * 1 ),
-                    child: Container(
-                        width: maxWidth,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: Colours.offWhite),
-                        child: Padding(
-                          padding:  EdgeInsets.symmetric(vertical:h1p * 4,horizontal: w10p * .3),
-                          child: Row(children: [
-                            SvgPicture.asset(
-                                "assets/images/logo1.svg"),
-                            SizedBox(
-                              width: w10p * 0.5,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Column(
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: h1p * 4, horizontal: w10p * .3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("All Paid Invoices",
+                                  style: TextStyles.textStyle38),
+                              // Row(
+                              //   children: [
+                              //     Text(
+                              //       "Filters     ",
+                              //       style: TextStyles.textStyle38,
+                              //     ),
+                              //     SvgPicture.asset("assets/images/filterRight.svg"),
+                              //   ],
+                              // )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w10p * .6, vertical: h1p * 1),
+                          child: Container(
+                              width: maxWidth,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Colours.offWhite),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h1p * 4, horizontal: w10p * .3),
+                                child: Row(children: [
+                                  SvgPicture.asset("assets/images/logo1.svg"),
+                                  SizedBox(
+                                    width: w10p * 0.5,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: const [
+                                                Text(
+                                                  "Please wait while we connect you with ",
+                                                  style: TextStyles.textStyle34,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                       Row(
                                         children: const [
-
                                           Text(
-                                            "Please wait while we connect you with ",
+                                            "your sellers and load your invoices>>",
                                             style: TextStyles.textStyle34,
-                                          ),
+                                          )
                                         ],
                                       ),
                                     ],
                                   ),
-                                ),
-                                Row(
-                                  children: const [
-                                    Text(
-                                      "your sellers and load your invoices>>",
-                                      style: TextStyles.textStyle34,
-                                    )
-                                  ],
-                                ),
+                                ]),
+                              )),
+                        ),
+                        SizedBox(
+                          height: h1p * 8,
+                        ),
+                        Center(
+                          child:
+                              Image.asset("assets/images/onboard-image-3.png"),
+                        ),
+                      ],
+                    )
+                  : CustomScrollView(
+                      slivers: [
+                        // SliverToBoxAdapter(
+                        //   child:DownloadReport(maxHeight: maxHeight,maxWidth: maxWidth,),
+                        //
+                        // ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: h1p * 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("All Paid Invoices",
+                                    style: TextStyles.textStyle38),
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       "Filters     ",
+                                //       style: TextStyles.textStyle38,
+                                //     ),
+                                //     SvgPicture.asset("assets/images/filterRight.svg"),
+                                //   ],
+                                // )
                               ],
                             ),
-                          ]),
+                          ),
+                        ),
+
+                        SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                          ((context, index) {
+                            Buyer? buyr = paidInvoice[index].seller;
+                            return PaidInvoiceWidget(
+                              maxWidth: maxWidth,
+                              maxHeight: maxHeight,
+                              amount: paidInvoice[index]
+                                  .outstandingAmount
+                                  .toString(),
+                              invoiceDate: paidInvoice[index].invoiceDate ?? "",
+                              dueDate: paidInvoice[index].updatedAt ?? "",
+                              companyName: buyr!.companyName ?? "",
+                              savedAmount: "500",
+                              gst: paidInvoice[index]
+                                      .billDetails!
+                                      .gstSummary!
+                                      .totalTax ??
+                                  "",
+                              isOverdue: false,
+                              invoiceAmount:
+                                  paidInvoice[index].invoiceAmount ?? "",
+                              fullDetails: paidInvoice[index],
+                            );
+                          }),
+                          childCount: paidInvoice.length,
                         )),
-                  ),
-                  SizedBox(height: h1p * 8,),
-                  Center(child: Image.asset("assets/images/onboard-image-3.png"),),
-                ],
-              ):
-              CustomScrollView(
-                slivers: [
-                  // SliverToBoxAdapter(
-                  //   child:DownloadReport(maxHeight: maxHeight,maxWidth: maxWidth,),
-                  //
-                  // ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding:
-                           EdgeInsets.symmetric(horizontal: 18,vertical: h1p * 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("All Paid Invoices",
-                              style: TextStyles.textStyle38),
-                          // Row(
-                          //   children: [
-                          //     Text(
-                          //       "Filters     ",
-                          //       style: TextStyles.textStyle38,
-                          //     ),
-                          //     SvgPicture.asset("assets/images/filterRight.svg"),
-                          //   ],
-                          // )
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        ((context, index) {
-                          Buyer? buyr = paidInvoice[index].seller;
-                          return
-                             PaidInvoiceWidget(maxWidth: maxWidth, maxHeight: maxHeight,
-                               amount: paidInvoice[index].outstandingAmount.toString(),
-                               invoiceDate: paidInvoice[index].invoiceDate ?? "",
-                               dueDate:paidInvoice[index].updatedAt ?? "" ,
-                               companyName: buyr!.companyName ?? "",
-                               savedAmount: "500",
-                                gst: paidInvoice[index].billDetails!.gstSummary!.totalTax ?? "",
-                               isOverdue: false,
-                               invoiceAmount: paidInvoice[index].invoiceAmount ?? "",
-                               fullDetails: paidInvoice[index],
-                             );
-                        }),
-                        childCount: paidInvoice.length,
-                      )),
-
-                ],
-              )));
+                      ],
+                    )));
     });
   }
 }
-

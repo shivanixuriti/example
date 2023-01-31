@@ -5,6 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:xuriti/ui/screens/invoices_screens/pending_invoices_screen/all_pending_invoices.dart';
+import 'package:xuriti/ui/screens/invoices_screens/pending_invoices_screen/pending_invoice_report.dart';
 import 'package:xuriti/ui/widgets/kyc_widgets/submitt_button.dart';
 
 import '../../../logic/view_models/transaction_manager.dart';
@@ -15,6 +17,7 @@ import '../../theme/constants.dart';
 
 class PendingInvoiceWidget extends StatelessWidget {
   final double maxWidth;
+  final Function? refreshingMethod;
   final double maxHeight;
   final bool isOverdue;
   final String amount;
@@ -36,7 +39,8 @@ class PendingInvoiceWidget extends StatelessWidget {
       required this.invoiceDate,
       required this.dueDate,
       required this.companyName,
-      required this.isOverdue});
+      required this.isOverdue,
+      required this.refreshingMethod});
 
   @override
   Widget build(BuildContext context) {
@@ -615,6 +619,13 @@ class PendingInvoiceWidget extends StatelessWidget {
                                                                       .text,
                                                                   "This invoice has been confirmed and Xuriti and its financing partner is authorised to disburse funds to the seller as per the invoice generated on my behalf");
                                                           progress.dismiss();
+                                                          if (refreshingMethod !=
+                                                              null) {
+                                                            refreshingMethod!();
+                                                          }
+
+                                                          print(
+                                                              '${message} ====================>');
                                                           ScaffoldMessenger.of(
                                                                   context)
                                                               .showSnackBar(
@@ -638,6 +649,11 @@ class PendingInvoiceWidget extends StatelessWidget {
                                                         }
 
                                                         Navigator.pop(context);
+                                                        // Navigator.of(context);
+
+                                                        // Navigator.of(context)
+                                                        //     .pushNamed(
+                                                        //         '/pInvoices');
                                                       },
                                                       child: Container(
                                                         height: h1p * 8,
