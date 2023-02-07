@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:xuriti/ui/routes/router.dart';
 
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../models/helper/service_locator.dart';
@@ -18,6 +21,8 @@ class AddressProof extends StatefulWidget {
 
 class _AddressProofState extends State<AddressProof> {
   TextEditingController documentController = TextEditingController();
+
+  List<File?>? addressProofImages;
 
   String? doc;
   @override
@@ -204,11 +209,15 @@ class _AddressProofState extends State<AddressProof> {
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
+                      onFileSelection: (files) {
+                        addressProofImages = files;
+                      },
                     ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>()
-                            .storeAddressProof(documentController.text, doc!);
+                        await getIt<KycManager>().storeAddressProof(
+                            documentController.text, doc!,
+                            filePath: addressProofImages?.first?.path ?? "");
                         Fluttertoast.showToast(msg: "successfully uploaded");
                         Navigator.pop(context);
                       },

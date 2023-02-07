@@ -1,42 +1,43 @@
 class KycModel {
-  String? panNo;//a
+  String? panNo; //a
   String? addressDocType; //a
-  String? addressDocNumber;//a
+  String? addressDocNumber; //a
   String? ownershipDocType;
   String? ownershipDocNumber;
-  String? businessDocType;//a
-  String? businessDocNumber;//a
-  String? vintageProof;//a
-  String? panCard;//a
-  String? addressFile;//a
+  String? businessDocType; //a
+  String? businessDocNumber; //a
+  String? vintageProof; //a
+  String? panCard; //a
+  String? addressFile; //a
   String? businessProof;
-  String? gstDetails;//a
+  List<String>? gstDetails; //a
   String? propertyOwnership;
-  String? bankStatementDetails;//a
-  String? partnershipDetails;//a
-  String? financialDetails;
+  String? bankStatementDetails; //a
+  String? partnershipDetails; //a
+  List<String>? financialDetails;
   String? userID;
   String? companyId;
+  List<String>? storeImages;
 
   KycModel(
       {this.panNo,
-        this.addressDocType ,
-        this.addressDocNumber ,
-        this.ownershipDocType ,
-        this.ownershipDocNumber ,
-        this.businessDocType ,
-        this.businessDocNumber ,
-        this.vintageProof ,
-        this.panCard ,
-        this.addressFile ,
-        this.businessProof ,
-        this.gstDetails ,
-        this.propertyOwnership ,
-        this.bankStatementDetails ,
-        this.partnershipDetails ,
-        this.financialDetails ,
-        this.userID ,
-        this.companyId});
+      this.addressDocType,
+      this.addressDocNumber,
+      this.ownershipDocType,
+      this.ownershipDocNumber,
+      this.businessDocType,
+      this.businessDocNumber,
+      this.vintageProof,
+      this.panCard,
+      this.addressFile,
+      this.businessProof,
+      this.gstDetails,
+      this.propertyOwnership,
+      this.bankStatementDetails,
+      this.partnershipDetails,
+      this.financialDetails,
+      this.userID,
+      this.companyId});
 
   KycModel.fromJson(Map<String, dynamic> json) {
     panNo = json['panNo'];
@@ -49,7 +50,7 @@ class KycModel {
     vintageProof = json['vintageProof'];
     panCard = json['panCard'];
     addressFile = json['addressFile'];
-    businessProof = json['businessProof'];
+    businessProof = json['businessProof'].toString();
     gstDetails = json['gstDetails'];
     propertyOwnership = json['propertyOwnership'];
     bankStatementDetails = json['bankStatementDetails'];

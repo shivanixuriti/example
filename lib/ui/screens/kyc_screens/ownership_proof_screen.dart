@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,14 +19,16 @@ class OwnershipProof extends StatefulWidget {
 }
 
 class _OwnershipProofState extends State<OwnershipProof> {
- int currentIndex = 0;
- String? doc;
+  int currentIndex = 0;
+  String? doc;
+  List<File?>? ownershipImages;
+
+  var _formKey = GlobalKey<FormState>();
   TextEditingController documentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return
-      LayoutBuilder(builder: (context, constraints) {
+    return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
       double maxWidth = constraints.maxWidth;
       double h1p = maxHeight * 0.01;
@@ -80,78 +84,109 @@ class _OwnershipProofState extends State<OwnershipProof> {
                         style: TextStyles.textStyle122,
                       ),
                     ),
-                    ListTile(
-
-                      title: Row(
+                    Form(
+                      key: _formKey,
+                      child: Column(
                         children: [
-                          Radio(
-                            value: "Property Ownership Document",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value: "Property Ownership Document",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Property Ownership Document",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Property Ownership Document",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
-
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Electricity Bill",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value: "Electricity Bill",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Electricity Bill",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Electricity Bill",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: w1p * 6, right: w1p * 6, top: h1p * 3),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x26000000),
-                                offset: Offset(0, 1),
-                                blurRadius: 1,
-                                spreadRadius: 0)
-                          ],
-                          color: Colours.paleGrey,
-                        ),
-                        child: TextFormField(
-                            controller: documentController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: w1p * 6, vertical: h1p * .5),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: w1p * 6, right: w1p * 6, top: h1p * 3),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0x26000000),
+                                      offset: Offset(0, 1),
+                                      blurRadius: 1,
+                                      spreadRadius: 0)
+                                ],
+                                color: Colours.paleGrey,
                               ),
-                              fillColor: Colours.paleGrey,
-                              hintText: "Document Number",
-                              hintStyle: TextStyles.textStyle120,
-                            )),
+                              child: TextFormField(
+                                controller: documentController,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: w1p * 6, vertical: h1p * .5),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  fillColor: Colours.paleGrey,
+                                  hintText: "Document Number",
+                                  hintStyle: TextStyles.textStyle120,
+                                ),
+                                validator: (value1) {
+                                  if (value1 == null || value1.isEmpty) {
+                                    return 'Enter Valid Number';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: h1p * 3,
+                          ),
+                          DocumentUploading(
+                            maxWidth: maxWidth,
+                            maxHeight: maxHeight,
+                            onFileSelection: (files) {
+                              ownershipImages = files;
+                              setState(() {});
+                            },
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(height: h1p * 3,),
-                    DocumentUploading(
-                      maxWidth: maxWidth,
-                      maxHeight: maxHeight,
                     ),
                     InkWell(
-                      onTap: ()async{
-                       await getIt<KycManager>().storeOwnershipProof(documentController.text, doc!);
-                        Fluttertoast.showToast(msg:"successfully uploaded");
-                        Navigator.pop(context);
+                      onTap: () async {
+                        await getIt<KycManager>().storeOwnershipProof(
+                            documentController.text, doc!,
+                            filePath: ownershipImages?.first?.path ?? "");
+
+                        if (_formKey.currentState!.validate()) {
+                          Fluttertoast.showToast(msg: "successfully uploaded");
+                          Navigator.pop(context);
+                        }
+                        // Fluttertoast.showToast(msg: "successfully uploaded");
+                        // Navigator.pop(context);
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

@@ -26,6 +26,7 @@ const String firmDetails = '/firmDetails';
 const String vintageProof = '/vintageProof';
 const String addressProof = '/addressProof';
 const String aadhaarCard = '/aadhaarCard';
+const String mobileVerification = '/mobileVerification';
 const String finGstDetails = '/finGstDetails';
 const String kycSubmission = '/kycSubmission';
 const String kycnextstep = '/kycnextstep';
@@ -50,6 +51,7 @@ const String paymentFailed = '/paymentFailed';
 const String companyRegisterScreen = '/companyRegisterScreen';
 const String paidInvoiceDetails = '/paidInvoiceDetails';
 //const String allPendingInvoices = '/allPendingInvoices';
+const String storeImages = '/storeImages';
 
 const String apiExample = '/apiExample';
 const String pInvoices = '/pInvoices';

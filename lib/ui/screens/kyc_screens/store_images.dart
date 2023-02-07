@@ -3,26 +3,25 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:xuriti/logic/view_models/kyc_manager.dart';
 
-import '../../../logic/view_models/kyc_manager.dart';
 import '../../../models/helper/service_locator.dart';
 import '../../theme/constants.dart';
 import '../../widgets/appbar/app_bar_widget.dart';
 import '../../widgets/kyc_widgets/document_uploading.dart';
 import '../../widgets/kyc_widgets/submitt_button.dart';
 
-class PanDetails extends StatefulWidget {
-  const PanDetails({Key? key}) : super(key: key);
+class StoreImages extends StatefulWidget {
+  const StoreImages({Key? key}) : super(key: key);
 
   @override
-  State<PanDetails> createState() => _PanDetailsState();
+  State<StoreImages> createState() => _StoreImagesState();
 }
 
-class _PanDetailsState extends State<PanDetails> {
-  TextEditingController panController = TextEditingController();
+class _StoreImagesState extends State<StoreImages> {
+  List<File?>? storeImages;
 
-  List<File?>? panDetailsImages;
-
+  var _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -63,7 +62,7 @@ class _PanDetailsState extends State<PanDetails> {
                               width: w10p * .3,
                             ),
                             const Text(
-                              "PAN Details",
+                              "Store Images",
                               style: TextStyles.leadingText,
                             ),
                           ],
@@ -72,57 +71,44 @@ class _PanDetailsState extends State<PanDetails> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: w1p * 6, right: w1p * 6, top: h1p * 3),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x26000000),
-                                offset: Offset(0, 1),
-                                blurRadius: 1,
-                                spreadRadius: 0)
-                          ],
-                          color: Colours.paleGrey,
-                        ),
-                        child: TextFormField(
-                            controller: panController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: w1p * 6, vertical: h1p * .5),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              fillColor: Colours.paleGrey,
-                              hintText: "PAN Number",
-                              hintStyle: TextStyles.textStyle120,
-                            )),
+                          left: w1p * 6,
+                          right: w1p * 6,
+                          top: h1p * 1.5,
+                          bottom: h1p * 3),
+                      child: Text(
+                        "NOTE: Please upload three images of the shop\n\n"
+                        "1 - Store front photo along with store name from outside of the premises.\n\n"
+                        "2 - Selfie of the registered owner along with inside area of the shop.\n\n"
+                        "3 - Photo of current stock/inventory of inside the shop.\n\n",
+                        style: TextStyles.textStyle123,
                       ),
-                    ),
-                    SizedBox(
-                      height: h1p * 3,
                     ),
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
-                      onFileSelection: (files) {
-                        panDetailsImages = files;
+                      flag: true,
+                      onFileSelection: (filesObjects) {
+                        storeImages = filesObjects;
                         setState(() {});
                       },
                     ),
                     InkWell(
-                        onTap: () async {
-                          await getIt<KycManager>().storePanCardDetails(
-                              panController.text,
-                              filePath: panDetailsImages?.first?.path ?? "");
-                          Fluttertoast.showToast(msg: "successfully uploaded");
-                          Navigator.pop(context);
-                        },
-                        child: Submitbutton(
-                          maxWidth: maxWidth,
-                          maxHeight: maxHeight,
-                          isKyc: true,
-                          content: "Save & Continue",
-                        ))
+                      onTap: () async {
+                        await getIt<KycManager>().storeImages(
+                            filePath: storeImages
+                                    ?.map((e) => e?.path ?? "")
+                                    .toList() ??
+                                []);
+                        Fluttertoast.showToast(msg: "successfully uploaded");
+                        Navigator.pop(context);
+                      },
+                      child: Submitbutton(
+                        maxWidth: maxWidth,
+                        maxHeight: maxHeight,
+                        content: "Save & Continue",
+                        isKyc: true,
+                      ),
+                    )
                   ]))));
     });
   }

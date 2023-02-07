@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,11 +19,12 @@ class VintageProof extends StatefulWidget {
 }
 
 class _VintageProofState extends State<VintageProof> {
+  List<File?>? vintageImages;
   String? firm;
+  var _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return
-      LayoutBuilder(builder: (context, constraints) {
+    return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
       double maxWidth = constraints.maxWidth;
       double h1p = maxHeight * 0.01;
@@ -54,7 +57,8 @@ class _VintageProofState extends State<VintageProof> {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: SvgPicture.asset("assets/images/arrowLeft.svg")),
+                              child: SvgPicture.asset(
+                                  "assets/images/arrowLeft.svg")),
                           SizedBox(
                             width: w10p * .3,
                           ),
@@ -68,15 +72,19 @@ class _VintageProofState extends State<VintageProof> {
                             ),
                           ),
                           SizedBox(
-                            width: w10p *5.5,
+                            width: w10p * 5.5,
                           ),
-                          SvgPicture.asset("assets/images/kycImages/submitted.svg")
+                          SvgPicture.asset(
+                              "assets/images/kycImages/submitted.svg")
                         ],
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: w1p * 6, right: w1p * 6, top: h1p * 1.5,bottom: h1p * 1),
+                          left: w1p * 6,
+                          right: w1p * 6,
+                          top: h1p * 1.5,
+                          bottom: h1p * 1),
                       child: Text(
                         "If business & residence is rented then any business proof showing existence of business for 3 years ",
                         style: TextStyles.textStyle123,
@@ -94,20 +102,27 @@ class _VintageProofState extends State<VintageProof> {
                               });
                             },
                           ),
-                          Text("My business & residence is not rented",style: TextStyles.textStyle55,),
+                          Text(
+                            "My business & residence is not rented",
+                            style: TextStyles.textStyle55,
+                          ),
                         ],
                       ),
                     ),
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
+                      onFileSelection: (files) {
+                        vintageImages = files;
+                        setState(() {});
+                      },
                     ),
                     InkWell(
-                      onTap: ()async{
-                        await getIt<KycManager>().storeVintageProof();
-                        Fluttertoast.showToast(msg:"successfully uploaded");
+                      onTap: () async {
+                        await getIt<KycManager>().storeVintageProof(
+                            filePath: vintageImages?.first?.path ?? "");
+                        Fluttertoast.showToast(msg: "successfully uploaded");
                         Navigator.pop(context);
-
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

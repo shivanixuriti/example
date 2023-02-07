@@ -208,7 +208,7 @@ class _KycVerificationState extends State<KycVerification> {
                           },
                           child: KycDetails(
                             title: "ADHAAR Verification",
-                            subtitle: " (Any one of the following)",
+                            //subtitle: " (Any one of the following)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
                           ),
@@ -219,11 +219,11 @@ class _KycVerificationState extends State<KycVerification> {
                         //   child:
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, aadhaarCard);
+                            Navigator.pushNamed(context, mobileVerification);
                           },
                           child: KycDetails(
                             title: "Mobile Verification",
-                            subtitle: " (Any one of the following)",
+                            //  subtitle: " (Any one of the following)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
                           ),

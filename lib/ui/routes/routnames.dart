@@ -20,6 +20,7 @@ import 'package:xuriti/ui/screens/kyc_screens/kyc_verification_screen.dart';
 import 'package:xuriti/ui/screens/kyc_screens/ownership_proof_screen.dart';
 import 'package:xuriti/ui/screens/kyc_screens/pan_details_screen.dart';
 import 'package:xuriti/ui/screens/kyc_screens/kyc_submission_screen.dart';
+import 'package:xuriti/ui/screens/kyc_screens/store_images.dart';
 import 'package:xuriti/ui/screens/kyc_screens/vintage_proof_screen.dart';
 import 'package:xuriti/ui/screens/paynow_screens/payment_failed_screen.dart';
 import 'package:xuriti/ui/screens/paynow_screens/payment_success_screen.dart';
@@ -44,6 +45,7 @@ import 'package:xuriti/ui/screens/starting_screens/onboard_screen.dart';
 import 'package:xuriti/ui/screens/starting_screens/splash_screen.dart';
 import 'package:xuriti/wrapper.dart';
 import '../screens/kyc_screens/kycVerification_secondScreen.dart';
+import '../screens/kyc_screens/mobile_verification_screen.dart';
 import '../screens/guide_screen/all_guide_screen.dart';
 import '../screens/invoices_screens/all_sellers_screens/sellers_details.dart';
 import '../screens/invoices_screens/payment_history/all_payment_details.dart';
@@ -139,6 +141,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const AddressProof());
       case '/aadhaarCard':
         return MaterialPageRoute(builder: (_) => const AadhaarCard());
+      case '/mobileVerification':
+        return MaterialPageRoute(builder: (_) => const MobileVerification());
       case '/finGstDetails':
         return MaterialPageRoute(builder: (_) => const FinancialGstDetails());
       case '/kycSubmission':
@@ -160,6 +164,9 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const CompanyRegisterScreen());
       case '/paidInvoiceDetails':
         return MaterialPageRoute(builder: (_) => const PaidInvoiceDetails());
+      case '/storeImages':
+        return MaterialPageRoute(builder: (_) => const StoreImages());
+
       // case '/allPendingInvoices':
       //   return MaterialPageRoute(
       //       builder: (_) => AllPendingInvoiceWidget(

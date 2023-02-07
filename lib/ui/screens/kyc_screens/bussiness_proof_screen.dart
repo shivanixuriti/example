@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,11 +20,15 @@ class BussinessProof extends StatefulWidget {
 
 class _BussinessProofState extends State<BussinessProof> {
   TextEditingController documentNoController = TextEditingController();
-  String? doc;
 
+  List<File?>? businessProofImages;
+
+  String? doc;
+  late File business_file;
+  var _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return  LayoutBuilder(builder: (context, constraints) {
+    return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
       double maxWidth = constraints.maxWidth;
       double h1p = maxHeight * 0.01;
@@ -78,183 +84,251 @@ class _BussinessProofState extends State<BussinessProof> {
                         style: TextStyles.textStyle122,
                       ),
                     ),
-                    ListTile(
-
-                      title: Row(
+                    Form(
+                      key: _formKey,
+                      child: Column(
                         children: [
-                          Radio(
-                            value: "GSTN Certificate ",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value: "GSTN Certificate ",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "GSTN Certificate",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("GSTN Certificate",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
-
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Utility bill for current business address",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value:
+                                      "Utility bill for current business address",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Utility bill for current business address",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Utility bill for current business address",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
-
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Shop Act",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value: "Shop Act",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Shop Act",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Shop Act",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
+                          // ListTile(
 
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Firm Pan",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          //   title: Row(
+                          //     children: [
+                          //       Radio(
+                          //         value: "Firm Pan",
+                          //         groupValue: doc,
+                          //         onChanged: (value) {
+                          //           setState(() {
+                          //             doc = value.toString();
+                          //           });
+                          //         },
+                          //       ),
+                          //       Text("Shop Act",style: TextStyles.textStyle55,),
+                          //     ],
+                          //   ),
+                          // ),
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value: "Firm PAN",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Firm PAN",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Shop Act",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
-
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Firm PAN",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value:
+                                      "Letter of signatory authorization (for partnership)",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Letter of signatory authorization (for partnership)",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Firm PAN",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
-
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Letter of signatory authorization (for partnership)",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value: "Udyog Adhar",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Udyog Adhar",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Letter of signatory authorization (for partnership)",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
-
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Udyog Adhar",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
+                          ListTile(
+                            title: Row(
+                              children: [
+                                Radio(
+                                  value: "Board Resolution (for companies)",
+                                  groupValue: doc,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      doc = value.toString();
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "Board Resolution (for companies)",
+                                  style: TextStyles.textStyle55,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text("Udyog Adhar",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-                    ListTile(
 
-                      title: Row(
-                        children: [
-                          Radio(
-                            value: "Board Resolution (for companies)",
-                            groupValue: doc,
-                            onChanged: (value) {
-                              setState(() {
-                                doc = value.toString();
-                              });
-                            },
-                          ),
-                          Text("Board Resolution (for companies)",style: TextStyles.textStyle55,),
-                        ],
-                      ),
-                    ),
-
-
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: w1p * 6, right: w1p * 6, top: h1p * 3),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0x26000000),
-                                offset: Offset(0, 1),
-                                blurRadius: 1,
-                                spreadRadius: 0)
-                          ],
-                          color: Colours.paleGrey,
-                        ),
-                        child: TextFormField(
-                            controller: documentNoController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: w1p * 6, vertical: h1p * .5),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: w1p * 6, right: w1p * 6, top: h1p * 3),
+                            child: Container(
+                              //key: _formKey,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0x26000000),
+                                      offset: Offset(0, 1),
+                                      blurRadius: 1,
+                                      spreadRadius: 0)
+                                ],
+                                color: Colours.paleGrey,
                               ),
-                              fillColor: Colours.paleGrey,
-                              hintText: "Document Number",
-                              hintStyle: TextStyles.textStyle120,
-                            )),
+                              child: TextFormField(
+                                controller: documentNoController,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: w1p * 6, vertical: h1p * .5),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  fillColor: Colours.paleGrey,
+                                  hintText: "Document Number",
+                                  hintStyle: TextStyles.textStyle120,
+                                ),
+                                validator: (value1) {
+                                  if (value1 == null || value1.isEmpty) {
+                                    return 'Enter Valid Number';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: h1p * 3,
+                          ),
+                          DocumentUploading(
+                            maxWidth: maxWidth,
+                            maxHeight: maxHeight,
+                            flag: false,
+                            onFileSelection: (files) {
+                              businessProofImages = files;
+                              setState(() {});
+                            },
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(height: h1p * 3,),
-                    DocumentUploading(
-                      maxWidth: maxWidth,
-                      maxHeight: maxHeight,
                     ),
                     InkWell(
-                      onTap: ()async{
-                        await getIt<KycManager>().storeBusinessProof(documentNoController.text, doc!);
-                        Fluttertoast.showToast(msg:"successfully uploaded");
+                      onTap: () async {
+                        print(documentNoController.text);
+                        print('Doc Type : $doc');
+                        //  progress!.show();
+                        Map<String, dynamic> kyc = await getIt<KycManager>()
+                            .storeBusinessProof(documentNoController.text, doc!,
+                                filePath:
+                                    businessProofImages?.first?.path ?? "");
+
+                        //    progress.dismiss();
+                        print("doc---- $kyc");
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              kyc['msg'],
+                              style: TextStyle(
+                                  color: kyc['status'] == true
+                                      ? Colors.green
+                                      : Colors.green),
+                            )));
                         Navigator.pop(context);
                       },
+                      // onTap: () async {
+                      //   await getIt<KycManager>().storeBusinessProof(
+                      //       documentNoController.text, doc!);
+                      //   if (_formKey.currentState!.validate() == false) {
+                      //     //  Fluttertoast.showToast(msg: "successfully uploaded");
+                      //     // Navigator.pop(context);
+                      //     return;
+                      //   }
+
+                      //  Navigator.push(context);
+                      //  if()
+                      // Fluttertoast.showToast(
+                      //     msg: "Please enter valid number");
+                      //},
                       child: Submitbutton(
                         maxWidth: maxWidth,
                         maxHeight: maxHeight,

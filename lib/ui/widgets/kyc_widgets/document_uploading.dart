@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:xuriti/models/helper/service_locator.dart';
 
 import '../../../logic/view_models/kyc_manager.dart';
@@ -8,8 +11,16 @@ import '../../theme/constants.dart';
 class DocumentUploading extends StatelessWidget {
   final double maxWidth;
   final double maxHeight;
-  const DocumentUploading({required this.maxWidth, required this.maxHeight});
-
+  final bool? flag;
+  final Function(List<File?>? files) onFileSelection;
+  //final String type;
+  const DocumentUploading(
+      {required this.maxWidth,
+      required this.maxHeight,
+      this.flag,
+      required this.onFileSelection});
+  // const uploadfile(
+  //     {required this.maxWidth, required this.maxHeight, type});
   @override
   Widget build(BuildContext context) {
     double h1p = maxHeight * 0.01;
@@ -23,7 +34,7 @@ class DocumentUploading extends StatelessWidget {
           InkWell(
             onTap: () async {
               Map<String, dynamic> fileSelection =
-              await getIt<KycManager>().getImage();
+                  await getIt<KycManager>().getImage();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   behavior: SnackBarBehavior.floating,
                   content: Text(
@@ -52,17 +63,25 @@ class DocumentUploading extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
-              Map<String, dynamic> fileSelection =
-                  await getIt<KycManager>().selectFile();
+              List<File?>? fileSelection =
+                  await getIt<KycManager>().selectFile(flag);
+
+              print('=====>File uploaded====>${fileSelection}');
+              if (fileSelection?.isEmpty ?? true) {
+                Fluttertoast.showToast(msg: "Please select file");
+                return;
+              }
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   behavior: SnackBarBehavior.floating,
                   content: Text(
-                    fileSelection['msg'],
+                    fileSelection != null
+                        ? "Uploaded images ${fileSelection.first}"
+                        : "",
                     style: TextStyle(
-                        color: fileSelection['status'] == true
-                            ? Colors.green
-                            : Colors.red),
+                        color:
+                            fileSelection != null ? Colors.green : Colors.red),
                   )));
+              onFileSelection(fileSelection);
             },
             child: Container(
               height: h1p * 6,

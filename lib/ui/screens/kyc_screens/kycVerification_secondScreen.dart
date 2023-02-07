@@ -146,17 +146,17 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                         //     padding:
                         //         EdgeInsets.only(left: w1p * 3, right: w1p * 3),
                         //child:
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, addressProof);
-                          },
-                          child: KycDetails(
-                            title: "Address Proof",
-                            subtitle: " (Any one of the following)",
-                            maxHeight: maxHeight,
-                            maxWidth: maxWidth,
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: () {
+                        //     Navigator.pushNamed(context, addressProof);
+                        //   },
+                        //   child: KycDetails(
+                        //     title: "Address Proof",
+                        //     subtitle: " (Any one of the following)",
+                        //     maxHeight: maxHeight,
+                        //     maxWidth: maxWidth,
+                        //   ),
+                        // ),
                         //),
                         InkWell(
                           onTap: () {
@@ -249,6 +249,47 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             ),
                           ),
                         ),
+                        // SizedBox(
+                        //   height: h1p * 3,
+                        // ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: w1p * 3, top: h1p * 4, right: w1p * 3),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, storeImages);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: const Color(0x1f000000),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 1,
+                                        spreadRadius: 0)
+                                  ],
+                                  color: Colours.white),
+                              child: ListTile(
+                                tileColor: Colours.white,
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      "Upload Store Images ",
+                                      style: TextStyles.textStyle44,
+                                    ),
+                                    // Text(
+                                    //   "(Upto 24 Months)",
+                                    //   style: TextStyles.textStyle119,
+                                    // ),
+                                  ],
+                                ),
+                                trailing: SvgPicture.asset(
+                                    "assets/images/kycImages/vector.svg"),
+                              ),
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: h1p * 3,
                         ),
@@ -259,7 +300,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, kycVerification);
+                                  Navigator.pushNamed(context, storeImages);
                                 },
                                 child: const Align(
                                   alignment: Alignment.topLeft,
