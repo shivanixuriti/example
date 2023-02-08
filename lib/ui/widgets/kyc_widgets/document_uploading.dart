@@ -75,7 +75,7 @@ class DocumentUploading extends StatelessWidget {
                   behavior: SnackBarBehavior.floating,
                   content: Text(
                     fileSelection != null
-                        ? "Uploaded images ${fileSelection.first}"
+                        ? "Uploaded images $fileSelection"
                         : "",
                     style: TextStyle(
                         color:
