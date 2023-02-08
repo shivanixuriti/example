@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 var outlineInputBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(14),borderSide: const BorderSide(color: Colours.black015, width: 1));
-
+    borderRadius: BorderRadius.circular(14),
+    borderSide: const BorderSide(color: Colours.black015, width: 1));
 
 class TextStyles {
   static const textStyle11 = TextStyle(
@@ -103,7 +103,6 @@ class TextStyles {
       fontStyle: FontStyle.normal,
       height: 2,
       fontSize: 14.0);
-
 
   static const textStyle13 = TextStyle(
       color: Colors.black,
@@ -421,12 +420,11 @@ class TextStyles {
       fontStyle: FontStyle.normal,
       fontSize: 14.0);
   static const leadingText = const TextStyle(
-      color:  Colours.leading,
+      color: Colours.leading,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle69 = TextStyle(
       color: Colours.gey,
       fontWeight: FontWeight.w400,
@@ -544,109 +542,88 @@ class TextStyles {
       fontFamily: "Poppins",
       fontStyle: FontStyle.normal,
       fontSize: 12.0);
-  static const textStyle85 =  TextStyle(
-      color:  Colours.paleGrey,
+  static const textStyle85 = TextStyle(
+      color: Colours.paleGrey,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 18.0
-  );
-  static const textStyle86 =  TextStyle(
-      color:  Colours.white,
+      fontStyle: FontStyle.normal,
+      fontSize: 18.0);
+  static const textStyle86 = TextStyle(
+      color: Colours.white,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
-  static const textStyle87 =  TextStyle(
-      color:  Colours.black,
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
+  static const textStyle87 = TextStyle(
+      color: Colours.black,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 16.0
-  );
-  static const textStyle88 =  TextStyle(
-      color:  Colours.black,
+      fontStyle: FontStyle.normal,
+      fontSize: 16.0);
+  static const textStyle88 = TextStyle(
+      color: Colours.black,
       fontWeight: FontWeight.w700,
       fontFamily: "OpenSans",
-      fontStyle:  FontStyle.normal,
-      fontSize: 18.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 18.0);
 
-
-
-
-
-
-
-
-  static const textStyle45 =  TextStyle(
-      color:  Colours.charcoalGrey,
+  static const textStyle45 = TextStyle(
+      color: Colours.charcoalGrey,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
-  static const textStyle90 =  TextStyle(
-      color:  Colours.darkGreyBlue,
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
+  static const textStyle90 = TextStyle(
+      color: Colours.darkGreyBlue,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
-  static const textStyle91 =  TextStyle(
-      color:  Colours.darkGreyBlue,
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
+  static const textStyle91 = TextStyle(
+      color: Colours.darkGreyBlue,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 16.0
-  );
-  static const textStyle89 =  TextStyle(
-      color:  Colours.darkGreyBlue,
+      fontStyle: FontStyle.normal,
+      fontSize: 16.0);
+  static const textStyle89 = TextStyle(
+      color: Colours.darkGreyBlue,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 18.0
-
-
-  );
-  static const textStyle92 =  TextStyle(
-      color:  Colours.primary,
+      fontStyle: FontStyle.normal,
+      fontSize: 18.0);
+  static const textStyle92 = TextStyle(
+      color: Colours.primary,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
 
-  static const textStyle36 =  TextStyle(
-  color:  Colours.primary,
-  fontWeight: FontWeight.w600,
-  fontFamily: "OpenSans",
-  fontStyle:  FontStyle.normal,
-  fontSize: 15.0);
-
-  static const verifiedText =  TextStyle(
-      color:  Colors.green,
+  static const textStyle36 = TextStyle(
+      color: Colours.primary,
       fontWeight: FontWeight.w600,
       fontFamily: "OpenSans",
-      fontStyle:  FontStyle.normal,
-      fontSize: 15.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 15.0);
 
-  static const textStyle93 =  TextStyle(
-      color:  Colours.steel,
+  static const verifiedText = TextStyle(
+      color: Colors.green,
+      fontWeight: FontWeight.w600,
+      fontFamily: "OpenSans",
+      fontStyle: FontStyle.normal,
+      fontSize: 15.0);
+
+  static const textStyle93 = TextStyle(
+      color: Colours.steel,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
-  static const textStyle94 =  TextStyle(
-      color:  Colours.dusk,
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
+  static const textStyle94 = TextStyle(
+      color: Colours.dusk,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
   static const textStyle101 = TextStyle(
       color: Colours.failPrimary,
       fontWeight: FontWeight.w600,
@@ -654,309 +631,282 @@ class TextStyles {
       fontStyle: FontStyle.normal,
       fontSize: 18.0);
 
-  static const textStyle96 =  TextStyle(
-      color:  Colors.white,
+  static const textStyle96 = TextStyle(
+      color: Colors.white,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
-  static const textStyle97 =  TextStyle(
-      color:  Colors.white,
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
+  static const textStyle97 = TextStyle(
+      color: Colors.white,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
 
-  static const textStyle98 =  TextStyle(
-      color:  Colours.paleGrey,
+  static const textStyle98 = TextStyle(
+      color: Colours.paleGrey,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
 
-
-
-
-
-
-
-  static const textStyle99 =  TextStyle(
-      color:  Colours.black,
-      fontWeight: FontWeight.w400,
-      fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
-  static const textStyleUp =  TextStyle(
-      color:  Colours.black,
+  static const textStyle140 = TextStyle(
+      color: Colours.black,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 18.0
-  );
-
-  static const subHeading =  TextStyle(
-      color:  Colours.white,
-      fontWeight: FontWeight.w700,
-      fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
-
-  static const subValue =  TextStyle(
-      color:  Colors.white,
+      fontStyle: FontStyle.normal,
+      fontSize: 15.0);
+  static const textStyle142 = TextStyle(
+      color: Colours.emerald,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 8.0
-  );
-  static const guideSubTitle =  TextStyle(
-      color:  Colors.white,
-      fontWeight: FontWeight.w700,
+      fontStyle: FontStyle.normal,
+      fontSize: 15.0);
+  static const textStyle143 = TextStyle(
+      color: Colours.failPrimary,
+      fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
-  static const companyName =  TextStyle(
-      color:  Colours.charcoalGrey,
+      fontStyle: FontStyle.normal,
+      fontSize: 15.0);
+
+  static const textStyle99 = TextStyle(
+      color: Colours.black,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
-  static const textStyle100 =  TextStyle(
-      color:  Colours.successPrimary,
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
+  static const textStyleUp = TextStyle(
+      color: Colours.black,
+      fontWeight: FontWeight.w600,
+      fontFamily: "Poppins",
+      fontStyle: FontStyle.normal,
+      fontSize: 18.0);
+
+  static const subHeading = TextStyle(
+      color: Colours.white,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
-  static const textStyle102 =  TextStyle(
-      color:  Colours.black,
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
+
+  static const subValue = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w600,
+      fontFamily: "Poppins",
+      fontStyle: FontStyle.normal,
+      fontSize: 8.0);
+  static const guideSubTitle = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Poppins",
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
+  static const companyName = TextStyle(
+      color: Colours.charcoalGrey,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 8.0
-  );
-  static const overdue =  TextStyle(
-      color:  Colors.white,
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
+  static const textStyle100 = TextStyle(
+      color: Colours.successPrimary,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
-  static const textStyle103 =  TextStyle(
-      color:  Colors.black,
-      fontWeight: FontWeight.w700,
-      fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
-  static const textStyle104 =  TextStyle(
-      color:  Colors.white,
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
+  static const textStyle102 = TextStyle(
+      color: Colours.black,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 8.0);
+  static const overdue = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Poppins",
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
+  static const textStyle103 = TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Poppins",
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
+  static const textStyle104 = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+      fontFamily: "Poppins",
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
   static const textStyle105 = const TextStyle(
-      color:  Colors.white,
+      color: Colors.white,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 24.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 24.0);
   static const textStyle106 = const TextStyle(
-      color:  Colors.white,
+      color: Colors.white,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle107 = const TextStyle(
-      color:  Colors.white,
+      color: Colors.white,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
   static const textStyle108 = const TextStyle(
-      color:  Colors.white,
+      color: Colors.white,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle109 = const TextStyle(
-      color:  Colours.charcoalGrey,
+      color: Colours.charcoalGrey,
       fontWeight: FontWeight.w600,
       fontFamily: "Catamaran",
-      fontStyle:  FontStyle.normal,
-      fontSize: 18.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 18.0);
   static const textStyle110 = const TextStyle(
-      color:  Colours.gey,
+      color: Colours.gey,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
   static const textStyle111 = const TextStyle(
-      color:  Colours.charcoalGrey,
+      color: Colours.charcoalGrey,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
   static const textStyle112 = const TextStyle(
-      color:  Colours.charcoalGrey,
+      color: Colours.charcoalGrey,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
-  static const textStyle113 =  TextStyle(
-      color:  Colours.warmGrey,
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
+  static const textStyle113 = TextStyle(
+      color: Colours.warmGrey,
       fontWeight: FontWeight.w500,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle114 = const TextStyle(
-      color:  Colours.pumpkin,
+      color: Colours.pumpkin,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle116 = const TextStyle(
-      color:  Colours.charcoalGrey,
+      color: Colours.charcoalGrey,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
   static const textStyle117 = const TextStyle(
-      color:  Colours.charcoalGrey,
+      color: Colours.charcoalGrey,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
   static const textStyle118 = const TextStyle(
-      color:  Colours.paleRed,
+      color: Colours.paleRed,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 12.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 12.0);
   static const textStyle119 = const TextStyle(
-      color:  Colours.darkBlue,
+      color: Colours.darkBlue,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 8.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 8.0);
 
   static const textStyle120 = const TextStyle(
-      color:  Colours.gey,
+      color: Colours.gey,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle121 = const TextStyle(
-      color:  Colors.white,
+      color: Colors.white,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
   static const textStyle122 = const TextStyle(
-      color:  Colors.black,
+      color: Colors.black,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle123 = const TextStyle(
-      color:  Colors.black,
+      color: Colors.black,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
 
   static const textStyle125 = const TextStyle(
-      color:  Colors.black,
+      color: Colors.black,
       fontWeight: FontWeight.w700,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 24.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 24.0);
   static const textStyle126 = const TextStyle(
-      color:  Colors.black,
+      color: Colors.black,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle127 = const TextStyle(
-      color:  Colors.black,
+      color: Colors.black,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle128 = const TextStyle(
-      color:  Colours.gey50,
+      color: Colours.gey50,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle129 = const TextStyle(
-      color:  Colors.black,
+      color: Colors.black,
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 10.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 10.0);
   static const textStyle130 = const TextStyle(
-      color:  Colours.mediumGreen,
+      color: Colours.mediumGreen,
       fontWeight: FontWeight.w500,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle131 = const TextStyle(
-      color:  Colours.failPrimary,
+      color: Colours.failPrimary,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 14.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 14.0);
   static const textStyle132 = const TextStyle(
-      color:  Colours.tangerineThree,
+      color: Colours.tangerineThree,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
-      fontStyle:  FontStyle.normal,
-      fontSize: 18.0
-  );
+      fontStyle: FontStyle.normal,
+      fontSize: 18.0);
 }
 
 class Colours {
   static const white = Color(0xffffffff);
   static const primary = Color(0xfff79e1b);
   static const black0 = Color(0x00000000);
-  static const black05 =  Color(0x0d000000);
+  static const black05 = Color(0x0d000000);
   static const black025 = Color(0x40000000);
   static const black = Color(0xff000000);
   static const black015 = Color(0x26000000);
-  static const black012 =  Color(0x1f000000);
+  static const black012 = Color(0x1f000000);
   static const pumpkin = Color(0xffe79500);
   static const charcoalGrey = Color(0xff323338);
   static const paleGrey = Color(0xfff5f6f8);
@@ -978,8 +928,6 @@ class Colours {
   static const mediumGreen = const Color(0xff34a853);
   static const tangerineThree = const Color(0xfff38e00);
 
-
-
   static const peach = Color(0xffffb885);
 
   static const offWhite = Color(0xfffffbf4);
@@ -993,7 +941,5 @@ class Colours {
   static const warmGrey75 = const Color(0xbf999999);
   // static const violet =  Color(6f21d1);
 
-
-
-  static const steel =  Color(0xff88879c);
+  static const steel = Color(0xff88879c);
 }

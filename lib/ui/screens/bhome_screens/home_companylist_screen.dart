@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xuriti/logic/view_models/auth_manager.dart';
 
 import '../../../logic/view_models/transaction_manager.dart';
 import '../../../models/core/get_company_list_model.dart';
@@ -48,6 +49,42 @@ class _HomeCompanyListState extends State<HomeCompanyList> {
                   } else if (snapshot.hasData) {
                     List<GetCompany> data = snapshot.data as List<GetCompany>;
                     return Scaffold(
+                      floatingActionButton: FloatingActionButton(
+                        backgroundColor: Colours.tangerine,
+                        foregroundColor: Colours.white,
+                        onPressed: () async => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Logging out'),
+                            content: const Text('Are you sure?'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text(
+                                  'Cancel',
+                                  style: TextStyle(color: Colours.tangerine),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  await getIt<AuthManager>().logOut();
+                                  await getIt<SharedPreferences>().clear();
+                                  await getIt<SharedPreferences>()
+                                      .setString('onboardViewed', 'true');
+
+                                  Navigator.pushNamed(context, getStarted);
+                                },
+                                child: const Text(
+                                  'OK',
+                                  style: TextStyle(color: Colours.tangerine),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        child: Icon(Icons.logout),
+                      ),
                       backgroundColor: Colours.black,
                       appBar: AppBar(
                         elevation: 0,
@@ -67,136 +104,156 @@ class _HomeCompanyListState extends State<HomeCompanyList> {
                           ],
                         ),
                       ),
-                      body: Container(
-                        width: maxWidth,
-                        decoration: const BoxDecoration(
-                            color: Colours.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(26),
-                              topRight: Radius.circular(26),
-                            )),
-                        child: CustomScrollView(slivers: [
-                          SliverList(
-                              delegate: SliverChildListDelegate(
-                            [
-                              Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: w1p * 5),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
+                      body: Column(children: [
+                        Container(
+                          width: maxWidth,
+                          decoration: const BoxDecoration(
+                              color: Colours.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(26),
+                                topRight: Radius.circular(26),
+                              )),
+                          child: SizedBox(
+                            height: 600,
+                            child: CustomScrollView(slivers: [
+                              SliverList(
+                                  delegate: SliverChildListDelegate(
+                                [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: w1p * 5),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: SvgPicture.asset(
+                                              "assets/images/arrowLeft.svg"),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: h1p * 5),
+                                          child: Text(
+                                            "Companies",
+                                            style: TextStyles.textStyle56,
+                                          ),
+                                        ),
+                                        InkWell(
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                  context, addCompany);
+                                            },
+                                            child: Icon(Icons.add))
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )),
+                              SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  return InkWell(
+                                      onTap: () async {
+                                        String? companyId =
+                                            data[index].companyDetails!.sId;
+                                        String? companyName = data[index]
+                                            .companyDetails!
+                                            .companyName;
+                                        String? companyStatus =
+                                            data[index].companyDetails!.status;
+                                        await getIt<SharedPreferences>()
+                                            .setString('companyId', companyId!);
+                                        await getIt<SharedPreferences>()
+                                            .setInt('companyIndex', index);
+                                        if (companyStatus == "Approved") {
+                                          Navigator.pushReplacementNamed(
+                                              context, landing);
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  duration:
+                                                      Duration(seconds: 2),
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  content: Text(
+                                                    'You are not allowed to perform any operation, $companyName status is $companyStatus. Please contact to Xuriti team.',
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  )));
+                                        }
                                       },
-                                      child: SvgPicture.asset(
-                                          "assets/images/arrowLeft.svg"),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: h1p * 5),
-                                      child: Text(
-                                        "Companies",
-                                        style: TextStyles.textStyle56,
-                                      ),
-                                    ),
-                                    InkWell(
-                                        onTap: () {
-                                          Navigator.pushNamed(
-                                              context, addCompany);
-                                        },
-                                        child: Icon(Icons.add))
-                                  ],
-                                ),
-                              )
-                            ],
-                          )),
-                          SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return InkWell(
-                                  onTap: () async {
-                                    String? companyId =
-                                        data[index].companyDetails!.sId;
-                                    String? companyName =
-                                        data[index].companyDetails!.companyName;
-                                    String? companyStatus =
-                                        data[index].companyDetails!.status;
-                                    await getIt<SharedPreferences>()
-                                        .setString('companyId', companyId!);
-                                    await getIt<SharedPreferences>()
-                                        .setInt('companyIndex', index);
-                                    if (companyStatus == "Approved") {
-                                      Navigator.pushReplacementNamed(
-                                          context, landing);
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              duration: Duration(seconds: 2),
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              content: Text(
-                                                'You are not allowed to perform any operation, $companyName status is $companyStatus. Please contact to Xuriti team.',
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                              )));
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left: w1p * 5,
-                                      right: w1p * 5,
-                                      bottom: h1p * 3,
-                                    ),
-                                    child: Container(
-                                      height: h10p * 1,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colours.tangerine),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              data[index].companyDetails == null
-                                                  ? ""
-                                                  : data[index]
-                                                          .companyDetails!
-                                                          .companyName ??
-                                                      "",
-                                              style: TextStyles.textStyle85,
-                                            ),
-                                            // Text("Asian Paints",style: TextStyles.textStyle85,),
-                                            Row(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: w1p * 5,
+                                          right: w1p * 5,
+                                          bottom: h1p * 3,
+                                        ),
+                                        child: Container(
+                                          height: h10p * 1,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Colours.tangerine),
+                                          child: Center(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  "GST No :",
-                                                  style: TextStyles.textStyle71,
+                                                Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    data[index].companyDetails ==
+                                                            null
+                                                        ? ""
+                                                        : data[index]
+                                                                .companyDetails!
+                                                                .companyName ??
+                                                            "",
+                                                    style:
+                                                        TextStyles.textStyle85,
+                                                  ),
                                                 ),
-                                                Text(
-                                                  data[index]
-                                                          .companyDetails!
-                                                          .gstin ??
-                                                      '',
-                                                  style: TextStyles.textStyle71,
+                                                // Text("Asian Paints",style: TextStyles.textStyle85,),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "GST No :",
+                                                      style: TextStyles
+                                                          .textStyle71,
+                                                    ),
+                                                    Text(
+                                                      data[index]
+                                                              .companyDetails!
+                                                              .gstin ??
+                                                          '',
+                                                      style: TextStyles
+                                                          .textStyle71,
+                                                    )
+                                                  ],
                                                 )
                                               ],
-                                            )
-                                          ],
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ));
-                            },
-                            childCount: data.length,
-                          ))
-                        ]),
-                      ),
+                                      ));
+                                },
+                                childCount: data.length,
+                              )),
+                            ]),
+                          ),
+                        ),
+                        Expanded(
+                            child: Container(
+                          color: Colours.white,
+                        ))
+                      ]),
                     );
                   } else {
                     return Center(

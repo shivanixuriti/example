@@ -132,6 +132,20 @@ class DrawerWidget extends StatelessWidget {
                   height: h1p * 5,
                 ),
                 const Text(
+                  "Payment History",
+                  style: TextStyles.textStyle98,
+                ),
+                SizedBox(
+                  height: h1p * 5,
+                ),
+                const Text(
+                  "Associated Companies",
+                  style: TextStyles.textStyle98,
+                ),
+                SizedBox(
+                  height: h1p * 5,
+                ),
+                const Text(
                   "Help Center",
                   style: TextStyles.textStyle98,
                 ),
@@ -141,7 +155,7 @@ class DrawerWidget extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     Map<String, dynamic> data =
-                    await getIt<ProfileManager>().getTermsAndConditions();
+                        await getIt<ProfileManager>().getTermsAndConditions();
                     if (data != null && data['status'] == true) {
                       _launchInBrowser(Uri.parse(
                           "https://docs.google.com/gview?embedded=true&url=${data['url']}"));

@@ -33,18 +33,20 @@ class _PaidInvoiceDetailsState extends State<PaidInvoiceDetails> {
 
     String idueDate = DateFormat("dd-MMM-yyyy").format(dd);
     String invDate = DateFormat("dd-MMM-yyyy").format(id);
-   double gstAmt;
+    double gstAmt;
     String paidInvAmount =
         double.parse(invoice.outstandingAmount ?? "").toStringAsFixed(2);
-    double inv = double.parse(invoice.outstandingAmount ?? "");
-    String gst = invoice.billDetails!.gstSummary!.totalTax ?? "";
-    if(gst != "undefined"){
-      gstAmt = double.parse(gst);
 
-    }else{
-      gstAmt= 0;
+    double inv = double.parse(invoice.outstandingAmount ?? "");
+    num discount = double.parse(invoice.paidDiscount.toString());
+    num interest = double.parse(invoice.paidInterest.toString());
+    String gst = invoice.billDetails!.gstSummary!.totalTax ?? "";
+    if (gst != "undefined") {
+      gstAmt = double.parse(gst);
+    } else {
+      gstAmt = 0;
     }
-     gstAmt = double.parse(invoice.billDetails!.gstSummary!.totalTax ?? "");
+    gstAmt = double.parse(invoice.billDetails!.gstSummary!.totalTax ?? "");
     double invAmt = double.parse(invoice.invoiceAmount ?? "");
     double payableAMt = invAmt + gstAmt - inv;
     double paidAmt = invAmt - inv;
@@ -198,12 +200,242 @@ class _PaidInvoiceDetailsState extends State<PaidInvoiceDetails> {
                                 height: 4,
                               ),
                               Text(
-                                "Updated At",
+                                "Uploaded At",
                                 style: TextStyles.textStyle62,
                               ),
                               Text(
                                 idueDate,
                                 style: TextStyles.textStyle63,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Invoice Amount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${invAmt.toString()}",
+                                style: TextStyles.textStyle140,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.end,
+                          //   children: [
+                          //     SizedBox(
+                          //       height: 4,
+                          //     ),
+                          //     Text(
+                          //       "GST Amount",
+                          //       style: TextStyles.textStyle62,
+                          //     ),
+                          //     Text(
+                          //       gstAmt.toString(),
+                          //       style: TextStyles.textStyle63,
+                          //     ),
+                          //     // Text(
+                          //     //   invoice.seller!.companyName ?? '',
+                          //     //   style: TextStyles.textStyle64,
+                          //     // ),
+                          //   ],
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "GST Amount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${gstAmt.toString()}",
+                                style: TextStyles.textStyle140,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Outstanding Amount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ $paidInvAmount",
+                                style: TextStyles.textStyle140,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Discount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${discount.toString()}",
+                                style: TextStyles.textStyle143,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Interest",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${interest.toString()}",
+                                style: TextStyles.textStyle142,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Invoice Due Date",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                invoice.invoiceDueDate.toString(),
+                                style: TextStyles.textStyle140,
                               ),
                               // Text(
                               //   invoice.seller!.companyName ?? '',

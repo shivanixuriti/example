@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:xuriti/logic/view_models/transaction_manager.dart';
+import 'package:xuriti/models/core/invoice_model.dart';
 import 'package:xuriti/models/core/payment_history_model.dart';
 
 import '../../../../logic/view_models/trans_history_manager.dart';
@@ -17,7 +19,24 @@ import '../../../widgets/payment_history_widgets/leading.dart';
 import '../../../widgets/profile/profile_widget.dart';
 
 class AllPaymentDetails extends StatefulWidget {
-  AllPaymentDetails();
+  String? image;
+  String? companyName;
+  String? companyAddress;
+  String? state;
+  String? gstNo;
+  String? creditLimit;
+  String? balanceCredit;
+  TrancDetail? fullDetails;
+  AllPaymentDetails({
+    this.image,
+    this.companyName,
+    this.companyAddress,
+    this.state,
+    this.gstNo,
+    this.creditLimit,
+    this.balanceCredit,
+    this.fullDetails,
+  });
 
   @override
   State<AllPaymentDetails> createState() => _AllPaymentDetailsState();
@@ -29,9 +48,13 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
   @override
   Widget build(BuildContext context) {
     TrancDetail? transDetail = getIt<TransHistoryManager>().transDetail;
+    Invoice? invoice =
+        Provider.of<TransactionManager>(context).currentPaidInvoice;
+
     String companyName = transDetail!.sellerName ?? '';
     String invoiceId = transDetail.invoiceNumber ?? '';
-
+    String orderId = transDetail.orderId ?? '';
+    String paymentMode = transDetail.paymentMode ?? '';
     String invoiceD = transDetail.createdAt ?? "";
     String dueD = transDetail.createdAt ?? "";
     String paymentD = transDetail.createdAt ?? "";
@@ -116,6 +139,16 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                                             companyName,
                                             style: TextStyles.textStyle8,
                                           ),
+                                          AutoSizeText(
+                                              invoice!.seller!.address
+                                                  .toString(),
+                                              style: TextStyles.textStyle63),
+                                          AutoSizeText(
+                                              invoice.seller!.state.toString(),
+                                              style: TextStyles.textStyle63),
+                                          AutoSizeText(
+                                              invoice.seller!.gstin.toString(),
+                                              style: TextStyles.textStyle43),
                                         ]))
                                   ])
                             ]))),
@@ -124,7 +157,9 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                   padding: EdgeInsets.symmetric(
                       horizontal: w10p * .6, vertical: h1p * 1),
                   child: Container(
-                    decoration: BoxDecoration(color: Colours.offWhite),
+                    decoration: BoxDecoration(
+                        color: Colours.successIcon,
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: h1p * 1),
                       child: Row(
@@ -133,26 +168,38 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Invoice ID",
-                                style: TextStyles.textStyle62,
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  "Invoice ID",
+                                  style: TextStyles.textStyle62,
+                                ),
                               ),
-                              Text(
-                                "$invoiceId",
-                                style: TextStyles.textStyle56,
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  "$invoiceId",
+                                  style: TextStyles.textStyle56,
+                                ),
                               ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                "Payment Status",
-                                style: TextStyles.textStyle62,
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  "Payment Status",
+                                  style: TextStyles.textStyle62,
+                                ),
                               ),
-                              Text(
-                                "$orderStatus",
-                                style: TextStyles.textStyle56,
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  "$orderStatus",
+                                  style: TextStyles.textStyle56,
+                                ),
                               ),
                             ],
                           ),
@@ -250,13 +297,13 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Payment Amount",
+                              const Text(
+                                "Paid Amount",
                                 style: TextStyles.textStyle62,
                               ),
                               Text(
                                 "₹ $invAmount",
-                                style: TextStyles.textStyle66,
+                                style: TextStyles.textStyle140,
                               ),
                             ],
                           ),
@@ -271,8 +318,48 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                                   ? Text("")
                                   : Text(
                                       paymentDate.substring(0, 10),
-                                      style: TextStyles.textStyle66,
+                                      style: TextStyles.textStyle140,
                                     ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    decoration: BoxDecoration(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Transaction Id",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                orderId,
+                                style: TextStyles.textStyle140,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              const Text(
+                                "Payment Mode",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                paymentMode,
+                                style: TextStyles.textStyle140,
+                              )
                             ],
                           ),
                         ],

@@ -17,8 +17,7 @@ class PaymentHistory {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.trancDetail != null) {
-      data['trunc_details'] =
-          this.trancDetail!.map((v) => v.toJson()).toList();
+      data['trunc_details'] = this.trancDetail!.map((v) => v.toJson()).toList();
     }
     data['status'] = this.status;
     return data;
@@ -35,21 +34,25 @@ class TrancDetail {
   String? orderId;
   String? orderAmount;
   String? createdAt;
+  String? paymentDate;
+  String? paymentMode;
   String? cfOrderId;
   String? sId;
 
   TrancDetail(
       {this.invoiceNumber,
-        this.buyerName,
-        this.buyerId,
-        this.sellerId,
-        this.sellerName,
-        this.orderStatus,
-        this.orderId,
-        this.orderAmount,
-        this.createdAt,
-        this.cfOrderId,
-        this.sId});
+      this.buyerName,
+      this.buyerId,
+      this.sellerId,
+      this.sellerName,
+      this.orderStatus,
+      this.orderId,
+      this.orderAmount,
+      this.createdAt,
+      this.paymentDate,
+      this.paymentMode,
+      this.cfOrderId,
+      this.sId});
 
   TrancDetail.fromJson(Map<String, dynamic> json) {
     invoiceNumber = json['invoice_number'];
@@ -60,6 +63,8 @@ class TrancDetail {
     orderStatus = json['order_status'];
     orderId = json['order_id'];
     orderAmount = json['order_amount'];
+    paymentDate = json['payment_date'];
+    paymentMode = json['payment_mode'];
     createdAt = json['createdAt'];
     cfOrderId = json['cf_order_id'];
     sId = json['_id'];
@@ -74,6 +79,8 @@ class TrancDetail {
     data['seller_name'] = this.sellerName;
     data['order_status'] = this.orderStatus;
     data['order_id'] = this.orderId;
+    data['payment_date'] = this.paymentDate;
+    data['payment_mode'] = this.paymentMode;
     data['order_amount'] = this.orderAmount;
     data['createdAt'] = this.createdAt;
     data['cf_order_id'] = this.cfOrderId;

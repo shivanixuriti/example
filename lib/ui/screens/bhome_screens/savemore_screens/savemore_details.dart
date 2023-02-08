@@ -25,20 +25,29 @@ class _SavemoreDetailsState extends State<SavemoreDetails> {
   Widget build(BuildContext context) {
     Invoice? invoice = Provider.of<TransactionManager>(context).currentInvoice;
 
-
-
     DateTime id = DateTime.parse(invoice!.invoiceDate ?? '');
     DateTime dd = DateTime.parse(invoice.invoiceDueDate ?? '');
     DateTime currentDate = DateTime.now();
     Duration dif = dd.difference(currentDate);
+    num discount = double.parse(invoice.paidDiscount.toString());
+    num interest = double.parse(invoice.paidInterest.toString());
+    String gst = invoice.billDetails!.gstSummary!.totalTax ?? "";
+    double invAmt = double.parse(invoice.invoiceAmount ?? "");
+    double inv = double.parse(invoice.outstandingAmount ?? "");
+    double paidAmt = invAmt - inv;
     int daysLeft = dif.inDays;
+    double gstAmt;
+    if (gst != "undefined") {
+      gstAmt = double.parse(gst);
+    } else {
+      gstAmt = 0;
+    }
 
     String idueDate = DateFormat("dd-MMM-yyyy").format(dd);
     String invDate = DateFormat("dd-MMM-yyyy").format(id);
 
     String paidInvAmount =
         double.parse(invoice.outstandingAmount ?? "").toStringAsFixed(2);
-
 
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
@@ -132,7 +141,7 @@ class _SavemoreDetailsState extends State<SavemoreDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "Paid Amount",
+                                "Payable Amount",
                                 style: TextStyles.textStyle62,
                               ),
                               Text(
@@ -189,12 +198,222 @@ class _SavemoreDetailsState extends State<SavemoreDetails> {
                                 height: 4,
                               ),
                               Text(
-                                "Updated At",
+                                "Uploaded At",
                                 style: TextStyles.textStyle62,
                               ),
                               Text(
                                 idueDate,
                                 style: TextStyles.textStyle63,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Invoice Amount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ $invAmt",
+                                style: TextStyles.textStyle140,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "GST Amount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${gstAmt.toString()}",
+                                style: TextStyles.textStyle140,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Outstanding Amount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${invoice.outstandingAmount}",
+                                style: TextStyles.textStyle140,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Discount",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${discount.toString()}",
+                                style: TextStyles.textStyle143,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Interest",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                "₹ ${interest.toString()}",
+                                style: TextStyles.textStyle142,
+                              ),
+                              // Text(
+                              //   invoice.seller!.companyName ?? '',
+                              //   style: TextStyles.textStyle64,
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .5,
+                  child: Container(
+                    height: h1p * 10,
+                    color: Colours.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: w10p * .50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "Invoice Date",
+                                style: TextStyles.textStyle62,
+                              ),
+                              Text(
+                                invoice.invoiceDueDate.toString(),
+                                style: TextStyles.textStyle140,
                               ),
                               // Text(
                               //   invoice.seller!.companyName ?? '',
@@ -220,17 +439,15 @@ class _SavemoreDetailsState extends State<SavemoreDetails> {
                     child: GestureDetector(
                         onTap: () async {
                           // progress!.show();
-                          if(invoice.invoiceFile!.isNotEmpty){
-                            await getIt<TransactionManager>().openFile(
-                                url:
-                                invoice.invoiceFile ?? "");
+                          if (invoice.invoiceFile!.isNotEmpty) {
+                            await getIt<TransactionManager>()
+                                .openFile(url: invoice.invoiceFile ?? "");
                             // progress.dismiss();
                             Fluttertoast.showToast(msg: "Opening invoice file");
-                          }else{
-                            Fluttertoast.showToast(msg: "Invoice file not found");
-
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Invoice file not found");
                           }
-
                         },
                         child: Image.asset("assets/images/invoiceButton.png")),
                   ),

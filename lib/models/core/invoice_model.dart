@@ -34,6 +34,8 @@ class Invoice {
   String? invoiceFile;
   bool? emandateRaised;
   String? invoiceNumber;
+  num? paidDiscount;
+  num? paidInterest;
   String? createdAt;
   String? updatedAt;
   // int? iV;
@@ -61,6 +63,8 @@ class Invoice {
       // this.iV,
       this.buyer,
       this.buyerGst,
+      this.paidDiscount,
+      this.paidInterest,
       this.invoiceAmount,
       this.invoiceDate,
       this.invoiceDueDate,
@@ -87,6 +91,8 @@ class Invoice {
     buyer = json['buyer'] != null ? new Buyer.fromJson(json['buyer']) : null;
     buyerGst = json['buyer_gst'];
     invoiceAmount = json['invoice_amount'];
+    paidDiscount = json['paid_discount'];
+    paidInterest = json['paid_interest'];
     invoiceDate = json['invoice_date'];
     invoiceDueDate = json['invoice_due_date'];
     invoiceType = json['invoice_type'];
@@ -106,6 +112,8 @@ class Invoice {
     data['invoice_number'] = this.invoiceNumber;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
+    data['paid_interest'] = this.paidInterest;
+    data['paid_discount'] = this.paidDiscount;
     // data['__v'] = this.iV;
     if (this.buyer != null) {
       data['buyer'] = this.buyer!.toJson();
@@ -114,6 +122,7 @@ class Invoice {
     data['invoice_amount'] = this.invoiceAmount;
     data['invoice_date'] = this.invoiceDate;
     data['invoice_due_date'] = this.invoiceDueDate;
+
     data['invoice_type'] = this.invoiceType;
     if (this.seller != null) {
       data['seller'] = this.seller!.toJson();
