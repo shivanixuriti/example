@@ -454,22 +454,28 @@ class KycManager extends ChangeNotifier {
 
   storeImages({required List<String> filePath}) async {
     kycModel.storeImages = filePath;
-    String url = "/entity/onboard";
+    String url = "https://dev.xuriti.app/api/entity/onboard";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
     // Map<String, dynamic> data = kycModel.toJson();
     var map = new Map<String, dynamic>();
-
+    List uploadImages = [];
+    map['_id'] = userID;
     map['companyId'] = companyId;
     int indexCounter = 0;
-    for (; indexCounter < filePath.length;) {
-      map['StoreImages["${indexCounter}"]'] =
-          await MultipartFile.fromFile(filePath[indexCounter]);
-      indexCounter += 1;
+    // for (; indexCounter < filePath.length;) {
+    //   print(filePath);
+    for (var file in filePath) {
+      var multipartFile = await MultipartFile.fromFile(file);
+      uploadImages.add(multipartFile);
     }
+    print(uploadImages);
+    // }
+
+    map["StoreImages"] = uploadImages;
 
     FormData formData = FormData.fromMap(map);
-
+    print(map);
     dynamic responseData =
         await getIt<DioClient>().postFormData(url, formData, token);
 
