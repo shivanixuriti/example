@@ -111,11 +111,21 @@ class _PanDetailsState extends State<PanDetails> {
                     ),
                     InkWell(
                         onTap: () async {
-                          await getIt<KycManager>().storePanCardDetails(
-                              panController.text,
-                              filePath: panDetailsImages?.first?.path ?? "");
-                          Fluttertoast.showToast(msg: "successfully uploaded");
-                          Navigator.pop(context);
+                          Map<String, dynamic> panDetails =
+                              await getIt<KycManager>().storePanCardDetails(
+                                  panController.text,
+                                  filePath:
+                                      panDetailsImages?.first?.path ?? "");
+                          Fluttertoast.showToast(msg: panDetails['msg']);
+                          //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          //       behavior: SnackBarBehavior.floating,
+                          //       content: Text(
+                          //         panDetails['msg'],
+                          //         style: const TextStyle(color: Colors.green),
+                          //       )));
+                          if (panDetails['error'] == false) {
+                            Navigator.pop(context);
+                          }
                         },
                         child: Submitbutton(
                           maxWidth: maxWidth,

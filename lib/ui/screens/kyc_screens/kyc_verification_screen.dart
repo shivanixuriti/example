@@ -1,11 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/models/helper/service_locator.dart';
+import 'package:xuriti/ui/screens/kyc_screens/aadhaar_card_screen.dart';
 
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../logic/view_models/transaction_manager.dart';
@@ -202,9 +205,24 @@ class _KycVerificationState extends State<KycVerification> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, aadhaarCard);
+                          onTap: () async {
+                            var data = await getIt<KycManager>().getCaptcha();
+                            //  print("Data : $data");
+                            // AdhaarController.adhaarDetails(companyId, , back)
+                            // Fluttertoast.showToast(
+                            //     msg: "successfully uploaded");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (__) => AadhaarCard(data)));
+                            // Navigator.pushNamed(
+                            //   context,
+                            //   aadhaarCard,
+                            // );
                           },
+                          // onTap: () {
+                          //   Navigator.pushNamed(context, aadhaarCard);
+                          // },
                           child: KycDetails(
                             title: "ADHAAR Verification",
                             //subtitle: " (Any one of the following)",

@@ -37,7 +37,8 @@ class KycModel {
       this.partnershipDetails,
       this.financialDetails,
       this.userID,
-      this.companyId});
+      this.companyId,
+      this.storeImages});
 
   KycModel.fromJson(Map<String, dynamic> json) {
     panNo = json['panNo'];
@@ -58,6 +59,7 @@ class KycModel {
     financialDetails = json['financialDetails'];
     userID = json['userID'];
     companyId = json['companyId'];
+    storeImages = json['storeImages'];
   }
 
   Map<String, dynamic> toJson() {
@@ -80,6 +82,7 @@ class KycModel {
     data['financialDetails'] = this.financialDetails;
     data['userID'] = this.userID;
     data['companyId'] = this.companyId;
+    data['storeImages'] = this.storeImages;
     return data;
   }
 }

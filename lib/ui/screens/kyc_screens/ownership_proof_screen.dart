@@ -177,15 +177,16 @@ class _OwnershipProofState extends State<OwnershipProof> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>().storeOwnershipProof(
-                            documentController.text, doc!,
-                            filePath: ownershipImages?.first?.path ?? "");
+                        Map<String, dynamic> kyc = await getIt<KycManager>()
+                            .storeOwnershipProof(documentController.text, doc,
+                                filePath: ownershipImages?.first?.path ?? "");
 
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate() && kyc['error']==false) {
                           Fluttertoast.showToast(msg: "successfully uploaded");
                           Navigator.pop(context);
                         }
                         // Fluttertoast.showToast(msg: "successfully uploaded");
+                        Fluttertoast.showToast(msg: kyc['msg']);
                         // Navigator.pop(context);
                       },
                       child: Submitbutton(

@@ -90,10 +90,13 @@ class _FirmDetailsState extends State<FirmDetails> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>().storeFirmDetails(
-                            filePath: firmDetails?.first?.path ?? "");
-                        Fluttertoast.showToast(msg: "successfully uploaded");
-                        Navigator.pop(context);
+                        Map<String, dynamic> storeFirmDetails =
+                            await getIt<KycManager>().storeFirmDetails(
+                                filePath: firmDetails?.first?.path ?? "");
+                        Fluttertoast.showToast(msg: storeFirmDetails['msg']);
+                        if (storeFirmDetails['error'] == false) {
+                          Navigator.pop(context);
+                        }
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

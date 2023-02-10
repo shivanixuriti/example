@@ -90,11 +90,14 @@ class _BankingDetailsState extends State<BankingDetails> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>().storeBankDetails(
-                            bankStatementImage:
-                                bankDetailsImages?.first?.path ?? "");
-                        Fluttertoast.showToast(msg: "successfully uploaded");
-                        Navigator.pop(context);
+                        Map<String, dynamic> bankingDetails =
+                            await getIt<KycManager>().storeBankDetails(
+                                bankStatementImage:
+                                    bankDetailsImages?.first?.path ?? "");
+                        Fluttertoast.showToast(msg: bankingDetails['msg']);
+                        if (bankingDetails['error'] == false) {
+                          Navigator.pop(context);
+                        }
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

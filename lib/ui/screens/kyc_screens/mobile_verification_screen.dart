@@ -108,15 +108,16 @@ class _MobileVerificationState extends State<MobileVerification> {
 
                         //    progress.dismiss();
                         //    print("doc---- $kyc");
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            content: Text(
-                              kyc['msg'],
-                              style: TextStyle(
-                                  color: kyc['status'] == true
-                                      ? Colors.green
-                                      : Colors.green),
-                            )));
+                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //     behavior: SnackBarBehavior.floating,
+                        //     content: Text(
+                        //       kyc['msg'],
+                        //       style: TextStyle(
+                        //           color: kyc['status'] == true
+                        //               ? Colors.green
+                        //               : Colors.green),
+                        //     )));
+                        Fluttertoast.showToast(msg: kyc['msg']);
                         // Navigator.pop(context);
                       },
                       child: Submitbutton(
@@ -164,8 +165,17 @@ class _MobileVerificationState extends State<MobileVerification> {
                     // ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>().verifyOTP(otpController.text);
-                        Fluttertoast.showToast(msg: "OTP Verified..");
+                       Map<String, dynamic> otpDetails = await getIt<KycManager>().verifyOTP(otpController.text);
+                        Fluttertoast.showToast(msg: otpDetails['msg']);
+                        //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //         behavior: SnackBarBehavior.floating,
+                        //         content: Text(
+                        //           otpDetails['msg'],
+                        //           style: const TextStyle(color: Colors.green),
+                        //         )));
+                        if(otpDetails['error'] == false){
+                          Navigator.pop(context);
+                        }
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

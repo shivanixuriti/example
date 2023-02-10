@@ -119,10 +119,13 @@ class _VintageProofState extends State<VintageProof> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>().storeVintageProof(
-                            filePath: vintageImages?.first?.path ?? "");
-                        Fluttertoast.showToast(msg: "successfully uploaded");
-                        Navigator.pop(context);
+                        Map<String, dynamic> storeVintageProof =
+                            await getIt<KycManager>().storeVintageProof(
+                                filePath: vintageImages?.first?.path ?? "");
+                        Fluttertoast.showToast(msg: storeVintageProof['msg']);
+                        if (storeVintageProof['error'] == false) {
+                          Navigator.pop(context);
+                        }
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

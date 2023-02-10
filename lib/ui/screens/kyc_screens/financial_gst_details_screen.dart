@@ -145,15 +145,30 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                     // ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>().storeGstDetails(
-                            gstImage:
-                                gstImages?.map((e) => e?.path ?? "").toList() ??
-                                    [],
-                            financialDetailsImage: financialImages
-                                    ?.map((e) => e?.path ?? "")
-                                    .toList() ??
-                                []);
-                        Fluttertoast.showToast(msg: "successfully uploaded");
+                        //var img1 =
+                        Map<String, dynamic> storeGstDetails =
+                            await getIt<KycManager>().storeGstDetails(
+                          filePath: financialImages
+                                  ?.map((e) => e?.path ?? "")
+                                  .toList() ??
+                              [],
+                          filePath1:
+                              gstImages?.map((e) => e?.path ?? "").toList() ??
+                                  [],
+                        );
+
+                        // gstImage:
+                        //     gstImages?.map((e) => e?.path ?? "").toList() ??
+                        //         [],
+                        // financialDetailsImage: financialImages
+                        //         ?.map((e) => e?.path ?? "")
+                        //         .toList() ??
+                        //     []
+
+                        Fluttertoast.showToast(msg: storeGstDetails['msg']);
+                        if (storeGstDetails['error'] == false) {
+                          Navigator.pop(context);
+                        }
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

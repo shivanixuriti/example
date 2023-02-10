@@ -94,13 +94,16 @@ class _StoreImagesState extends State<StoreImages> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await getIt<KycManager>().storeImages(
-                            filePath: storeImages
-                                    ?.map((e) => e?.path ?? "")
-                                    .toList() ??
-                                []);
-                        Fluttertoast.showToast(msg: "successfully uploaded");
-                        Navigator.pop(context);
+                        Map<String, dynamic> storeImagesMap =
+                            await getIt<KycManager>().storeImages(
+                                filePath: storeImages
+                                        ?.map((e) => e?.path ?? "")
+                                        .toList() ??
+                                    []);
+                        Fluttertoast.showToast(msg: storeImagesMap['msg']);
+                        if (storeImagesMap['error'] == false) {
+                          Navigator.pop(context);
+                        }
                       },
                       child: Submitbutton(
                         maxWidth: maxWidth,

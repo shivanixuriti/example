@@ -298,22 +298,25 @@ class _BussinessProofState extends State<BussinessProof> {
                         print('Doc Type : $doc');
                         //  progress!.show();
                         Map<String, dynamic> kyc = await getIt<KycManager>()
-                            .storeBusinessProof(documentNoController.text, doc!,
+                            .storeBusinessProof(documentNoController.text, doc,
                                 filePath:
                                     businessProofImages?.first?.path ?? "");
 
                         //    progress.dismiss();
                         print("doc---- $kyc");
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            content: Text(
-                              kyc['msg'],
-                              style: TextStyle(
-                                  color: kyc['status'] == true
-                                      ? Colors.green
-                                      : Colors.green),
-                            )));
-                        Navigator.pop(context);
+                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //     behavior: SnackBarBehavior.floating,
+                        //     content: Text(
+                        //       kyc['msg'],
+                        //       style: TextStyle(
+                        //           color: kyc['status'] == true
+                        //               ? Colors.green
+                        //               : Colors.green),
+                        //     )));
+                        Fluttertoast.showToast(msg: kyc['msg']);
+                        if (kyc['error'] == false) {
+                          Navigator.pop(context);
+                        }
                       },
                       // onTap: () async {
                       //   await getIt<KycManager>().storeBusinessProof(
