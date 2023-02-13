@@ -96,14 +96,14 @@ class KycManager extends ChangeNotifier {
         pan_no.isNotEmpty &&
         panNumberRegex.hasMatch(panNo)) {
       var body = new Map<String, dynamic>();
-      body['companyId'] = companyId;
-      body['panNo'] = pan_no;
+      body['company_id'] = companyId;
+      body['pan_number'] = pan_no;
       FormData formData = FormData.fromMap(body);
 
       // pan ocr
       var ocr = new Map<String, dynamic>();
-      ocr['companyId'] = companyId;
-      ocr['panNo'] = panfile;
+      ocr['company_id'] = companyId;
+      ocr['pan'] = await MultipartFile.fromFile(panfile);
       FormData panocr = FormData.fromMap(ocr);
 
       dynamic responseData =
