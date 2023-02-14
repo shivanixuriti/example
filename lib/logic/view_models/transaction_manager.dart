@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,12 +18,14 @@ import 'package:open_file/open_file.dart';
 
 import 'package:xuriti/ui/routes/router.dart';
 
+import '../../models/core/transactional_model.dart';
 import '../../models/helper/service_locator.dart';
 
 class TransactionManager extends ChangeNotifier {
   Invoices? invoices;
   Invoices? tempInvoice;
   String? selectedCreditLimit = "0";
+  TransactionModel? transactionModel;
 
   List<Invoice> pendingInvoice = [];
   List<Invoice> paidInvoices = [];
@@ -34,6 +38,24 @@ class TransactionManager extends ChangeNotifier {
   String errorMessage = "";
   List<GetCompany> companyList = [];
   int paymentCounter = 0;
+
+  Future<TransactionModel?> getTransactionLedger(String? id) async {
+    TransactionModel? transactionModel;
+    String? companyId = getIt<SharedPreferences>().getString('companyId');
+    try {
+      String url =
+          "https://dev.xuriti.app/api/ledger/companies/transaction_ledger?buyer=63aa830e8a6964f3f6ef6982";
+      String? token = getIt<SharedPreferences>().getString("token");
+      notifyListeners();
+      dynamic responseData = await getIt<DioClient>().get(url, token: token);
+      if (responseData['status'] == true) {
+        return responseData;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return transactionModel;
+  }
 
   getInvoices(String? id) async {
     pendingInvoice = [];

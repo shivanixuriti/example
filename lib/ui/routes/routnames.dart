@@ -30,6 +30,8 @@ import 'package:xuriti/ui/screens/profile_screens/profile_screen.dart';
 import 'package:xuriti/ui/screens/registration_screens/business_register_screen.dart';
 import 'package:xuriti/ui/screens/registration_screens/buisness_registered_screen.dart';
 import 'package:xuriti/ui/screens/home_screen.dart';
+import 'package:xuriti/ui/screens/reports_screens/reports_option_screen.dart';
+import 'package:xuriti/ui/screens/reports_screens/transactional_ledger.dart';
 import 'package:xuriti/ui/screens/rewards_screens/coupon_screens/apply_screen.dart';
 import 'package:xuriti/ui/screens/rewards_screens/coupon_screens/applycoupon_screen.dart';
 import 'package:xuriti/ui/screens/rewards_screens/reward_screen/all_rewards_screen.dart';
@@ -100,7 +102,8 @@ class Routers {
       case '/forgetPassword2':
         return MaterialPageRoute(
             builder: (_) => const ForgetPasswordSecondScreen());
-
+      case '/transactionalLedger':
+        return MaterialPageRoute(builder: (_) => TransactionalLedger());
       case '/allPaymentDetails':
         return MaterialPageRoute(builder: (_) => AllPaymentDetails());
       case '/interestPaymentDetails':
@@ -140,7 +143,7 @@ class Routers {
       case '/addressProof':
         return MaterialPageRoute(builder: (_) => const AddressProof());
       case '/aadhaarCard':
-        return MaterialPageRoute(builder: (_) => const AadhaarCard());
+        return MaterialPageRoute(builder: (_) => AadhaarCard(AadhaarCard));
       case '/mobileVerification':
         return MaterialPageRoute(builder: (_) => const MobileVerification());
       case '/finGstDetails':
@@ -150,6 +153,9 @@ class Routers {
       case '/kycnextstep':
         return MaterialPageRoute(
             builder: (_) => const KycVerificationNextStep());
+      case '/reportsOptions':
+        return MaterialPageRoute(builder: (_) => const ReportsOptionScreen());
+
       case '/homeCompanyList':
         return MaterialPageRoute(builder: (_) => const HomeCompanyList());
       case '/addCompany':

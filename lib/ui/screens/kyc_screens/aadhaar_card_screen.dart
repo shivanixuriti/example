@@ -437,7 +437,9 @@ class _AadhaarCardState extends State<AadhaarCard> {
                             //       "Please upload both front and back images and click on capture",
                             //       style: const TextStyle(color: Colors.green),
                             //     )));
-                            Fluttertoast.showToast(msg: "Please upload both front and back images and click on capture");
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Please upload both front and back images and click on capture");
                           }
                         },
                         child: Text(

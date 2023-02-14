@@ -138,6 +138,18 @@ class DrawerWidget extends StatelessWidget {
                 SizedBox(
                   height: h1p * 5,
                 ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, reportsOptions);
+                  },
+                  child: const Text(
+                    "Reports",
+                    style: TextStyles.textStyle98,
+                  ),
+                ),
+                SizedBox(
+                  height: h1p * 5,
+                ),
                 const Text(
                   "Associated Companies",
                   style: TextStyles.textStyle98,
