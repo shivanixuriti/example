@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 
 class DioClient {
-  //final String baseUrl = "https://biz.xuriti.app/api";
-  final String baseUrl = "https://dev.xuriti.app/api";
-  //final String baseUrl = "https://uat.xuriti.app/api";
+  final String baseUrl = "https://biz.xuriti.app/api";
+  // final String baseUrl = "https://dev.xuriti.app/api";
+  // final String baseUrl = "https://uat.xuriti.app/api";
 
   postFormData(String endUrl, FormData data, String? token) async {
     BaseOptions options = new BaseOptions(
@@ -218,6 +217,7 @@ class DioClient {
         return response.data;
       }
       if (token != null) {
+        print('=== $url $token $data');
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
@@ -231,6 +231,7 @@ class DioClient {
           //     textColor: Colors.white,
           //     fontSize: 12.0);
         }
+        print(response);
         return response.data;
       }
     } catch (e) {

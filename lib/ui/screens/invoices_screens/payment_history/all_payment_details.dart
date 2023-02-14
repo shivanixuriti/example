@@ -140,14 +140,13 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                                             style: TextStyles.textStyle8,
                                           ),
                                           AutoSizeText(
-                                              invoice!.seller!.address
-                                                  .toString(),
+                                              invoice?.seller?.address ?? "",
                                               style: TextStyles.textStyle63),
                                           AutoSizeText(
-                                              invoice.seller!.state.toString(),
+                                              invoice?.seller?.state ?? "",
                                               style: TextStyles.textStyle63),
                                           AutoSizeText(
-                                              invoice.seller!.gstin.toString(),
+                                              invoice?.seller!.gstin ?? "",
                                               style: TextStyles.textStyle43),
                                         ]))
                                   ])
