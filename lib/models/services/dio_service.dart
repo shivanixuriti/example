@@ -179,14 +179,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
-          Fluttertoast.showToast(
-              msg: 'Aadhaar api successful....',
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 3,
-              backgroundColor: Color.fromARGB(255, 253, 153, 33),
-              textColor: Colors.white,
-              fontSize: 12.0);
+          // Fluttertoast.showToast(
+          //     msg: 'Aadhaar api successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -266,14 +266,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
-          Fluttertoast.showToast(
-              msg: 'Pan api successful....',
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 3,
-              backgroundColor: Color.fromARGB(255, 253, 153, 33),
-              textColor: Colors.white,
-              fontSize: 12.0);
+          // Fluttertoast.showToast(
+          //     msg: 'Pan api successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -301,14 +301,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
-          Fluttertoast.showToast(
-              msg: 'generate otp successful....',
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 3,
-              backgroundColor: Color.fromARGB(255, 253, 153, 33),
-              textColor: Colors.white,
-              fontSize: 12.0);
+          // Fluttertoast.showToast(
+          //     msg: 'generate otp successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -336,14 +336,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
-          Fluttertoast.showToast(
-              msg: 'otp verified successful....',
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 3,
-              backgroundColor: Color.fromARGB(255, 253, 153, 33),
-              textColor: Colors.white,
-              fontSize: 12.0);
+          // Fluttertoast.showToast(
+          //     msg: 'otp verified successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
