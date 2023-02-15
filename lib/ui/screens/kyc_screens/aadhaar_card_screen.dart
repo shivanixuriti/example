@@ -39,9 +39,9 @@ class _AadhaarCardState extends State<AadhaarCard> {
   TextEditingController aadhaarController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   TextEditingController reCaptchaController = TextEditingController();
-  late File frontImage;
-  late File backImage;
-  bool isCaptured = false;
+  File? frontImage;
+  File? backImage;
+  String img = '';
   var data;
   var url;
   String imageUrl = "";
@@ -57,7 +57,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
     print("URL1 --->$url");
     print('Constructor Data1 ------> $data');
   }
-  int onPressed = 1;
+  int onPressed = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -133,55 +133,62 @@ class _AadhaarCardState extends State<AadhaarCard> {
 
                         setState(() {
                           this.frontImage = selectFront;
+                          this.img = path.toString();
                         });
                         print("front img........$path");
                       },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: w1p * 6, right: w1p * 6, top: h1p * 1),
-                        child: Container(
-                            height: h1p * 6,
-                            width: w10p * 4,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: Colours.disabledText,
-                            ),
-                            child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: w1p * 2, vertical: h1p * 2),
-                                child: Row(children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      // File? file = File("");
-                                      // String filePath = "";
-                                      XFile? fileResult = await ImagePicker()
-                                          .pickImage(
-                                              source: ImageSource.camera);
-                                      String? path = fileResult != null
-                                          ? fileResult.path.isNotEmpty
-                                              ? fileResult.path
-                                              : ""
-                                          : "";
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: w1p * 6, right: w1p * 6, top: h1p * 1),
+                            child: Container(
+                                height: h1p * 6,
+                                width: w10p * 4,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: Colours.disabledText,
+                                ),
+                                child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: w1p * 2, vertical: h1p * 2),
+                                    child: Row(children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          // File? file = File("");
+                                          // String filePath = "";
+                                          XFile? fileResult =
+                                              await ImagePicker().pickImage(
+                                                  source: ImageSource.camera);
+                                          String? path = fileResult != null
+                                              ? fileResult.path.isNotEmpty
+                                                  ? fileResult.path
+                                                  : ""
+                                              : "";
 
-                                      final File selectFront =
-                                          File(path as String);
-                                      setState(() {
-                                        this.frontImage = selectFront;
-                                      });
-                                    },
-                                    child: Container(
-                                      child: Center(
-                                        child: SvgPicture.asset(
-                                            "assets/images/kycImages/camera.svg",
-                                            height: h1p * 4),
+                                          final File selectFront =
+                                              File(path as String);
+                                          setState(() {
+                                            this.frontImage = selectFront;
+                                            this.img = path.toString();
+                                          });
+                                        },
+                                        child: Container(
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                                "assets/images/kycImages/camera.svg",
+                                                height: h1p * 4),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Text(
-                                    'Upload Front Image',
-                                    style: TextStyles.textStyle121,
-                                  ),
-                                ]))),
+                                      Text(
+                                        'Upload Front Image',
+                                        style: TextStyles.textStyle121,
+                                      ),
+                                    ]))),
+                          ),
+                          this.frontImage != null ? showImage() : SizedBox()
+                        ],
                       )),
                   InkWell(
                       onTap: () async {
@@ -196,50 +203,58 @@ class _AadhaarCardState extends State<AadhaarCard> {
                         final File selectBack = File(path as String);
                         setState(() {
                           this.backImage = selectBack;
+                          this.img = path.toString();
                         });
                       },
                       child: Padding(
                         padding: EdgeInsets.only(
                             left: w1p * 2, right: w1p * 5, top: h1p * 1),
-                        child: Container(
-                          height: h1p * 6,
-                          width: w10p * 4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Colours.disabledText,
-                          ),
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: w1p * 2, vertical: h1p * 2),
-                              child: Row(children: [
-                                InkWell(
-                                  onTap: () async {
-                                    XFile? fileResult = await ImagePicker()
-                                        .pickImage(source: ImageSource.camera);
-                                    String? path = fileResult != null
-                                        ? fileResult.path.isNotEmpty
-                                            ? fileResult.path
-                                            : ""
-                                        : "";
-                                    final File selectBack =
-                                        File(path as String);
-                                    setState(() {
-                                      this.backImage = selectBack;
-                                    });
-                                  },
-                                  child: Container(
-                                    child: SvgPicture.asset(
-                                      "assets/images/kycImages/camera.svg",
-                                      height: h1p * 4,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: h1p * 6,
+                              width: w10p * 4,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: Colours.disabledText,
+                              ),
+                              child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: w1p * 2, vertical: h1p * 2),
+                                  child: Row(children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        XFile? fileResult = await ImagePicker()
+                                            .pickImage(
+                                                source: ImageSource.camera);
+                                        String? path = fileResult != null
+                                            ? fileResult.path.isNotEmpty
+                                                ? fileResult.path
+                                                : ""
+                                            : "";
+                                        final File selectBack =
+                                            File(path as String);
+                                        setState(() {
+                                          this.backImage = selectBack;
+                                          this.img = path.toString();
+                                        });
+                                      },
+                                      child: Container(
+                                        child: SvgPicture.asset(
+                                          "assets/images/kycImages/camera.svg",
+                                          height: h1p * 4,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                // ),
-                                Text(
-                                  'Upload Back Image',
-                                  style: TextStyles.textStyle121,
-                                ),
-                              ])),
+                                    // ),
+                                    Text(
+                                      'Upload Back Image',
+                                      style: TextStyles.textStyle121,
+                                    ),
+                                  ])),
+                            ),
+                            this.backImage != null ? showImage() : SizedBox()
+                          ],
                         ),
                       )),
                 ],
@@ -249,18 +264,14 @@ class _AadhaarCardState extends State<AadhaarCard> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                        left: w1p * 6, right: w1p * 6, top: h1p * 1),
+                        left: w1p * 6, right: w1p * 6, top: h1p * 5),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: TextButton(
                         onPressed: () async {
                           Map<String, dynamic> aadhaar =
                               await getIt<KycManager>().adhaarDetails(
-                                  companyId, frontImage, backImage);
-                          if (aadhaar['error'] == false) {
-                            ///
-                            isCaptured = true;
-                          }
+                                  companyId, frontImage!, backImage!);
                           setState(() {
                             this.onPressed == 1;
                           });
@@ -311,7 +322,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
 
               Padding(
                 padding: EdgeInsets.only(
-                    left: w1p * 6, right: w1p * 6, top: h1p * 3),
+                    left: w1p * 6, right: w1p * 6, top: h1p * 5),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Container(
@@ -344,39 +355,41 @@ class _AadhaarCardState extends State<AadhaarCard> {
               SizedBox(
                 height: maxHeight * 0.03,
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: w1p * 6, right: w1p * 6, top: h1p * 1),
-                    child: Row(
-                      children: [
-                        (imageUrl != null && imageUrl.isNotEmpty)
-                            ? Image(
+              Padding(
+                padding: EdgeInsets.only(
+                  left: w1p * 6,
+                  right: w1p * 6,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    (imageUrl != null && imageUrl.isNotEmpty)
+                        ? Container(
+                            width: maxWidth * 0.4,
+                            height: maxHeight * 0.05,
+                            child: Image(
                                 image: Image.memory(Base64Decoder()
                                         .convert(imageUrl.split(",").last))
-                                    .image)
-                            : SizedBox(),
-                        InkWell(
-                            onTap: () async {
-                              setState(() {});
-                              var data = await getIt<KycManager>().getCaptcha();
-                              response = data['data'];
-                              imageUrl = response != null ? response : "";
-                              setState(() {});
-                            },
-                            child: Icon(Icons.refresh)),
-                      ],
-                    ),
-                  ),
+                                    .image),
+                          )
+                        : SizedBox(),
+                    InkWell(
+                        onTap: () async {
+                          setState(() {});
+                          var data = await getIt<KycManager>().getCaptcha();
+                          response = data['data'];
+                          imageUrl = response != null ? response : "";
+                          setState(() {});
+                        },
+                        child: Icon(Icons.refresh)),
 
-                  // Image.network('https://picsum.photos/250?image=9'),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: w1p * 0.03, right: w1p * 2, top: h1p * 1),
-                    child: Align(
+                    // Image.network('https://picsum.photos/250?image=9'),
+                    // Padding(
+                    // padding: EdgeInsets.only(
+                    //   left: w1p * 0.03,
+                    //   right: w1p * 2,
+                    // ),
+                    Align(
                       alignment: Alignment.topLeft,
                       child: Container(
                         width: maxWidth * 0.4,
@@ -404,9 +417,10 @@ class _AadhaarCardState extends State<AadhaarCard> {
                             )),
                       ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
+
               SizedBox(
                 height: 7,
                 // height: maxHeight * 0.03,
@@ -417,30 +431,18 @@ class _AadhaarCardState extends State<AadhaarCard> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                        left: w1p * 6, right: w1p * 6, top: h1p * 1),
+                        left: w1p * 6, right: w1p * 6, top: h1p * 5),
                     child: Container(
                       height: maxHeight * 0.06,
                       child: TextButton(
                         onPressed: () async {
-                          if (isCaptured) {
-                            Map<String, dynamic> aadharOtp =
-                                await getIt<KycManager>().generateAdharOtp(
-                                    aadhaarController.text,
-                                    reCaptchaController.text);
-                            // AdhaarController.adhaarDetails(companyId, , back)
-                            Fluttertoast.showToast(msg: aadharOtp['msg']);
-                            // Navigator.pop(context);
-                          } else {
-                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            //     behavior: SnackBarBehavior.floating,
-                            //     content: Text(
-                            //       "Please upload both front and back images and click on capture",
-                            //       style: const TextStyle(color: Colors.green),
-                            //     )));
-                            Fluttertoast.showToast(
-                                msg:
-                                    "Please upload both front and back images and click on capture");
-                          }
+                          Map<String, dynamic> aadharOtp =
+                              await getIt<KycManager>().generateAdharOtp(
+                                  aadhaarController.text,
+                                  reCaptchaController.text);
+                          // AdhaarController.adhaarDetails(companyId, , back)
+                          Fluttertoast.showToast(msg: aadharOtp['msg']);
+                          // Navigator.pop(context);
                         },
                         child: Text(
                           'Generate OTP',
@@ -496,34 +498,65 @@ class _AadhaarCardState extends State<AadhaarCard> {
                 ],
               ),
               SizedBox(
-                height: maxHeight * 0.03,
+                height: w1p,
               ),
-              InkWell(
-                  onTap: () async {
-                    Map<String, dynamic> verifyAadharOtp =
-                        await getIt<KycManager>().verifyAdharOtp(
-                      otpController.text,
-                    );
+              Padding(
+                padding: EdgeInsets.only(
+                    left: w1p * 6, right: w1p * 6, top: h1p * 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        height: maxHeight * 0.06,
+                        width: maxWidth * 0.25,
+                        child: TextButton(
+                          onPressed: () async {
+                            Map<String, dynamic> verifyAadharOtp =
+                                await getIt<KycManager>().verifyAdharOtp(
+                              otpController.text,
+                            );
 
-                    // AdhaarController.adhaarDetails(companyId, , back)
-                    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    //             behavior: SnackBarBehavior.floating,
-                    //             content: Text(
-                    //               verifyAadharOtp['msg'],
-                    //               style: const TextStyle(color: Colors.green),
-                    //             )));
-                    Fluttertoast.showToast(msg: verifyAadharOtp['msg']);
-                    if (verifyAadharOtp['error'] == false) {
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: Submitbutton(
-                    maxWidth: maxWidth,
-                    maxHeight: maxHeight,
-                    isKyc: true,
-                    content: "Verify OTP",
-                  )),
-              Text('Verification Status:')
+                            // AdhaarController.adhaarDetails(companyId, , back)
+                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            // behavior: SnackBarBehavior.floating,
+                            // content: Text(
+                            // verifyAadharOtp['msg'],
+                            // style: const TextStyle(color: Colors.green),
+                            // )));
+                            Fluttertoast.showToast(msg: verifyAadharOtp['msg']);
+                            if (verifyAadharOtp['error'] == false) {
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text(
+                            'Verify OTP',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 253, 153, 33),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                                side: BorderSide(
+                                  width: 1,
+                                  color: Color.fromARGB(255, 150, 146, 146),
+                                ),
+                              ))),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: w10p,
+                    ),
+                    Text('Verification Status:')
+                  ],
+                ),
+              ),
             ]),
           ),
         ),
@@ -564,6 +597,21 @@ class _AadhaarCardState extends State<AadhaarCard> {
               height: MediaQuery.of(context).size.width * 0.1,
             ),
           ],
+        ),
+      );
+  Widget showImage() => Padding(
+        padding: const EdgeInsets.all(5),
+        child: Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(1),
+            child: Image.file(
+              //to show image, you type like this.
+              File(img),
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width * 0.38,
+              height: 200,
+            ),
+          ),
         ),
       );
 }

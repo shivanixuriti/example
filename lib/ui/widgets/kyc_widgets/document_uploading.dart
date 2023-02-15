@@ -134,16 +134,24 @@ class _DocumentUploadingState extends State<DocumentUploading> {
   Widget showImage() => Padding(
         padding: const EdgeInsets.all(8),
         child: Center(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.file(
-              //to show image, you type like this.
-              File(imgpath),
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: 200,
+          child: Column(children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.file(
+                //to show image, you type like this.
+                File(imgpath),
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: 200,
+              ),
             ),
-          ),
+            Text(
+              imgpath.split('/').last,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              // style: const TextStyle(fontWeight: FontWeight.bold),
+            )
+          ]),
         ),
       );
 }
