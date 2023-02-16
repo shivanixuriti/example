@@ -108,29 +108,37 @@ class KycManager extends ChangeNotifier {
 
       dynamic responseData =
           await getIt<DioClient>().pan_captured_data(url, panocr, token);
-      if (responseData['status'] == true) {
-        dynamic verifyresponseData =
-            await getIt<DioClient>().verify_pan(verifyPanUrl, formData, token);
-        if (verifyresponseData['status'] == true) {
-          Map<String, dynamic> successMessage = {
-            'msg': 'PAN Details saved successfully',
-            'error': false
-          };
-          return successMessage;
+      if (responseData != null && responseData.runtimeType != String) {
+        if (responseData['status'] == true) {
+          dynamic verifyresponseData = await getIt<DioClient>()
+              .verify_pan(verifyPanUrl, formData, token);
+          if (verifyresponseData['status'] == true) {
+            Map<String, dynamic> successMessage = {
+              'msg': 'PAN Details saved successfully',
+              'error': false
+            };
+            return successMessage;
+          } else {
+            Map<String, dynamic> errorMessage = {
+              'msg': 'Enter all mandatory fields',
+              'error': true
+            };
+            return errorMessage;
+          }
         } else {
-          Map<String, dynamic> errorMessage = {
-            'msg': 'Enter all mandatory fields',
+          Map<String, dynamic> errorMassage = {
+            'msg': 'Unable to capture data, Please try again',
             'error': true
           };
-          return errorMessage;
+          print("error:--$errorMassage");
+          return errorMassage;
         }
       } else {
-        Map<String, dynamic> errorMassage = {
-          'msg': 'Unable to capture data, Please try again',
-          'error': true
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Unable to proceed, please try again later.',
         };
-        print("error:--$errorMassage");
-        return errorMassage;
+        // print("error:--$errorMassage");
+        // return errorMassage;
       }
     } else {
       Map<String, dynamic> errorMassage = {
@@ -170,14 +178,21 @@ class KycManager extends ChangeNotifier {
       dynamic responseData =
           await getIt<DioClient>().aadhaar_otp(url, data, token);
       print("a otp $responseData");
-      if (responseData['status'] == true) {
-        Map<String, dynamic> successMessage = {
-          'msg': 'OTP sent to registered Mobile No.',
-        };
-        return successMessage;
+      if (responseData != null && responseData.runtimeType != String) {
+        if (responseData['status'] == true) {
+          Map<String, dynamic> successMessage = {
+            'msg': 'OTP sent to registered Mobile No.',
+          };
+          return successMessage;
+        } else {
+          Map<String, dynamic> errorMessage = {
+            'msg': 'Enter all mandatory fields',
+          };
+          return errorMessage;
+        }
       } else {
         Map<String, dynamic> errorMessage = {
-          'msg': 'Enter all mandatory fields',
+          'msg': 'Unable to proceed, please try again later.',
         };
         return errorMessage;
       }
@@ -215,12 +230,20 @@ class KycManager extends ChangeNotifier {
       dynamic responseData =
           await getIt<DioClient>().postFormData(url, formData, token);
 
-      if (responseData['status'] == true) {
-        Map<String, dynamic> successMessage = {
-          'msg': 'Details saved successfully',
-          'error': false
-        };
-        return successMessage;
+      if (responseData != null && responseData.runtimeType != String) {
+        if (responseData['status'] == true) {
+          Map<String, dynamic> successMessage = {
+            'msg': 'Details saved successfully',
+            'error': false
+          };
+          return successMessage;
+        } else {
+          Map<String, dynamic> errorMessage = {
+            'msg': 'Enter all mandatory fields',
+            'error': true
+          };
+          return errorMessage;
+        }
       } else {
         Map<String, dynamic> errorMessage = {
           'msg': 'Enter all mandatory fields',
@@ -260,29 +283,41 @@ class KycManager extends ChangeNotifier {
         filePath.isNotEmpty &&
         allowedDocCharacters.hasMatch(docNo)) {
       var map = new Map<String, dynamic>();
-
+      print('    1   ///////////');
       map['companyId'] = companyId;
       map['businessDocType'] = docType;
       map['businessDocNumber'] = docNo;
       map['BusinessProof'] = await MultipartFile.fromFile(filePath);
 
       FormData formData = FormData.fromMap(map);
-
+      print('     2  ///////////');
       dynamic responseData =
           await getIt<DioClient>().postFormData(url, formData, token);
 
-      if (responseData['status'] == true) {
-        Map<String, dynamic> successMessage = {
-          'msg': 'Details saved successfully',
-          'error': false
-        };
-        return successMessage;
+      print('     err?//???  ///////////');
+
+      if (responseData != null && responseData.runtimeType != String) {
+        if (responseData['status'] == true) {
+          print('     3  ///////////');
+          Map<String, dynamic> successMessage = {
+            'msg': 'Details saved successfully',
+            'error': false
+          };
+          print("errorMassage:---non");
+          return successMessage;
+        } else {
+          Map<String, dynamic> errorMessage = {
+            'msg': 'Enter all mandatory fields',
+            'error': true
+          };
+          print("errorMassage:---$errorMessage");
+          return errorMessage;
+        }
       } else {
         Map<String, dynamic> errorMessage = {
-          'msg': 'Enter all mandatory fields',
-          'error': true
+          'msg': 'Unable to proceed, please try again later.',
         };
-        return errorMessage;
+        print("errorMassage:---$errorMessage");
       }
     } else {
       Map<String, dynamic> errorMessage = {
@@ -321,17 +356,23 @@ class KycManager extends ChangeNotifier {
 
     dynamic responseData =
         await getIt<DioClient>().postFormData(url, formData, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'Details saved successfully',
-        'error': false
-      };
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'Details saved successfully',
+          'error': false
+        };
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Enter all mandatory fields',
+          'error': true
+        };
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Enter all mandatory fields',
-        'error': true
+        'msg': 'Unable to proceed, please try again later.',
       };
       return errorMessage;
     }
@@ -360,17 +401,23 @@ class KycManager extends ChangeNotifier {
 
     dynamic responseData =
         await getIt<DioClient>().postFormData(url, formData, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'Details saved successfully',
-        'error': false
-      };
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'Details saved successfully',
+          'error': false
+        };
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Enter all mandatory fields',
+          'error': true
+        };
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Enter all mandatory fields',
-        'error': true
+        'msg': 'Unable to proceed, please try again later.',
       };
       return errorMessage;
     }
@@ -399,17 +446,23 @@ class KycManager extends ChangeNotifier {
 
     dynamic responseData =
         await getIt<DioClient>().postFormData(url, formData, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'Details saved successfully',
-        'error': false
-      };
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'Details saved successfully',
+          'error': false
+        };
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Enter all mandatory fields',
+          'error': true
+        };
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Enter all mandatory fields',
-        'error': true
+        'msg': 'Unable to proceed, please try again later.',
       };
       return errorMessage;
     }
@@ -462,18 +515,25 @@ class KycManager extends ChangeNotifier {
     print(map);
     dynamic responseData =
         await getIt<DioClient>().postFormData(url, formData, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'Details saved successfully',
-        'error': false
-      };
-      print("success ");
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'Details saved successfully',
+          'error': false
+        };
+        print("success ");
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Enter all mandatory fields',
+          'error': true
+        };
+        print("failed ");
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Enter all mandatory fields',
-        'error': true
+        'msg': 'Unable to proceed, please try again later.',
       };
       print("failed ");
       return errorMessage;
@@ -489,22 +549,28 @@ class KycManager extends ChangeNotifier {
     var map = new Map<String, dynamic>();
 
     map['companyId'] = companyId;
-    map['front'] = await MultipartFile.fromFile(front as String);
-    map['back'] = await MultipartFile.fromFile(back as String);
+    map['front'] = await MultipartFile.fromFile(front as dynamic);
+    map['back'] = await MultipartFile.fromFile(back as dynamic);
 
     FormData formData = FormData.fromMap(map);
 
     dynamic responseData =
         await getIt<DioClient>().aadhaar_captured_data(url, formData, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'Details saved successfully',
-      };
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'Details saved successfully',
+        };
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Somthing wents wrong',
+        };
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Somthing wents wrong',
+        'msg': 'Unable to proceed, please try again later.',
       };
       return errorMessage;
     }
@@ -533,7 +599,7 @@ class KycManager extends ChangeNotifier {
         await getIt<DioClient>().mobile_verfication(url, data, token);
 
     print('Response Data : ------> $responseData');
-    if (responseData != null) {
+    if (responseData != null && responseData.runtimeType != String) {
       if (responseData['status'] == true) {
         var rest = responseData["data"];
         this.otpReferenceId = rest['referenceId'];
@@ -577,18 +643,25 @@ class KycManager extends ChangeNotifier {
 
     dynamic responseData =
         await getIt<DioClient>().otp_verfication(url, data, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'OTP verified successfully',
-        'error': false
-      };
-      print('OTP : $successMessage');
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'OTP verified successfully',
+          'error': false
+        };
+        print('OTP : $successMessage');
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Somthing wents wrong',
+          'error': true
+        };
+        print('msg: $errorMessage');
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Somthing wents wrong',
-        'error': true
+        'msg': 'Unable to proceed, please try again later.',
       };
       print('msg: $errorMessage');
       return errorMessage;
@@ -603,7 +676,7 @@ class KycManager extends ChangeNotifier {
 
     var map = new Map<String, dynamic>();
 
-    map['companyId'] = companyId;
+    map['company_id'] = companyId;
     map['front'] = front;
     // await MultipartFile.fromFile(front as String);
     map['back'] = back;
@@ -613,15 +686,21 @@ class KycManager extends ChangeNotifier {
 
     dynamic responseData =
         await getIt<DioClient>().aadhaar_captured_data(url, formData, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'Details saved successfully',
-      };
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'Details saved successfully',
+        };
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Something went wrong',
+        };
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Something went wrong',
+        'msg': 'Unable to proceed, please try again later.',
       };
       return errorMessage;
     }
@@ -663,18 +742,25 @@ class KycManager extends ChangeNotifier {
     print(map);
     dynamic responseData =
         await getIt<DioClient>().postFormData(url, formData, token);
-
-    if (responseData['status'] == true) {
-      Map<String, dynamic> successMessage = {
-        'msg': 'Details saved successfully',
-        'error': false
-      };
-      print("success ");
-      return successMessage;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        Map<String, dynamic> successMessage = {
+          'msg': 'Details saved successfully',
+          'error': false
+        };
+        print("success ");
+        return successMessage;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Enter all mandatory fields',
+          'error': true
+        };
+        print("failed ");
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Enter all mandatory fields',
-        'error': true
+        'msg': 'Unable to proceed, please try again later.',
       };
       print("failed ");
       return errorMessage;
@@ -692,16 +778,23 @@ class KycManager extends ChangeNotifier {
     dynamic responseData =
         await getIt<DioClient>().getCaptcha(url, token: token);
     //adhar = responseData;
-    if (responseData['status'] == true) {
-      print("Response Data : $responseData");
-      this.captchasessionId = responseData['sessionId'];
-      Map<String, dynamic> successMessage = {
-        //'msg': 'cDetails saved successfully',
-      };
-      return responseData;
+    if (responseData != null && responseData.runtimeType != String) {
+      if (responseData['status'] == true) {
+        print("Response Data : $responseData");
+        this.captchasessionId = responseData['sessionId'];
+        Map<String, dynamic> successMessage = {
+          //'msg': 'cDetails saved successfully',
+        };
+        return responseData;
+      } else {
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Somthing wents wrong',
+        };
+        return errorMessage;
+      }
     } else {
       Map<String, dynamic> errorMessage = {
-        'msg': 'Somthing wents wrong',
+        'msg': 'Unable to proceed, please try again later.',
       };
       return errorMessage;
     }
@@ -722,16 +815,24 @@ class KycManager extends ChangeNotifier {
       dynamic responseData =
           await getIt<DioClient>().aadhaar_otp_verify(url, data, token);
       print("a otp $responseData");
-      if (responseData['status'] == true) {
-        Map<String, dynamic> successMessage = {
-          'msg': 'OTP Verified',
-          'error': false
-        };
-        return successMessage;
+      if (responseData != null && responseData.runtimeType != String) {
+        if (responseData['status'] == true) {
+          Map<String, dynamic> successMessage = {
+            'msg': 'OTP Verified',
+            'error': false
+          };
+          return successMessage;
+        } else {
+          Map<String, dynamic> errorMessage = {
+            'msg': 'Enter all mandatory fields',
+            'error': true
+          };
+          print("otp $errorMessage");
+          return errorMessage;
+        }
       } else {
         Map<String, dynamic> errorMessage = {
-          'msg': 'Enter all mandatory fields',
-          'error': true
+          'msg': 'Unable to proceed, please try again later.',
         };
         print("otp $errorMessage");
         return errorMessage;

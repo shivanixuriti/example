@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Model/KycDetails.dart';
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../models/helper/service_locator.dart';
+import '../../../models/services/dio_service.dart';
 import '../../theme/constants.dart';
 import '../../widgets/appbar/app_bar_widget.dart';
 import '../../widgets/kyc_widgets/document_uploading.dart';
@@ -26,6 +29,28 @@ class _BussinessProofState extends State<BussinessProof> {
   String? doc;
   late File business_file;
   var _formKey = GlobalKey<FormState>();
+  List imgfiles = [];
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future init() async {
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+
+    //final docs = DioClient().KycDetails(companyId);
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
+    final details = responseData['data'];
+    Business Docdetails = Business.fromJson(details['business']);
+    setState(() {
+      List<String> imgfiles = Docdetails.files;
+      final List imgFiles = Docdetails.files;
+      final type = imgFiles[0].runtimeType;
+      this.imgfiles = imgfiles;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -280,6 +305,44 @@ class _BussinessProofState extends State<BussinessProof> {
                           SizedBox(
                             height: h1p * 3,
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: w1p * 3,
+                              right: w1p * 6,
+                            ),
+                            child: SizedBox(
+                              width: maxWidth,
+                              height: 50,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: imgfiles.length,
+                                itemBuilder: (context, index) {
+                                  final doc = imgfiles[index];
+                                  print('doc type is ${doc}');
+
+                                  return GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Dialog(
+                                                child: Container(
+                                                  width: 220,
+                                                  height: 200,
+                                                  child: Image.network(
+                                                    '$doc',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      child: imageDialog(doc));
+                                },
+                              ),
+                              //_checkController();
+                            ),
+                          ),
                           DocumentUploading(
                             maxWidth: maxWidth,
                             maxHeight: maxHeight,
@@ -342,4 +405,8 @@ class _BussinessProofState extends State<BussinessProof> {
                   ]))));
     });
   }
+}
+
+Widget imageDialog(path) {
+  return Icon(Icons.edit_document);
 }

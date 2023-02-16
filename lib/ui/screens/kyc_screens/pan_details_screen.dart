@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Model/KycDetails.dart';
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../models/helper/service_locator.dart';
+import '../../../models/services/dio_service.dart';
 import '../../theme/constants.dart';
 import '../../widgets/appbar/app_bar_widget.dart';
 import '../../widgets/kyc_widgets/document_uploading.dart';
@@ -22,6 +25,33 @@ class _PanDetailsState extends State<PanDetails> {
   TextEditingController panController = TextEditingController();
 
   List<File?>? panDetailsImages;
+  List panfiles = [];
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future init() async {
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+
+    //final docs = DioClient().KycDetails(companyId);
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
+    final details = responseData['data'];
+    Pan pandetails = Pan.fromJson(details['pan']);
+    setState(() {
+      List<String> panfiles = pandetails.files;
+      this.panfiles = panfiles;
+    });
+    print('panfiles...))))))))))))${panfiles[0].toString()}');
+    print('the response data of kyc"""""""""$responseData');
+    // setState(() {
+    //   this.details = details;
+    // });
+    // List<String> panFiles = details[0].files;
+    // print(
+    //     'kyc details from kyc verification 1st screen ............${pandetails[0].files}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,13 +131,57 @@ class _PanDetailsState extends State<PanDetails> {
                     SizedBox(
                       height: h1p * 3,
                     ),
-                    DocumentUploading(
-                      maxWidth: maxWidth,
-                      maxHeight: maxHeight,
-                      onFileSelection: (files) {
-                        panDetailsImages = files;
-                        setState(() {});
-                      },
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w1p * 6,
+                        right: w1p * 6,
+                        // top: h1p * 1.5,
+                        // bottom: h1p * 3
+                      ),
+                      child: SizedBox(
+                        width: maxWidth,
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: panfiles.length,
+                          itemBuilder: (context, index) {
+                            final doc = panfiles[index];
+
+                            return GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: SizedBox(
+                                            width: 220,
+                                            height: 60,
+                                            child: Image.network(
+                                              '$doc',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: imageDialog(doc));
+                          },
+                        ),
+                        //_checkController();
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        DocumentUploading(
+                          maxWidth: maxWidth,
+                          maxHeight: maxHeight,
+                          onFileSelection: (files) {
+                            panDetailsImages = files;
+                            setState(() {});
+                          },
+                        ),
+                      ],
                     ),
                     InkWell(
                         onTap: () async {
@@ -136,4 +210,8 @@ class _PanDetailsState extends State<PanDetails> {
                   ]))));
     });
   }
+}
+
+Widget imageDialog(path) {
+  return Icon(Icons.edit_document);
 }
