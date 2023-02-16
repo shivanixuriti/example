@@ -43,8 +43,7 @@ class TransactionManager extends ChangeNotifier {
     TransactionModel? transactionModel;
     String? companyId = getIt<SharedPreferences>().getString('companyId');
     try {
-      String url =
-          "https://dev.xuriti.app/api/ledger/companies/transaction_ledger?buyer=63aa830e8a6964f3f6ef6982";
+      String url = "/ledger/companies/transaction_ledger?buyer=$companyId";
       String? token = getIt<SharedPreferences>().getString("token");
       notifyListeners();
       dynamic responseData = await getIt<DioClient>().get(url, token: token);
