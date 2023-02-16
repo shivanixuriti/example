@@ -173,15 +173,7 @@ class _MobileVerificationState extends State<MobileVerification> {
                         //           otpDetails['msg'],
                         //           style: const TextStyle(color: Colors.green),
                         //         )));
-
-                        print('///////////otpDetails/////////////');
-                        print(otpDetails);
-print('///////////otpDetails 1/////////////');
-  print(otpDetails.runtimeType);
-print(otpDetails['msg']);
-
-                        print('///////////otpDetails end/////////////');
-                        if (otpDetails['error'] == false) {
+                        if(otpDetails['error'] == false){
                           Navigator.pop(context);
                         }
                       },

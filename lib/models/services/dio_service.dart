@@ -5,6 +5,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../helper/service_locator.dart';
 
 class DioClient {
   final String baseUrl = "https://biz.xuriti.app/api";
@@ -152,8 +155,52 @@ class DioClient {
   // }
   //
   // }
+  KycDetails(String companyid) async {
+    var dio = Dio();
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
 
-  aadhaar_captured_data(String url, FormData data, String? token) async {
+    String endUrl = '/kyc/$companyid/status';
+    String? token = getIt<SharedPreferences>().getString('token');
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+
+    String url = baseUrl + endUrl;
+    final uri = Uri.parse(url);
+    // if (token == null) {
+    //   final response = await http.get(uri);
+    // }
+    // if (token != null) {
+    //   final response = await http.get(uri);
+    // if (response.statusCode == 200) {
+    //   final docs = json.decode(response.body);
+
+    //   print('docs....data....pan...holder....$docs');
+
+    //   // final tokenLower = doc.tokenNo.toString();
+    //   // final searchLower = query.toLowerCase();
+    // }
+
+    try {
+      print(token.toString());
+      if (token == null) {
+        Response response = await dio.get(url);
+        return response.data;
+      }
+      if (token != null) {
+        Response response = await dio.get(url,
+            options: Options(headers: {'Authorization': 'Bearer $token'}));
+        return response.data;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
+  aadhaar_captured_data(String endUrl, FormData data, String? token) async {
     BaseOptions options = new BaseOptions(
         baseUrl: baseUrl,
         receiveDataWhenStatusError: true,
@@ -167,11 +214,11 @@ class DioClient {
           (X509Certificate cert, String host, int port) => true;
       return client;
     };
-    //String url = baseUrl + endUrl;
+    String url = baseUrl + endUrl;
     try {
       if (token == null) {
         Response response = await dio.post(url, data: data);
-
+        print('URL11111 -----> $url');
         return response.data;
       }
       if (token != null) {

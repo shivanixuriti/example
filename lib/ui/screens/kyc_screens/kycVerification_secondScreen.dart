@@ -297,26 +297,52 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                           padding:
                               EdgeInsets.only(left: w1p * 3, right: w1p * 3),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, storeImages);
+                                  Navigator.pushNamed(context, kycVerification);
                                 },
-                                child: const Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Icon(
-                                    Icons.keyboard_arrow_left_rounded,
-                                    size: 30,
-                                  ),
+                                child: Row(
+                                  children: const [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Icon(
+                                        Icons.keyboard_arrow_left_rounded,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Text(
+                                      'prev',
+                                      style: TextStyles.textStyle44,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                'prev',
-                                style: TextStyles.textStyle44,
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, kycSubmission);
+                                },
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        'next',
+                                        style: TextStyles.textStyle44,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(
+                                          Icons.keyboard_arrow_right_rounded,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ]),
                               ),
                             ],
                           ),
                         ),
+
                         // Row(
                         //   mainAxisAlignment: MainAxisAlignment.center,
                         //   children: [
@@ -356,43 +382,43 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                         //     //),
                         //   ],
                         // ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: w1p * 5,
-                          ),
-                          child: InkWell(
-                            onTap: () async {
-                              progress!.show();
-                              Map<String, dynamic> kyc =
-                                  await getIt<KycManager>().getKycSubmission();
-                              progress.dismiss();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      content: Text(
-                                        kyc['msg'],
-                                        style: TextStyle(
-                                            color: kyc['status'] == true
-                                                ? Colors.green
-                                                : Colors.green),
-                                      )));
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: h1p * 6,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: Colours.tangerine,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Submit Details",
-                                  style: TextStyles.subHeading,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(
+                        //     horizontal: w1p * 5,
+                        //   ),
+                        //   child: InkWell(
+                        //     onTap: () async {
+                        //       progress!.show();
+                        //       Map<String, dynamic> kyc =
+                        //           await getIt<KycManager>().getKycSubmission();
+                        //       progress.dismiss();
+                        //       ScaffoldMessenger.of(context)
+                        //           .showSnackBar(SnackBar(
+                        //               behavior: SnackBarBehavior.floating,
+                        //               content: Text(
+                        //                 kyc['msg'],
+                        //                 style: TextStyle(
+                        //                     color: kyc['status'] == true
+                        //                         ? Colors.green
+                        //                         : Colors.green),
+                        //               )));
+                        //       Navigator.pop(context);
+                        //     },
+                        //     child: Container(
+                        //       height: h1p * 6,
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(6),
+                        //         color: Colours.tangerine,
+                        //       ),
+                        //       child: Center(
+                        //         child: Text(
+                        //           "Submit Details",
+                        //           style: TextStyles.subHeading,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: h1p * 10,
                         ),

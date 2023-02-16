@@ -29,7 +29,7 @@ class _KycVerificationState extends State<KycVerification> {
   PageController _controller = PageController(initialPage: 0);
 
   double currentIndexPage = 1;
-
+  List? details;
   int pageLength = 2;
 
   // @override
@@ -259,26 +259,26 @@ class _KycVerificationState extends State<KycVerification> {
                         Padding(
                           padding:
                               EdgeInsets.only(left: w1p * 3, right: w1p * 3),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'next',
-                                style: TextStyles.textStyle44,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context, kycnextstep);
-                                },
-                                child: Align(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, kycnextstep);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Text(
+                                  'next',
+                                  style: TextStyles.textStyle44,
+                                ),
+                                Align(
                                   alignment: Alignment.topRight,
                                   child: Icon(
                                     Icons.keyboard_arrow_right_rounded,
                                     size: 30,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
 

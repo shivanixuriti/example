@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/logic/view_models/kyc_manager.dart';
 
+import '../../../Model/KycDetails.dart';
 import '../../../models/helper/service_locator.dart';
+import '../../../models/services/dio_service.dart';
 import '../../theme/constants.dart';
 import '../../widgets/appbar/app_bar_widget.dart';
 import '../../widgets/kyc_widgets/document_uploading.dart';
@@ -22,6 +25,26 @@ class _BankingDetailsState extends State<BankingDetails> {
   var _formKey = GlobalKey<FormState>();
 
   List<File?>? bankDetailsImages;
+  List imgfiles = [];
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future init() async {
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+
+    //final docs = DioClient().KycDetails(companyId);
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
+    final details = responseData['data'];
+    Banking Docdetails = Banking.fromJson(details['bankStatement']);
+    setState(() {
+      List<String> imgfiles = Docdetails.files;
+      this.imgfiles = imgfiles;
+    });
+    print('business files...))))))))))))${imgfiles[0].toString()}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +111,37 @@ class _BankingDetailsState extends State<BankingDetails> {
                         bankDetailsImages = files;
                       },
                     ),
+                    SizedBox(
+                      width: maxWidth,
+                      height: 50,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: imgfiles.length,
+                        itemBuilder: (context, index) {
+                          final doc = imgfiles[index];
+
+                          return GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                        child: Container(
+                                          width: 220,
+                                          height: 200,
+                                          child: Image.network(
+                                            '$doc',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: imageDialog(doc));
+                        },
+                      ),
+                      //_checkController();
+                    ),
                     InkWell(
                       onTap: () async {
                         Map<String, dynamic> bankingDetails =
@@ -109,4 +163,8 @@ class _BankingDetailsState extends State<BankingDetails> {
                   ]))));
     });
   }
+}
+
+Widget imageDialog(path) {
+  return Icon(Icons.edit_document);
 }

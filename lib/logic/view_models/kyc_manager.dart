@@ -137,8 +137,8 @@ class KycManager extends ChangeNotifier {
         Map<String, dynamic> errorMessage = {
           'msg': 'Unable to proceed, please try again later.',
         };
-        print("error:--$errorMassage");
-        return errorMassage;
+        // print("error:--$errorMassage");
+        // return errorMassage;
       }
     } else {
       Map<String, dynamic> errorMassage = {
@@ -549,8 +549,8 @@ class KycManager extends ChangeNotifier {
     var map = new Map<String, dynamic>();
 
     map['companyId'] = companyId;
-    map['front'] = await MultipartFile.fromFile(front as String);
-    map['back'] = await MultipartFile.fromFile(back as String);
+    map['front'] = await MultipartFile.fromFile(front as dynamic);
+    map['back'] = await MultipartFile.fromFile(back as dynamic);
 
     FormData formData = FormData.fromMap(map);
 
@@ -676,7 +676,7 @@ class KycManager extends ChangeNotifier {
 
     var map = new Map<String, dynamic>();
 
-    map['companyId'] = companyId;
+    map['company_id'] = companyId;
     map['front'] = front;
     // await MultipartFile.fromFile(front as String);
     map['back'] = back;

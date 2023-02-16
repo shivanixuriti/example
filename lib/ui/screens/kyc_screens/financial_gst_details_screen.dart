@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/logic/view_models/kyc_manager.dart';
 
+import '../../../Model/KycDetails.dart';
 import '../../../models/helper/service_locator.dart';
+import '../../../models/services/dio_service.dart';
 import '../../theme/constants.dart';
 import '../../widgets/appbar/app_bar_widget.dart';
 import '../../widgets/kyc_widgets/document_uploading.dart';
@@ -25,6 +28,32 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
   List<File?>? gstImages;
 
   bool? flag;
+
+  List financefiles = [];
+  List GSTfiles = [];
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future init() async {
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+
+    //final docs = DioClient().KycDetails(companyId);
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
+    final details = responseData['data'];
+    Financial financedetails = Financial.fromJson(details['financial']);
+    Gst GSTdetails = Gst.fromJson(details['gst']);
+    setState(() {
+      List<String> financefiles = financedetails.files;
+      this.financefiles = financefiles;
+      List<String> GSTfiles = GSTdetails.files;
+      this.GSTfiles = GSTfiles;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -92,6 +121,42 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                     //     style: TextStyles.textStyle123,
                     //   ),
                     // ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w1p * 6,
+                        right: w1p * 6,
+                      ),
+                      child: SizedBox(
+                        width: maxWidth,
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: financefiles.length,
+                          itemBuilder: (context, index) {
+                            final finance = financefiles[index];
+
+                            return GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: Container(
+                                            width: 220,
+                                            height: 200,
+                                            child: Image.network(
+                                              '$finance',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: imageDialog(finance));
+                          },
+                        ),
+                      ),
+                    ),
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
@@ -108,6 +173,42 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       child: Text(
                         "GST Details",
                         style: TextStyles.textStyle54,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w1p * 6,
+                        right: w1p * 6,
+                      ),
+                      child: SizedBox(
+                        width: maxWidth,
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: GSTfiles.length,
+                          itemBuilder: (context, index) {
+                            final gst = GSTfiles[index];
+
+                            return GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: Container(
+                                            width: 220,
+                                            height: 200,
+                                            child: Image.network(
+                                              '$gst',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: imageDialog(gst));
+                          },
+                        ),
                       ),
                     ),
                     DocumentUploading(
@@ -216,4 +317,8 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                   ]))));
     });
   }
+}
+
+Widget imageDialog(path) {
+  return Icon(Icons.edit_document);
 }
