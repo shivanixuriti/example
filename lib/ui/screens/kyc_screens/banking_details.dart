@@ -109,8 +109,31 @@ class _BankingDetailsState extends State<BankingDetails> {
                       maxHeight: maxHeight,
                       onFileSelection: (files) {
                         bankDetailsImages = files;
+                        setState(() {});
                       },
                     ),
+                    ((bankDetailsImages?.length ?? 0) != 0 &&
+                            bankDetailsImages?.first != null)
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    bankDetailsImages!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     SizedBox(
                       width: maxWidth,
                       height: 50,

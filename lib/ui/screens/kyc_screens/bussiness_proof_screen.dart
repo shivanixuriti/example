@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:developer';
 import '../../../Model/KycDetails.dart';
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../models/helper/service_locator.dart';
@@ -352,6 +352,31 @@ class _BussinessProofState extends State<BussinessProof> {
                               setState(() {});
                             },
                           ),
+                          ((businessProofImages?.length ?? 0) != 0 &&
+                                  businessProofImages?.first != null)
+                              ? SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.38,
+                                  height: 200,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(1),
+                                        child: Image.file(
+                                          businessProofImages!.first!,
+                                          fit: BoxFit.cover,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.38,
+                                          height: 200,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox()
                         ],
                       ),
                     ),

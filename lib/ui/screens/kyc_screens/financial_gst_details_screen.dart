@@ -167,6 +167,28 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       },
                       //type: "Financial Details"
                     ),
+                    ((financialImages?.length ?? 0) != 0 &&
+                            financialImages?.first != null)
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    financialImages!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: w1p * 6, vertical: h1p * 3),
@@ -220,6 +242,28 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                         setState(() {});
                       },
                     ),
+                    ((gstImages?.length ?? 0) != 0 && gstImages?.first != null)
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    financialImages!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+
                     // Padding(
                     //   padding: EdgeInsets.symmetric(
                     //       horizontal: w1p * 6, vertical: h1p * 3),
@@ -278,42 +322,6 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                         isKyc: true,
                       ),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //       left: w1p * 6,
-                    //       right: w1p * 7,
-                    //       top: h1p * 5,
-                    //       bottom: h1p * 2),
-                    //   child: Text(
-                    //     "GST Details",
-                    //     style: TextStyles.textStyle54,
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(
-                    //       horizontal: w1p * 6, vertical: h1p * 2),
-                    //   child: Text(
-                    //     "GST Return Files",
-                    //     style: TextStyles.textStyle123,
-                    //   ),
-                    // ),
-                    // DocumentUploading(
-                    //   maxWidth: maxWidth,
-                    //   maxHeight: maxHeight,
-                    // ),
-                    // InkWell(
-                    //   onTap: () async {
-                    //     await getIt<KycManager>().storeGstDetails();
-                    //     Fluttertoast.showToast(msg: "successfully uploaded");
-                    //     Navigator.pop(context);
-                    //   },
-                    //   child: Submitbutton(
-                    //     maxWidth: maxWidth,
-                    //     maxHeight: maxHeight,
-                    //     content: "Save & Continue",
-                    //     isKyc: true,
-                    //   ),
-                    // )
                   ]))));
     });
   }

@@ -238,6 +238,31 @@ class _OwnershipProofState extends State<OwnershipProof> {
                               setState(() {});
                             },
                           ),
+                          ((ownershipImages?.length ?? 0) != 0 &&
+                                  ownershipImages?.first != null)
+                              ? SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.38,
+                                  height: 200,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(1),
+                                        child: Image.file(
+                                          ownershipImages!.first!,
+                                          fit: BoxFit.cover,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.38,
+                                          height: 200,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox()
                         ],
                       ),
                     ),

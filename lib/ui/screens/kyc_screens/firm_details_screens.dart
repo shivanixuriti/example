@@ -145,8 +145,31 @@ class _FirmDetailsState extends State<FirmDetails> {
                       maxHeight: maxHeight,
                       onFileSelection: (files) {
                         firmDetails = files;
+                        setState(() {});
                       },
                     ),
+                    ((firmDetails?.length ?? 0) != 0 &&
+                            firmDetails?.first != null)
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    firmDetails!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     InkWell(
                       onTap: () async {
                         Map<String, dynamic> storeFirmDetails =

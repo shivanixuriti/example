@@ -170,19 +170,72 @@ class _PanDetailsState extends State<PanDetails> {
                         //_checkController();
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        DocumentUploading(
-                          maxWidth: maxWidth,
-                          maxHeight: maxHeight,
-                          onFileSelection: (files) {
-                            panDetailsImages = files;
-                            setState(() {});
-                          },
-                        ),
-                      ],
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    DocumentUploading(
+                      maxWidth: maxWidth,
+                      maxHeight: maxHeight,
+                      onFileSelection: (files) {
+                        panDetailsImages = files;
+                        setState(() {});
+                      },
                     ),
+                    ((panDetailsImages?.length ?? 0) != 0 &&
+                            panDetailsImages?.first != null)
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    panDetailsImages!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                    //   ],
+                    // ),
+                    // ((panDetailsImages?.length ?? 0) != 0 &&
+                    //         panDetailsImages?.first != null)
+                    //     ? Expanded(
+                    //         child: Column(children: [
+                    //           SizedBox(
+                    //             height: 50,
+                    //           ),
+                    //           Center(
+                    //             child: SizedBox(
+                    //               width:
+                    //                   MediaQuery.of(context).size.width * 0.38,
+                    //               height: 200,
+                    //               child: Center(
+                    //                 child: ClipRRect(
+                    //                   borderRadius: BorderRadius.circular(1),
+                    //                   child: Image.file(
+                    //                     panDetailsImages!.first!,
+                    //                     fit: BoxFit.cover,
+                    //                     width:
+                    //                         MediaQuery.of(context).size.width *
+                    //                             0.38,
+                    //                     height: 200,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ]),
+                    //       )
+                    //     : SizedBox(),
                     InkWell(
                         onTap: () async {
                           Map<String, dynamic> panDetails =

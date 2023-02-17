@@ -25,7 +25,6 @@ import 'package:http/http.dart' as http;
 class AadhaarCard extends StatefulWidget {
   var data;
   dynamic? url;
-  // const AadhaarCard(data, {Key? key}, this.da) : super(key: key);
   AadhaarCard(this.data) {
     var response = data['data'];
     url = response.toString();

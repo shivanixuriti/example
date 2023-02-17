@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,22 +29,10 @@ class KycManager extends ChangeNotifier {
   dynamic userID = getIt<SharedPreferences>().getString('id');
 
   var captchasessionId;
-  Future<Map<String, dynamic>> getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) {
-      Map<String, dynamic> errorMessage = {
-        'msg': 'Image selection failed',
-        'status': false
-      };
-      return errorMessage;
-    } else {
-      final imageTemp = File(image.path);
-      Map<String, dynamic> successMessage = {
-        'msg': 'Image selected successfully',
-        'File': imageTemp,
-        'status': true
-      };
-      return successMessage;
+  Future<File?> getImage({required BuildContext context}) async {
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      return File(image.path);
     }
   }
 

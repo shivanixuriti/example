@@ -20,7 +20,7 @@ class AdhaarCapture {
 
   factory AdhaarCapture.fromJson(Map<String, dynamic> json) => AdhaarCapture(
         data: Data.fromJson(json["data"]),
-        status: json["status"],
+        status: json["status"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,19 +61,19 @@ class Data {
   StoreImage storeImages;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        pan: Pan.fromJson(json["pan"]),
-        aadhar: Aadhar.fromJson(json["aadhar"]),
-        mobile: Mobile.fromJson(json["mobile"]),
-        faceMatch: FaceMatch.fromJson(json["faceMatch"]),
-        address: Address.fromJson(json["address"]),
-        bankStatement: Banking.fromJson(json["bankStatement"]),
-        business: Business.fromJson(json["business"]),
-        financial: Financial.fromJson(json["financial"]),
-        gst: Gst.fromJson(json["gst"]),
-        ownership: Business.fromJson(json["ownership"]),
-        partnership: Partnership.fromJson(json["partnership"]),
-        vintage: Vintage.fromJson(json["vintage"]),
-        storeImages: StoreImage.fromJson(json["storeImages"]),
+        pan: Pan.fromJson(json["pan"] ?? ""),
+        aadhar: Aadhar.fromJson(json["aadhar"] ?? ""),
+        mobile: Mobile.fromJson(json["mobile"] ?? ""),
+        faceMatch: FaceMatch.fromJson(json["faceMatch"] ?? ""),
+        address: Address.fromJson(json["address"] ?? ""),
+        bankStatement: Banking.fromJson(json["bankStatement"] ?? ""),
+        business: Business.fromJson(json["business"] ?? ""),
+        financial: Financial.fromJson(json["financial"] ?? ""),
+        gst: Gst.fromJson(json["gst"] ?? ""),
+        ownership: Business.fromJson(json["ownership"] ?? ""),
+        partnership: Partnership.fromJson(json["partnership"] ?? ""),
+        vintage: Vintage.fromJson(json["vintage"] ?? ""),
+        storeImages: StoreImage.fromJson(json["storeImages"] ?? ""),
       );
 
   Map<String, dynamic> toJson() => {
@@ -155,9 +155,9 @@ class Address {
   List<String> files;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-        status: json["status"],
-        comment: json["comment"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        verified: json["verified"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -185,10 +185,10 @@ class Business {
   List<String> files;
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
-        documentNumber: json["documentNumber"],
-        documentType: json["documentType"],
-        status: json["status"],
-        verified: json["verified"],
+        documentNumber: json["documentNumber"] ?? "",
+        documentType: json["documentType"] ?? "",
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -217,10 +217,10 @@ class Ownership {
   List<String> files;
 
   factory Ownership.fromJson(Map<String, dynamic> json) => Ownership(
-        documentNumber: json["documentNumber"],
-        documentType: json["documentType"],
-        status: json["status"],
-        verified: json["verified"],
+        documentNumber: json["documentNumber"] ?? "",
+        documentType: json["documentType"] ?? "",
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -245,8 +245,8 @@ class Partnership {
   List<String> files;
 
   factory Partnership.fromJson(Map<String, dynamic> json) => Partnership(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -269,8 +269,8 @@ class Vintage {
   List<String> files;
 
   factory Vintage.fromJson(Map<String, dynamic> json) => Vintage(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -293,8 +293,8 @@ class StoreImage {
   List<String> files;
 
   factory StoreImage.fromJson(Map<String, dynamic> json) => StoreImage(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -317,8 +317,8 @@ class Banking {
   List<String> files;
 
   factory Banking.fromJson(Map<String, dynamic> json) => Banking(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -351,13 +351,13 @@ class FaceMatch {
   List<String> files;
 
   factory FaceMatch.fromJson(Map<String, dynamic> json) => FaceMatch(
-        verified: json["verified"],
-        status: json["status"],
-        comment: json["comment"],
-        holder: json["holder"],
+        verified: json["verified"] ?? "",
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        holder: json["holder"] ?? "",
         matchPercentage: json["matchPercentage"],
-        message: json["message"],
-        dob: json["dob"],
+        message: json["message"] ?? "",
+        dob: json["dob"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -383,7 +383,7 @@ class Financial {
   List<String> files;
 
   factory Financial.fromJson(Map<String, dynamic> json) => Financial(
-        verified: json["verified"],
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -403,7 +403,7 @@ class Gst {
   List<String> files;
 
   factory Gst.fromJson(Map<String, dynamic> json) => Gst(
-        verified: json["verified"],
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -435,14 +435,14 @@ class Mobile {
   String email;
 
   factory Mobile.fromJson(Map<String, dynamic> json) => Mobile(
-        verified: json["verified"],
-        status: json["status"],
-        comment: json["comment"],
-        number: json["number"],
-        countryCode: json["countryCode"],
-        holder: json["holder"],
-        address: json["address"],
-        email: json["email"],
+        verified: json["verified"] ?? "",
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        number: json["number"] ?? "",
+        countryCode: json["countryCode"] ?? "",
+        holder: json["holder"] ?? "",
+        address: json["address"] ?? "",
+        email: json["email"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -475,11 +475,11 @@ class Pan {
   List<String> files;
 
   factory Pan.fromJson(Map<String, dynamic> json) => Pan(
-        verified: json["verified"],
-        status: json["status"],
-        comment: json["comment"],
-        holder: json["holder"],
-        number: json["number"],
+        verified: json["verified"] ?? "",
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        holder: json["holder"] ?? "",
+        number: json["number"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 

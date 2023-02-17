@@ -156,6 +156,28 @@ class _StoreImagesState extends State<StoreImages> {
                         setState(() {});
                       },
                     ),
+                    ((storeImages?.length ?? 0) != 0 &&
+                            storeImages?.first != null)
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    storeImages!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     InkWell(
                       onTap: () async {
                         Map<String, dynamic> storeImagesMap =
