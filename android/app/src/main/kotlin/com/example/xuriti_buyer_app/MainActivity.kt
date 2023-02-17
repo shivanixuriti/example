@@ -1,4 +1,4 @@
-package com.example.xuriti_buyer_app
+package com.xuriti.app
 
 import io.flutter.embedding.android.FlutterActivity
 

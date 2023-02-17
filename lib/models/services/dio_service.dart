@@ -11,8 +11,7 @@ import '../helper/service_locator.dart';
 
 class DioClient {
   final String baseUrl = "https://biz.xuriti.app/api";
-  // final String baseUrl = "https://dev.xuriti.app/api";
-  // final String baseUrl = "https://uat.xuriti.app/api";
+  //final String baseUrl = "https://uat.xuriti.app/api";
 
   postFormData(String endUrl, FormData data, String? token) async {
     BaseOptions options = new BaseOptions(
@@ -89,6 +88,7 @@ class DioClient {
       if (token != null) {
         Response response = await dio.get(url,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
+
         return response.data;
       }
     } catch (e) {
