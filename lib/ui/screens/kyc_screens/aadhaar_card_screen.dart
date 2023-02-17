@@ -660,22 +660,22 @@ class _AadhaarCardState extends State<AadhaarCard> {
           ],
         ),
       );
-//   Widget showImage() => Padding(
-//         padding: const EdgeInsets.all(5),
-//         child: Center(
-//           child: ClipRRect(
-//             borderRadius: BorderRadius.circular(1),
-//             child: Image.file(
-//               //to show image, you type like this.
-//               File(img),
-//               fit: BoxFit.cover,
-//               width: MediaQuery.of(context).size.width * 0.38,
-//               height: 200,
-//             ),
-//           ),
-//         ),
-//       );
-// }
+  Widget showImage() => Padding(
+        padding: const EdgeInsets.all(5),
+        child: Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(1),
+            child: Image.file(
+              //to show image, you type like this.
+              File(img),
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width * 0.38,
+              height: 200,
+            ),
+          ),
+        ),
+      );
+}
 
 Widget imageDialog() {
   return Icon(Icons.edit_document);

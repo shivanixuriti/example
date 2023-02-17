@@ -668,8 +668,10 @@ class KycManager extends ChangeNotifier {
     }
   }
 
-  adhaarDetails(String? companyId, File front, File back) async {
+  adhaarDetails(String? companyId, File frontFile, File backFile) async {
     String url = "/kyc/document-verify/aadhaar";
+    String front = frontFile.path;
+    String back = backFile.path;
     String? token = getIt<SharedPreferences>().getString('token');
     KycModel kycModel = KycModel();
     //Map<String, dynamic> data = kycModel.toJson();
@@ -677,13 +679,11 @@ class KycManager extends ChangeNotifier {
     var map = new Map<String, dynamic>();
 
     map['company_id'] = companyId;
-    map['front'] = front;
+    map['front'] = await MultipartFile.fromFile(front);
     // await MultipartFile.fromFile(front as String);
-    map['back'] = back;
+    map['back'] = await MultipartFile.fromFile(back);
     // await MultipartFile.fromFile(back as String);
-
     FormData formData = FormData.fromMap(map);
-
     dynamic responseData =
         await getIt<DioClient>().aadhaar_captured_data(url, formData, token);
     if (responseData != null && responseData.runtimeType != String) {
