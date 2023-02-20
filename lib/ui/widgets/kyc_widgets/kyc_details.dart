@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:xuriti/Model/KycDetails.dart';
 
 import '../../theme/constants.dart';
-
 
 class KycDetails extends StatelessWidget {
   final String title;
   final double maxWidth;
   final double maxHeight;
-   String? subtitle;
+  String? subtitle;
+  String? kycStatus;
 
-   KycDetails({required this.title,required this.maxWidth,required this.maxHeight,
-     this.subtitle });
+  KycDetails(
+      {required this.title,
+      required this.maxWidth,
+      required this.maxHeight,
+      this.subtitle,
+      this.kycStatus});
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-
       double h1p = maxHeight * 0.01;
       double h10p = maxHeight * 0.1;
       double w10p = maxWidth * 0.1;
@@ -38,9 +42,13 @@ class KycDetails extends StatelessWidget {
             tileColor: Colours.white,
             title: Row(
               children: [
+                KycStatus.kycStatusToIcon(kycStatus),
+                SizedBox(
+                  width: w1p * 3,
+                ),
                 Text(
-                title,
-                style: TextStyles.textStyle44,
+                  title,
+                  style: TextStyles.textStyle44,
                 ),
                 Text(
                   subtitle ?? "",

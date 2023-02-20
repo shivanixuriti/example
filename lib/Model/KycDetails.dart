@@ -1,16 +1,18 @@
 // To parse this JSON data, do
 //
-//     final adhaarCapture = adhaarCaptureFromJson(jsonString);
+//     final KYCDetails = KYCDetailsFromJson(jsonString);
 
 import 'dart:convert';
 
-AdhaarCapture adhaarCaptureFromJson(String str) =>
-    AdhaarCapture.fromJson(json.decode(str));
+import 'package:flutter/material.dart';
 
-String adhaarCaptureToJson(AdhaarCapture data) => json.encode(data.toJson());
+KYCDetails KYCDetailsFromJson(String str) =>
+    KYCDetails.fromJson(json.decode(str));
 
-class AdhaarCapture {
-  AdhaarCapture({
+String KYCDetailsToJson(KYCDetails data) => json.encode(data.toJson());
+
+class KYCDetails {
+  KYCDetails({
     required this.data,
     required this.status,
   });
@@ -18,7 +20,7 @@ class AdhaarCapture {
   Data data;
   bool status;
 
-  factory AdhaarCapture.fromJson(Map<String, dynamic> json) => AdhaarCapture(
+  factory KYCDetails.fromJson(Map<String, dynamic> json) => KYCDetails(
         data: Data.fromJson(json["data"]),
         status: json["status"] ?? "",
       );
@@ -90,6 +92,131 @@ class Data {
         "partnership": partnership.toJson(),
         "vintage": vintage.toJson(),
         "storeImages": storeImages.toJson(),
+      };
+}
+
+class KycStatus {
+  KycStatus({
+    required this.panStatus,
+    required this.aadharStatus,
+    required this.mobileStatus,
+    required this.faceMatchStatus,
+    required this.addressStatus,
+    required this.bankStatementStatus,
+    required this.businessStatus,
+    required this.financialStatus,
+    required this.gstStatus,
+    required this.ownershipStatus,
+    required this.partnershipStatus,
+    required this.vintageStatus,
+    required this.storeImagesStatus,
+  });
+
+  String panStatus;
+  String aadharStatus;
+  String mobileStatus;
+  String faceMatchStatus;
+  String addressStatus;
+  String bankStatementStatus;
+  String businessStatus;
+  String financialStatus;
+  String gstStatus;
+  String ownershipStatus;
+  String partnershipStatus;
+  String vintageStatus;
+  String storeImagesStatus;
+
+  factory KycStatus.fromJson(Map<String, dynamic> json) => KycStatus(
+        panStatus: json['pan']?['status'] ?? 'Unknown', //'Pending',
+        aadharStatus: json['aadhar']?['status'] ?? 'Unknown', //'Pending',
+        mobileStatus: json['mobile']?['status'] ?? 'Unknown', //'Pending',
+        faceMatchStatus: json['faceMatch']?['status'] ?? 'Unknown', //'Pending',
+        addressStatus: json['address']?['status'] ?? 'Unknown', //'Pending',
+        bankStatementStatus:
+            json['bankStatement']?['status'] ?? 'Unknown', //'Pending',
+        businessStatus: json['business']?['status'] ?? 'Unknown', //'Pending',
+        financialStatus: json['financial']?['status'] ?? 'Unknown', //'Pending',
+        gstStatus: json['gst']?['status'] ?? 'Unknown', //'Pending',
+        ownershipStatus: json['ownership']?['status'] ?? 'Unknown', //'Pending',
+        partnershipStatus:
+            json['partnership']?['status'] ?? 'Unknown', //'Pending',
+        vintageStatus: json['vintage']?['status'] ?? 'Unknown', //'Pending',
+        storeImagesStatus:
+            json['storeImages']?['status'] ?? 'Unknown', //'Pending',
+      );
+
+  static Widget kycStatusToIcon(String? status) {
+    switch (status) {
+      case 'In-Progress':
+        {
+          return const Icon(
+            Icons.access_time_filled,
+            color: Colors.yellow,
+          );
+        }
+      case 'Approved':
+        {
+          return const Icon(
+            Icons.check_circle_rounded,
+            color: Colors.green,
+          );
+        }
+      case 'Rejected':
+        {
+          return const Icon(
+            Icons.remove_circle,
+            color: Colors.red,
+          );
+        }
+      default:
+        {
+          print('unknown status of kyc');
+          return const Icon(
+            Icons.circle_outlined,
+            color: Colors.black,
+          );
+        }
+    }
+  }
+
+  static bool isKycStatusVerified(KycStatus? status) {
+    if (status == null) {
+      return false;
+    } else if (status.panStatus == 'Approved' &&
+        status.aadharStatus == 'Approved' &&
+        status.mobileStatus == 'Approved' &&
+        status.bankStatementStatus == 'Approved' &&
+        status.businessStatus == 'Approved' &&
+        status.financialStatus == 'Approved' &&
+        status.gstStatus == 'Approved' &&
+        status.ownershipStatus == 'Approved' &&
+        status.partnershipStatus == 'Approved' &&
+        status.vintageStatus == 'Approved' &&
+        status.storeImagesStatus == 'Approved') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Map<String, dynamic> toJson() => {
+        "pan": panStatus,
+        "aadhar": aadharStatus,
+        "mobile": mobileStatus,
+        "faceMatch": faceMatchStatus,
+
+        ///check if needed
+        "address": addressStatus,
+
+        ///check if needed
+        "bankStatement": bankStatementStatus,
+        "business": businessStatus,
+        "financial": financialStatus,
+        "gst": gstStatus,
+        "ownership": ownershipStatus,
+        "partnership": partnershipStatus,
+        "vintage": vintageStatus,
+        "storeImages": storeImagesStatus,
       };
 }
 

@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/ui/widgets/kyc_widgets/document_uploading.dart';
+import 'package:xuriti/util/loaderWidget.dart';
 
 import '../../../Model/KycDetails.dart';
 import '../../../logic/view_models/kyc_manager.dart';
@@ -230,6 +234,115 @@ class _OwnershipProofState extends State<OwnershipProof> {
                               //_checkController();
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: w1p * 6,
+                              right: w1p * 6,
+                            ),
+                            child: SizedBox(
+                              width: maxWidth,
+                              height: 50,
+                              child: ListView.separated(
+                                separatorBuilder: (context, index) => SizedBox(
+                                  width: 30,
+                                ),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: imgfiles.length,
+                                itemBuilder: (context, index) {
+                                  final doc = imgfiles[index];
+
+                                  print('the whole filepath  >>>>>>>>$doc');
+
+                                  List doc1 = doc.split("?");
+                                  List doc2 = doc1[0].split(".");
+                                  List fpath = doc2;
+                                  print('doc1.>>>>>>>>$doc1');
+
+                                  print('fpath.>>>>>>>>$fpath');
+                                  final fp = doc2.last;
+                                  String filepath = fp.toString();
+                                  print('filepath.>>>>>>>>$filepath');
+
+                                  Future<File?> downloadFile(
+                                      String url, String name) async {
+                                    final appStorage =
+                                        await getApplicationDocumentsDirectory();
+                                    final file =
+                                        File('${appStorage.path}/$name');
+                                    try {
+                                      final response = await Dio().get(url,
+                                          options: Options(
+                                              responseType: ResponseType.bytes,
+                                              followRedirects: false,
+                                              receiveTimeout: 0));
+                                      final raf =
+                                          file.openSync(mode: FileMode.write);
+                                      raf.writeFromSync(response.data);
+                                      await raf.close();
+                                      return file;
+                                    } catch (e) {
+                                      return null;
+                                    }
+                                  }
+
+                                  Future openFile(
+                                      {required String url,
+                                      String? filename}) async {
+                                    final file =
+                                        await downloadFile(url, filename!);
+                                    if (file == null) return;
+                                    print(
+                                        'path for pdf file++++++++++++ ${file.path}');
+                                    OpenFile.open(file.path);
+                                  }
+
+                                  // filepath != 'pdf'
+                                  //     ?
+                                  if (filepath != 'pdf') {
+                                    print('object++++====');
+                                    return GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Dialog(
+                                                  child: SizedBox(
+                                                    width: maxWidth * 5,
+                                                    height: maxHeight * 0.5,
+                                                    child: Image.network(
+                                                      // ignore: unnecessary_string_interpolations
+                                                      '$doc',
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: w1p * 6, right: w1p * 6),
+                                          child: imageDialog(doc),
+                                        ));
+                                  } else {
+                                    return GestureDetector(
+                                        onTap: () {
+                                          openFile(
+                                              url: doc,
+                                              filename: 'ownership.pdf');
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: w1p * 6,
+                                            // right: w1p * 6,
+                                          ),
+                                          child: imageDialog(doc),
+                                        ));
+                                  }
+                                },
+                              ),
+                              //_checkController();
+                            ),
+                          ),
                           DocumentUploading(
                             maxWidth: maxWidth,
                             maxHeight: maxHeight,
@@ -268,9 +381,11 @@ class _OwnershipProofState extends State<OwnershipProof> {
                     ),
                     InkWell(
                       onTap: () async {
+                        context.showLoader();
                         Map<String, dynamic> kyc = await getIt<KycManager>()
                             .storeOwnershipProof(documentController.text, doc,
                                 filePath: ownershipImages?.first?.path ?? "");
+                        context.hideLoader();
 
                         if (_formKey.currentState!.validate() &&
                             kyc['error'] == false) {

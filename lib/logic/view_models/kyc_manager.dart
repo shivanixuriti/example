@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/models/core/kyc_model.dart';
 import 'package:xuriti/models/core/mobile_verification_model.dart';
@@ -34,6 +33,29 @@ class KycManager extends ChangeNotifier {
     if (image != null) {
       return File(image.path);
     }
+
+    return null;
+    // if (image == null) {
+    //   Map<String, dynamic> errorMessage = {
+    //     'msg': 'Image selection failed',
+    //     'status': false
+    //   };
+    //   return errorMessage;
+    // } else {
+    //   final imageTemp = File(image.path);
+    //   print('camera image path ---- $imageTemp');
+
+    //   Map<String, dynamic> successMessage = {
+    //     'msg': 'Image selected successfully',
+    //     'File': imageTemp,
+    //     'status': true
+    //   };
+    //   return successMessage;
+    //   // return imageTemp
+    //   //     .where((element) => (element?.length ?? 0) != 0)
+    //   //     .map((e) => File(e!))
+    //   //     .toList();
+    // }
   }
 
   Future<List<File?>?> selectFile(bool? flag) async {
@@ -57,7 +79,7 @@ class KycManager extends ChangeNotifier {
     }
   }
 
-  Future uploadFile({required File file}) async {
+  Future uploadFile({required File? file}) async {
     if (file == null) {
       Map<String, dynamic> errorMessage = {
         'msg': 'File upload failed',
@@ -65,8 +87,8 @@ class KycManager extends ChangeNotifier {
       };
       return errorMessage;
     } else {
-      final fileName = basename(file!.path);
-      final destination = 'files/$fileName';
+      //final fileName = basename(file.path);
+      //final destination = 'files/$fileName';
     }
   }
 
@@ -122,9 +144,9 @@ class KycManager extends ChangeNotifier {
           return errorMassage;
         }
       } else {
-        Map<String, dynamic> errorMessage = {
-          'msg': 'Unable to proceed, please try again later.',
-        };
+        // Map<String, dynamic> errorMessage = {
+        //   'msg': 'Unable to proceed, please try again later.',
+        // };
         // print("error:--$errorMassage");
         // return errorMassage;
       }
@@ -148,7 +170,7 @@ class KycManager extends ChangeNotifier {
     String? token = getIt<SharedPreferences>().getString('token');
     // Map<String, dynamic> data = kycModel.toJson();
     if (uid != null &&
-        security_code != null &&
+        security_code.isNotEmpty &&
         int.tryParse(uid) != null &&
         uid.length == 12) {
       var map = new Map<String, dynamic>();
@@ -167,6 +189,7 @@ class KycManager extends ChangeNotifier {
           await getIt<DioClient>().aadhaar_otp(url, data, token);
       print("a otp $responseData");
       if (responseData != null && responseData.runtimeType != String) {
+        print(responseData);
         if (responseData['status'] == true) {
           Map<String, dynamic> successMessage = {
             'msg': 'OTP sent to registered Mobile No.',
@@ -528,42 +551,42 @@ class KycManager extends ChangeNotifier {
     }
   }
 
-  storeFinancial_and_Details(String? companyId, File front, File back) async {
-    String url = "/entity/onboard";
-    String? token = getIt<SharedPreferences>().getString('token');
-    KycModel kycModel = KycModel();
-    //Map<String, dynamic> data = kycModel.toJson();
+  // storeFinancial_and_Details(String? companyId, File front, File back) async {
+  //   String url = "/entity/onboard";
+  //   String? token = getIt<SharedPreferences>().getString('token');
+  //   KycModel kycModel = KycModel();
+  //   //Map<String, dynamic> data = kycModel.toJson();
 
-    var map = new Map<String, dynamic>();
+  //   var map = new Map<String, dynamic>();
 
-    map['companyId'] = companyId;
-    map['front'] = await MultipartFile.fromFile(front as dynamic);
-    map['back'] = await MultipartFile.fromFile(back as dynamic);
+  //   map['companyId'] = companyId;
+  //   map['front'] = await MultipartFile.fromFile(front as dynamic);
+  //   map['back'] = await MultipartFile.fromFile(back as dynamic);
 
-    FormData formData = FormData.fromMap(map);
+  //   FormData formData = FormData.fromMap(map);
 
-    dynamic responseData =
-        await getIt<DioClient>().aadhaar_captured_data(url, formData, token);
-    if (responseData != null && responseData.runtimeType != String) {
-      if (responseData['status'] == true) {
-        Map<String, dynamic> successMessage = {
-          'msg': 'Details saved successfully',
-        };
-        return successMessage;
-      } else {
-        Map<String, dynamic> errorMessage = {
-          'msg': 'Somthing wents wrong',
-        };
-        return errorMessage;
-      }
-    } else {
-      Map<String, dynamic> errorMessage = {
-        'msg': 'Unable to proceed, please try again later.',
-      };
-      return errorMessage;
-    }
-    // throw Exception();
-  }
+  //   dynamic responseData =
+  //       await getIt<DioClient>().aadhaar_captured_data(url, formData, token);
+  //   if (responseData != null && responseData.runtimeType != String) {
+  //     if (responseData['status'] == true) {
+  //       Map<String, dynamic> successMessage = {
+  //         'msg': 'Details saved successfully',
+  //       };
+  //       return successMessage;
+  //     } else {
+  //       Map<String, dynamic> errorMessage = {
+  //         'msg': 'Somthing wents wrong',
+  //       };
+  //       return errorMessage;
+  //     }
+  //   } else {
+  //     Map<String, dynamic> errorMessage = {
+  //       'msg': 'Unable to proceed, please try again later.',
+  //     };
+  //     return errorMessage;
+  //   }
+  //   // throw Exception();
+  // }
 
   generateOTP(String mobile) async {
     if (int.tryParse(mobile) == null || mobile.length != 10) {
@@ -679,7 +702,7 @@ class KycManager extends ChangeNotifier {
         Map<String, dynamic> successMessage = {
           'msg': 'Details saved successfully',
         };
-        return successMessage;
+        return responseData;
       } else {
         Map<String, dynamic> errorMessage = {
           'msg': 'Something went wrong',
@@ -696,7 +719,7 @@ class KycManager extends ChangeNotifier {
   }
 
   storeImages({required List<String> filePath}) async {
-    if (filePath.isEmpty || filePath.length > 3) {
+    if (!(filePath.isNotEmpty || filePath.length <= 3)) {
       Map<String, dynamic> errorMessage = {
         'msg': 'Please give atleast 1 image and not more than 3 images',
         'error': true

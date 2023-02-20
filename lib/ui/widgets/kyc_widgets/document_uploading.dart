@@ -82,17 +82,18 @@ class _DocumentUploadingState extends State<DocumentUploading> {
                     img = fileSelection[0];
                     imgpath = '${img?.path}'; //error
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      content: Text(
-                        fileSelection != null
-                            ? "Uploaded images ${fileSelection.first}"
-                            : "",
-                        style: TextStyle(
-                            color: fileSelection != null
-                                ? Colors.green
-                                : Colors.red),
-                      )));
+
+                  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //     behavior: SnackBarBehavior.floating,
+                  //     content: Text(
+                  //       fileSelection != null
+                  //           ? "Uploaded images ${fileSelection.first}"
+                  //           : "",
+                  //       style: TextStyle(
+                  //           color: fileSelection != null
+                  //               ? Colors.green
+                  //               : Colors.red),
+                  //     )));
                   widget.onFileSelection(fileSelection);
                 },
                 child: Container(
@@ -114,8 +115,31 @@ class _DocumentUploadingState extends State<DocumentUploading> {
               ),
             ],
           ),
+          // imgpath.isNotEmpty ? showImage() : const SizedBox()
         ],
       ),
     );
   }
+
+  // Widget showImage() => Padding(
+  //     padding: const EdgeInsets.all(8),
+  //     child: Center(
+  //         child: Column(children: [
+  //       ClipRRect(
+  //         borderRadius: BorderRadius.circular(8),
+  //         child: Image.file(
+  //           //to show image, you type like this.
+  //           File(imgpath),
+  //           fit: BoxFit.cover,
+  //           width: MediaQuery.of(context).size.width * 0.5,
+  //           height: 200,
+  //         ),
+  //       ),
+  //       Text(
+  //         imgpath.split('/').last,
+  //         textAlign: TextAlign.center,
+  //         overflow: TextOverflow.ellipsis,
+  //         // style: const TextStyle(fontWeight: FontWeight.bold),
+  //       )
+  //     ])));
 }

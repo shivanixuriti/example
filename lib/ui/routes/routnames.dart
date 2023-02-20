@@ -19,7 +19,7 @@ import 'package:xuriti/ui/screens/kyc_screens/firm_details_screens.dart';
 import 'package:xuriti/ui/screens/kyc_screens/kyc_verification_screen.dart';
 import 'package:xuriti/ui/screens/kyc_screens/ownership_proof_screen.dart';
 import 'package:xuriti/ui/screens/kyc_screens/pan_details_screen.dart';
-import 'package:xuriti/ui/screens/kyc_screens/kyc_submission_screen.dart';
+// import 'package:xuriti/ui/screens/kyc_screens/kyc_submission_screen.dart';
 import 'package:xuriti/ui/screens/kyc_screens/store_images.dart';
 import 'package:xuriti/ui/screens/kyc_screens/vintage_proof_screen.dart';
 import 'package:xuriti/ui/screens/paynow_screens/payment_failed_screen.dart';
@@ -148,8 +148,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => const MobileVerification());
       case '/finGstDetails':
         return MaterialPageRoute(builder: (_) => const FinancialGstDetails());
-      case '/kycSubmission':
-        return MaterialPageRoute(builder: (_) => const kycSubmission());
+      // case '/kycSubmission':
+      //   return MaterialPageRoute(builder: (_) => const kycSubmission());
       case '/kycnextstep':
         return MaterialPageRoute(
             builder: (_) => const KycVerificationNextStep());

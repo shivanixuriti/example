@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/logic/view_models/kyc_manager.dart';
+import 'package:xuriti/util/loaderWidget.dart';
 
 import '../../../Model/KycDetails.dart';
 import '../../../models/helper/service_locator.dart';
@@ -129,34 +133,101 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       child: SizedBox(
                         width: maxWidth,
                         height: 50,
-                        child: ListView.builder(
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 30,
+                          ),
                           scrollDirection: Axis.horizontal,
                           itemCount: financefiles.length,
                           itemBuilder: (context, index) {
-                            final finance = financefiles[index];
+                            final doc = financefiles[index];
 
-                            return GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                          child: Container(
-                                            width: 220,
-                                            height: 200,
-                                            child: Image.network(
-                                              '$finance',
-                                              fit: BoxFit.cover,
+                            print('the whole filepath  >>>>>>>>$doc');
+
+                            List doc1 = doc.split("?");
+                            List doc2 = doc1[0].split(".");
+                            List fpath = doc2;
+                            print('doc1.>>>>>>>>$doc1');
+
+                            print('fpath.>>>>>>>>$fpath');
+                            final fp = doc2.last;
+                            String filepath = fp.toString();
+                            print('filepath.>>>>>>>>$filepath');
+
+                            Future<File?> downloadFile(
+                                String url, String name) async {
+                              final appStorage =
+                                  await getApplicationDocumentsDirectory();
+                              final file = File('${appStorage.path}/$name');
+                              try {
+                                final response = await Dio().get(url,
+                                    options: Options(
+                                        responseType: ResponseType.bytes,
+                                        followRedirects: false,
+                                        receiveTimeout: 0));
+                                final raf = file.openSync(mode: FileMode.write);
+                                raf.writeFromSync(response.data);
+                                await raf.close();
+                                return file;
+                              } catch (e) {
+                                return null;
+                              }
+                            }
+
+                            Future openFile(
+                                {required String url, String? filename}) async {
+                              final file = await downloadFile(url, filename!);
+                              if (file == null) return;
+                              print(
+                                  'path for pdf file++++++++++++ ${file.path}');
+                              OpenFile.open(file.path);
+                            }
+
+                            // filepath != 'pdf'
+                            //     ?
+                            if (filepath != 'pdf') {
+                              print('object++++====');
+                              return GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: SizedBox(
+                                              width: maxWidth * 5,
+                                              height: maxHeight * 0.5,
+                                              child: Image.network(
+                                                // ignore: unnecessary_string_interpolations
+                                                '$doc',
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      });
-                                },
-                                child: imageDialog(finance));
+                                          );
+                                        });
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: w1p * 6, right: w1p * 6),
+                                    child: imageDialog(doc),
+                                  ));
+                            } else {
+                              return GestureDetector(
+                                  onTap: () {
+                                    openFile(url: doc, filename: 'finance.pdf');
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: w1p * 6,
+                                      // right: w1p * 6,
+                                    ),
+                                    child: imageDialog(doc),
+                                  ));
+                            }
                           },
                         ),
                       ),
                     ),
+
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
@@ -205,34 +276,101 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       child: SizedBox(
                         width: maxWidth,
                         height: 50,
-                        child: ListView.builder(
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 30,
+                          ),
                           scrollDirection: Axis.horizontal,
                           itemCount: GSTfiles.length,
                           itemBuilder: (context, index) {
-                            final gst = GSTfiles[index];
+                            final doc = GSTfiles[index];
 
-                            return GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                          child: Container(
-                                            width: 220,
-                                            height: 200,
-                                            child: Image.network(
-                                              '$gst',
-                                              fit: BoxFit.cover,
+                            print('the whole filepath  >>>>>>>>$doc');
+
+                            List doc1 = doc.split("?");
+                            List doc2 = doc1[0].split(".");
+                            List fpath = doc2;
+                            print('doc1.>>>>>>>>$doc1');
+
+                            print('fpath.>>>>>>>>$fpath');
+                            final fp = doc2.last;
+                            String filepath = fp.toString();
+                            print('filepath.>>>>>>>>$filepath');
+
+                            Future<File?> downloadFile(
+                                String url, String name) async {
+                              final appStorage =
+                                  await getApplicationDocumentsDirectory();
+                              final file = File('${appStorage.path}/$name');
+                              try {
+                                final response = await Dio().get(url,
+                                    options: Options(
+                                        responseType: ResponseType.bytes,
+                                        followRedirects: false,
+                                        receiveTimeout: 0));
+                                final raf = file.openSync(mode: FileMode.write);
+                                raf.writeFromSync(response.data);
+                                await raf.close();
+                                return file;
+                              } catch (e) {
+                                return null;
+                              }
+                            }
+
+                            Future openFile(
+                                {required String url, String? filename}) async {
+                              final file = await downloadFile(url, filename!);
+                              if (file == null) return;
+                              print(
+                                  'path for pdf file++++++++++++ ${file.path}');
+                              OpenFile.open(file.path);
+                            }
+
+                            // filepath != 'pdf'
+                            //     ?
+                            if (filepath != 'pdf') {
+                              print('object++++====');
+                              return GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: SizedBox(
+                                              width: maxWidth * 5,
+                                              height: maxHeight * 0.5,
+                                              child: Image.network(
+                                                // ignore: unnecessary_string_interpolations
+                                                '$doc',
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      });
-                                },
-                                child: imageDialog(gst));
+                                          );
+                                        });
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: w1p * 6, right: w1p * 6),
+                                    child: imageDialog(doc),
+                                  ));
+                            } else {
+                              return GestureDetector(
+                                  onTap: () {
+                                    openFile(url: doc, filename: 'finance.pdf');
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: w1p * 6,
+                                      // right: w1p * 6,
+                                    ),
+                                    child: imageDialog(doc),
+                                  ));
+                            }
                           },
                         ),
                       ),
                     ),
+
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
@@ -290,6 +428,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                     // ),
                     InkWell(
                       onTap: () async {
+                        context.showLoader();
                         //var img1 =
                         Map<String, dynamic> storeGstDetails =
                             await getIt<KycManager>().storeGstDetails(
@@ -301,7 +440,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                               gstImages?.map((e) => e?.path ?? "").toList() ??
                                   [],
                         );
-
+                        context.hideLoader();
                         // gstImage:
                         //     gstImages?.map((e) => e?.path ?? "").toList() ??
                         //         [],
@@ -322,6 +461,42 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                         isKyc: true,
                       ),
                     ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //       left: w1p * 6,
+                    //       right: w1p * 7,
+                    //       top: h1p * 5,
+                    //       bottom: h1p * 2),
+                    //   child: Text(
+                    //     "GST Details",
+                    //     style: TextStyles.textStyle54,
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //       horizontal: w1p * 6, vertical: h1p * 2),
+                    //   child: Text(
+                    //     "GST Return Files",
+                    //     style: TextStyles.textStyle123,
+                    //   ),
+                    // ),
+                    // DocumentUploading(
+                    //   maxWidth: maxWidth,
+                    //   maxHeight: maxHeight,
+                    // ),
+                    // InkWell(
+                    //   onTap: () async {
+                    //     await getIt<KycManager>().storeGstDetails();
+                    //     Fluttertoast.showToast(msg: "successfully uploaded");
+                    //     Navigator.pop(context);
+                    //   },
+                    //   child: Submitbutton(
+                    //     maxWidth: maxWidth,
+                    //     maxHeight: maxHeight,
+                    //     content: "Save & Continue",
+                    //     isKyc: true,
+                    //   ),
+                    // )
                   ]))));
     });
   }
