@@ -118,35 +118,24 @@ class _BankingDetailsState extends State<BankingDetails> {
                     ),
                     ((bankDetailsImages?.length ?? 0) != 0 &&
                             bankDetailsImages?.first != null)
-                        ? Column(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.38,
-                                height: 200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Center(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(1),
-                                      child: Image.file(
-                                        bankDetailsImages!.first!,
-                                        fit: BoxFit.fill,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.38,
-                                        height: 200,
-                                      ),
-                                    ),
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    bankDetailsImages!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
                                   ),
                                 ),
                               ),
-                              Text(
-                                bankDetailsImages!.first!.path.split('/').last,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                // style: const TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
+                            ),
                           )
                         : SizedBox(),
                     SizedBox(
@@ -217,7 +206,7 @@ class _BankingDetailsState extends State<BankingDetails> {
                                             child: Image.network(
                                               // ignore: unnecessary_string_interpolations
                                               '$doc',
-                                              fit: BoxFit.fill,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         );
