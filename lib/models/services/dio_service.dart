@@ -180,17 +180,6 @@ class DioClient {
     } catch (e) {}
   }
 
-  // download(link, String fileName) async {
-  //   String savePath = await getIt<TransactionManager>().getFilePath(fileName);
-  //   var dio = Dio();
-  // try{
-  //   Response response = await dio.download(link, savePath);
-  //   return response.statusCode;
-  // }catch (e){
-  //   print(e);
-  // }
-  //
-  // }
   KycDetails(String companyid) async {
     var dio = Dio();
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -206,19 +195,6 @@ class DioClient {
 
     String url = baseUrl + endUrl;
     final uri = Uri.parse(url);
-    // if (token == null) {
-    //   final response = await http.get(uri);
-    // }
-    // if (token != null) {
-    //   final response = await http.get(uri);
-    // if (response.statusCode == 200) {
-    //   final docs = json.decode(response.body);
-
-    //   print('docs....data....pan...holder....$docs');
-
-    //   // final tokenLower = doc.tokenNo.toString();
-    //   // final searchLower = query.toLowerCase();
-    // }
 
     try {
       print(token.toString());
@@ -261,16 +237,7 @@ class DioClient {
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
-        if (response.statusCode == 200) {
-          // Fluttertoast.showToast(
-          //     msg: 'Aadhaar api successful....',
-          //     toastLength: Toast.LENGTH_LONG,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 3,
-          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
-          //     textColor: Colors.white,
-          //     fontSize: 12.0);
-        }
+        if (response.statusCode == 200) {}
         return response.data;
       }
     } catch (e) {
@@ -304,16 +271,7 @@ class DioClient {
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
-        if (response.statusCode == 200) {
-          // Fluttertoast.showToast(
-          //     msg: 'Pan api successful....',
-          //     toastLength: Toast.LENGTH_LONG,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 3,
-          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
-          //     textColor: Colors.white,
-          //     fontSize: 12.0);
-        }
+        if (response.statusCode == 200) {}
         print(response);
         return response.data;
       }
@@ -348,16 +306,7 @@ class DioClient {
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
-        if (response.statusCode == 200) {
-          // Fluttertoast.showToast(
-          //     msg: 'Pan api successful....',
-          //     toastLength: Toast.LENGTH_LONG,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 3,
-          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
-          //     textColor: Colors.white,
-          //     fontSize: 12.0);
-        }
+        if (response.statusCode == 200) {}
         return response.data;
       }
     } catch (e) {
@@ -383,16 +332,7 @@ class DioClient {
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
-        if (response.statusCode == 200) {
-          // Fluttertoast.showToast(
-          //     msg: 'generate otp successful....',
-          //     toastLength: Toast.LENGTH_LONG,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 3,
-          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
-          //     textColor: Colors.white,
-          //     fontSize: 12.0);
-        }
+        if (response.statusCode == 200) {}
         return response.data;
       }
     } catch (e) {
@@ -418,16 +358,7 @@ class DioClient {
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
-        if (response.statusCode == 200) {
-          // Fluttertoast.showToast(
-          //     msg: 'otp verified successful....',
-          //     toastLength: Toast.LENGTH_LONG,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 3,
-          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
-          //     textColor: Colors.white,
-          //     fontSize: 12.0);
-        }
+        if (response.statusCode == 200) {}
         return response.data;
       }
     } catch (e) {
@@ -455,9 +386,7 @@ class DioClient {
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         return response.data;
       }
-    } catch (e) {
-      // print(e);
-    }
+    } catch (e) {}
   }
 
   aadhaar_otp(String url, Object data, String? token) async {
@@ -478,16 +407,7 @@ class DioClient {
         Response response = await dio.post(url,
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
-        if (response.statusCode == 200) {
-          // Fluttertoast.showToast(
-          //     msg: 'otp verified successful....',
-          //     toastLength: Toast.LENGTH_LONG,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 3,
-          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
-          //     textColor: Colors.white,
-          //     fontSize: 12.0);
-        }
+        if (response.statusCode == 200) {}
         return response.data;
       }
     } catch (e) {
@@ -515,14 +435,6 @@ class DioClient {
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
           print("OTP Verified...");
-          // Fluttertoast.showToast(
-          //     msg: 'otp verified successful....',
-          //     toastLength: Toast.LENGTH_LONG,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 3,
-          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
-          //     textColor: Colors.white,
-          //     fontSize: 12.0);
         }
         return response.data;
       }

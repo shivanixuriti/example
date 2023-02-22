@@ -87,10 +87,8 @@ dev_dependencies:
 
   flutter_launcher_icons: ^0.11.0
 flutter_icons:
- 
   image_path: "assets/xuriti_icon.jpg" 
   android: true
-  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

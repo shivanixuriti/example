@@ -227,6 +227,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                         ),
                       ),
                     ),
+
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
