@@ -199,7 +199,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                                               child: Image.network(
                                                 // ignore: unnecessary_string_interpolations
                                                 '$doc',
-                                                fit: BoxFit.cover,
+                                                fit: BoxFit.fill,
                                               ),
                                             ),
                                           );
@@ -232,32 +232,62 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
                       flag: true,
-                      onFileSelection: (filesObject) {
-                        financialImages = filesObject;
+                      onFileSelection: (filesObjects) {
+                        if ((financialImages?.length ?? 0) == 0) {
+                          financialImages = filesObjects;
+                        } else if (((financialImages?.length ?? 0) +
+                                (filesObjects?.length ?? 0)) <=
+                            3) {
+                          financialImages?.addAll(filesObjects!);
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Selection limit for 3 images are accepted");
+                        }
+
                         setState(() {});
                       },
-                      //type: "Financial Details"
                     ),
+                    // DocumentUploading(
+                    //   maxWidth: maxWidth,
+                    //   maxHeight: maxHeight,
+                    //   flag: true,
+                    //   onFileSelection: (filesObject) {
+                    //     financialImages = filesObject;
+                    //     setState(() {});
+                    //   },
+                    //   //type: "Financial Details"
+                    // ),
                     ((financialImages?.length ?? 0) != 0 &&
                             financialImages?.first != null)
-                        ? SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.38,
-                            height: 200,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Center(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(1),
-                                  child: Image.file(
-                                    financialImages!.first!,
-                                    fit: BoxFit.cover,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.38,
-                                    height: 200,
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.38,
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(1),
+                                      child: Image.file(
+                                        financialImages!.first!,
+                                        fit: BoxFit.fill,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        height: 200,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                              Text(
+                                financialImages!.first!.path.split('/').last,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                // style: const TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
                           )
                         : SizedBox(),
                     Padding(
@@ -342,7 +372,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                                               child: Image.network(
                                                 // ignore: unnecessary_string_interpolations
                                                 '$doc',
-                                                fit: BoxFit.cover,
+                                                fit: BoxFit.fill,
                                               ),
                                             ),
                                           );
@@ -381,24 +411,35 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       },
                     ),
                     ((gstImages?.length ?? 0) != 0 && gstImages?.first != null)
-                        ? SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.38,
-                            height: 200,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Center(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(1),
-                                  child: Image.file(
-                                    financialImages!.first!,
-                                    fit: BoxFit.cover,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.38,
-                                    height: 200,
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.38,
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(1),
+                                      child: Image.file(
+                                        gstImages!.first!,
+                                        fit: BoxFit.fill,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        height: 200,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                              Text(
+                                gstImages!.first!.path.split('/').last,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                // style: const TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
                           )
                         : SizedBox(),
 
