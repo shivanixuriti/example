@@ -9,14 +9,16 @@ class KycDetails extends StatelessWidget {
   final double maxWidth;
   final double maxHeight;
   String? subtitle;
-  String? kycStatus;
+  bool? kycStatus;
+  bool isMandatory = false;
 
   KycDetails(
       {required this.title,
       required this.maxWidth,
       required this.maxHeight,
       this.subtitle,
-      this.kycStatus});
+      this.kycStatus,
+      this.isMandatory = false});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,16 @@ class KycDetails extends StatelessWidget {
             tileColor: Colours.white,
             title: Row(
               children: [
-                KycStatus.kycStatusToIcon(kycStatus),
+                // KycStatus.kycStatusToIcon(kycStatus),
+                kycStatus ?? false
+                    ? const Icon(
+                        Icons.check_circle_rounded,
+                        color: Colors.green,
+                      )
+                    : const Icon(
+                        Icons.remove_circle,
+                        color: Colors.red,
+                      ),
                 SizedBox(
                   width: w1p * 3,
                 ),
@@ -50,6 +61,12 @@ class KycDetails extends StatelessWidget {
                   title,
                   style: TextStyles.textStyle44,
                 ),
+                isMandatory
+                    ? Text(
+                        "* ",
+                        style: TextStyles.textStyle118,
+                      )
+                    : Text(" "),
                 Text(
                   subtitle ?? "",
                   style: TextStyles.textStyle119,

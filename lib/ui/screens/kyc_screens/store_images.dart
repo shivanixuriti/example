@@ -240,7 +240,8 @@ class _StoreImagesState extends State<StoreImages> {
                       maxHeight: maxHeight,
                       flag: true,
                       onFileSelection: (filesObjects) {
-                        if ((storeImages?.length ?? 0) == 0) {
+                        if ((storeImages?.length ?? 0) == 0 &&
+                            (filesObjects?.length ?? 0) <= 3) {
                           storeImages = filesObjects;
                         } else if (((storeImages?.length ?? 0) +
                                 (filesObjects?.length ?? 0)) <=
@@ -250,6 +251,18 @@ class _StoreImagesState extends State<StoreImages> {
                           Fluttertoast.showToast(
                               msg: "Selection limit for 3 images are accepted");
                         }
+
+                        // if ((storeImages?.length ?? 0) == 0 && ) {
+                        //   storeImages = filesObjects;
+                        // } else
+                        // if (((storeImages?.length ?? 0) +
+                        //         (filesObjects?.length ?? 0)) <=
+                        //     3) {
+                        //   storeImages?.addAll(filesObjects!);
+                        // } else {
+                        //   Fluttertoast.showToast(
+                        //       msg: "Selection limit for 3 images are accepted");
+                        // }
 
                         setState(() {});
                       },

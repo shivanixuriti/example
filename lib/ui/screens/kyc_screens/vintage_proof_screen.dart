@@ -103,9 +103,7 @@ class _VintageProofState extends State<VintageProof> {
                           ),
                           SizedBox(
                             width: w10p * 5.5,
-                          ),
-                          SvgPicture.asset(
-                              "assets/images/kycImages/submitted.svg")
+                          )
                         ],
                       ),
                     ),
