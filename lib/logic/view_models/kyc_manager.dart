@@ -148,11 +148,11 @@ class KycManager extends ChangeNotifier {
           return errorMassage;
         }
       } else {
-        // Map<String, dynamic> errorMessage = {
-        //   'msg': 'Unable to proceed, please try again later.',
-        // };
-        // print("error:--$errorMassage");
-        // return errorMassage;
+        Map<String, dynamic> errorMessage = {
+          'msg': 'Unable to proceed, please try again later.',
+        };
+        print("error:--$errorMessage");
+        return errorMessage;
       }
     } else {
       Map<String, dynamic> errorMassage = {
