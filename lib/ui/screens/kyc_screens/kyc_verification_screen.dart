@@ -216,10 +216,10 @@ class _KycVerificationState extends State<KycVerification> {
                                       "* ",
                                       style: TextStyles.textStyle118,
                                     ),
-                                    Text(
-                                      "(Individual)",
-                                      style: TextStyles.textStyle119,
-                                    ),
+                                    // Text(
+                                    //   "(Individual)",
+                                    //   style: TextStyles.textStyle119,
+                                    // ),
                                   ],
                                 ),
                                 trailing: SvgPicture.asset(

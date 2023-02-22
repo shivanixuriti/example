@@ -29,6 +29,8 @@ class _OwnershipProofState extends State<OwnershipProof> {
   int currentIndex = 0;
   String? doc;
   List<File?>? ownershipImages;
+  var docNo;
+  var docType;
 
   var _formKey = GlobalKey<FormState>();
   TextEditingController documentController = TextEditingController();
@@ -46,10 +48,15 @@ class _OwnershipProofState extends State<OwnershipProof> {
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
     final details = responseData['data'];
     Business Docdetails = Business.fromJson(details['ownership']);
+    var docNo = Docdetails.documentNumber;
+    var doc = Docdetails.documentType;
     setState(() {
       List<String> imgfiles = Docdetails.files;
       this.imgfiles = imgfiles;
+      this.docNo = docNo;
+      this.doc = doc;
     });
+    documentController.text = '${docNo}';
     print('business files...))))))))))))${imgfiles[0].toString()}');
     // setState(() {
     //   this.details = details;
@@ -174,7 +181,13 @@ class _OwnershipProofState extends State<OwnershipProof> {
                                 color: Colours.paleGrey,
                               ),
                               child: TextFormField(
-                                controller: documentController,
+                                controller: documentController =
+                                    TextEditingController(
+                                        text: '${documentController.text}'),
+                                onChanged: (value) {
+                                  // documentNoController.clear();
+                                  value = documentController.text;
+                                },
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: w1p * 6, vertical: h1p * .5),
