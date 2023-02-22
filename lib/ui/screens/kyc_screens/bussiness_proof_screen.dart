@@ -34,6 +34,8 @@ class _BussinessProofState extends State<BussinessProof> {
   late File business_file;
   var _formKey = GlobalKey<FormState>();
   List imgfiles = [];
+  var doctype;
+  var docno;
   @override
   void initState() {
     init();
@@ -47,12 +49,17 @@ class _BussinessProofState extends State<BussinessProof> {
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId!);
     final details = responseData['data'];
     Business Docdetails = Business.fromJson(details['business']);
+    var doc = Docdetails.documentType;
+    var docno = Docdetails.documentNumber;
     setState(() {
       List<String> imgfiles = Docdetails.files;
       final List imgFiles = Docdetails.files;
       final type = imgFiles[0].runtimeType;
       this.imgfiles = imgfiles;
+      this.docno = docno;
+      this.doc = doc;
     });
+    documentNoController.text = '${docno}';
   }
 
   @override
@@ -286,7 +293,12 @@ class _BussinessProofState extends State<BussinessProof> {
                                 color: Colours.paleGrey,
                               ),
                               child: TextFormField(
-                                controller: documentNoController,
+                                controller: documentNoController =
+                                    TextEditingController(
+                                        text: '${documentNoController.text}'),
+                                onChanged: (value) {
+                                  value = documentNoController.text;
+                                },
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: w1p * 6, vertical: h1p * .5),

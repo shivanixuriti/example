@@ -235,16 +235,14 @@ class _StoreImagesState extends State<StoreImages> {
                         //_checkController();
                       ),
                     ),
-
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
                       flag: true,
                       onFileSelection: (filesObjects) {
-                        // if ((storeImages?.length ?? 0) == 0 && ) {
-                        //   storeImages = filesObjects;
-                        // } else
-                        if (((storeImages?.length ?? 0) +
+                        if ((storeImages?.length ?? 0) == 0) {
+                          storeImages = filesObjects;
+                        } else if (((storeImages?.length ?? 0) +
                                 (filesObjects?.length ?? 0)) <=
                             3) {
                           storeImages?.addAll(filesObjects!);
@@ -270,8 +268,9 @@ class _StoreImagesState extends State<StoreImages> {
                               width: MediaQuery.of(context).size.width * 0.38,
                               height: 220,
                               child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Column(children: [
+                                padding: const EdgeInsets.all(5),
+                                child: Column(
+                                  children: [
                                     Center(
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(1),
@@ -291,45 +290,13 @@ class _StoreImagesState extends State<StoreImages> {
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       // style: const TextStyle(fontWeight: FontWeight.bold),
-                                    )
-                                  ])),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
                           }),
-                    )
-                    /*Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          //open button ----------------
-                          ElevatedButton(
-                              onPressed: () {
-                                openImages();
-                              },
-                              child: Text("Open Images")),
-
-                          Divider(),
-                          //   Text("Picked Files:"),
-                          Divider(),
-
-                          imagefiles != null
-                              ? Wrap(
-                                  children: imagefiles!.map((imageone) {
-                                    return Container(
-                                        child: Card(
-                                      child: Container(
-                                        height: 100,
-                                        width: 100,
-                                        child: Image.file(File(imageone.path)),
-                                      ),
-                                    ));
-                                  }).toList(),
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    ),*/
-                    ,
+                    ),
                     InkWell(
                       onTap: () async {
                         context.showLoader();

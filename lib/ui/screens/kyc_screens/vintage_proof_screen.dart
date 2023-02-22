@@ -30,6 +30,8 @@ class _VintageProofState extends State<VintageProof> {
   String? firm;
   var _formKey = GlobalKey<FormState>();
   List imgfiles = [];
+  var docType;
+
   @override
   void initState() {
     init();

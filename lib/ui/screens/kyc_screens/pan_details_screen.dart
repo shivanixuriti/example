@@ -30,6 +30,7 @@ class _PanDetailsState extends State<PanDetails> {
 
   List<File?>? panDetailsImages;
   List panfiles = [];
+  var panNo;
   @override
   void initState() {
     init();
@@ -43,9 +44,11 @@ class _PanDetailsState extends State<PanDetails> {
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
     final details = responseData['data'];
     Pan pandetails = Pan.fromJson(details['pan']);
+    var panNo = pandetails.number;
     setState(() {
       List<String> panfiles = pandetails.files;
       this.panfiles = panfiles;
+      this.panNo = panNo;
     });
     print('panfiles...))))))))))))${panfiles[0].toString()}');
     print('the response data of kyc"""""""""$responseData');
@@ -119,7 +122,8 @@ class _PanDetailsState extends State<PanDetails> {
                           color: Colours.paleGrey,
                         ),
                         child: TextFormField(
-                            controller: panController,
+                            controller: panController =
+                                TextEditingController(text: '${this.panNo}'),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: w1p * 6, vertical: h1p * .5),

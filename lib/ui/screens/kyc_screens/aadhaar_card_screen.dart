@@ -65,7 +65,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
   File? img;
 
   String? imgpath;
-
+  var adharno;
   _AadhaarCardState(data) {
     response = data['data'];
     imageUrl = response != null ? response : "";
@@ -89,10 +89,13 @@ class _AadhaarCardState extends State<AadhaarCard> {
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
     final details = responseData['data'];
     Aadhar Docdetails = Aadhar.fromJson(details['aadhar']);
+    var adharno = Docdetails.number;
     setState(() {
       List<String> imgfiles = Docdetails.files;
       this.imgfiles = imgfiles;
+      this.adharno = adharno;
     });
+    aadhaarController.text = '${adharno}';
     print('adhaar files...))))))))))))${imgfiles[0].toString()}');
   }
 
@@ -492,15 +495,15 @@ class _AadhaarCardState extends State<AadhaarCard> {
                                 String adharmsg = aadhaar.toString();
                                 String adhaarmsg = adharmsg.substring(4);
 
-                                Fluttertoast.showToast(
-                                    msg: adhaarmsg,
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 3,
-                                    backgroundColor:
-                                        Color.fromARGB(255, 253, 153, 33),
-                                    textColor: Colors.white,
-                                    fontSize: 12.0);
+                                // Fluttertoast.showToast(
+                                //     msg: adhaarmsg,
+                                //     toastLength: Toast.LENGTH_LONG,
+                                //     gravity: ToastGravity.CENTER,
+                                //     timeInSecForIosWeb: 3,
+                                //     backgroundColor:
+                                //         Color.fromARGB(255, 253, 153, 33),
+                                //     textColor: Colors.white,
+                                //     fontSize: 12.0);
                               },
                               child: Text(
                                 'CAPTURED',
@@ -560,7 +563,12 @@ class _AadhaarCardState extends State<AadhaarCard> {
                       color: Colours.paleGrey,
                     ),
                     child: TextFormField(
-                        controller: aadhaarController,
+                        controller: aadhaarController = TextEditingController(
+                            text: '${aadhaarController.text}'),
+                        onChanged: (value) {
+                          // documentNoController.clear();
+                          value = aadhaarController.text;
+                        },
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: w1p * 6, vertical: h1p * .5),
