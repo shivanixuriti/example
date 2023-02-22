@@ -27,6 +27,7 @@ class KycVerificationNextStep extends StatefulWidget {
 
 class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
   KycStatus? kycStatus;
+  dynamic details;
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
     dynamic companyId = getIt<SharedPreferences>().getString('companyId');
 
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
-    final details = responseData?['data'] ?? <String, dynamic>{};
+    details = responseData?['data'] ?? <String, dynamic>{};
 
     setState(() {
       kycStatus = KycStatus.fromJson(details);
@@ -191,7 +192,9 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             subtitle: " (Any one of the following)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
-                            kycStatus: kycStatus?.businessStatus,
+                            kycStatus:
+                                ((details?['business']?['files']?.length ?? 0) >
+                                    0), //kycStatus?.businessStatus,
                           ),
                         ),
                         InkWell(
@@ -203,7 +206,10 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             subtitle: " (Business/Residence- any one)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
-                            kycStatus: kycStatus?.ownershipStatus,
+                            kycStatus:
+                                ((details?['ownership']?['files']?.length ??
+                                        0) >
+                                    0), //kycStatus?.ownershipStatus,
                           ),
                         ),
                         InkWell(
@@ -214,7 +220,9 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             title: "Vintage Proof",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
-                            kycStatus: kycStatus?.vintageStatus,
+                            kycStatus:
+                                ((details?['vintage']?['files']?.length ?? 0) >
+                                    0), //kycStatus?.vintageStatus,
                           ),
                         ),
                         InkWell(
@@ -225,7 +233,10 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             title: "Firm/Partnership Details",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
-                            kycStatus: kycStatus?.partnershipStatus,
+                            kycStatus:
+                                ((details?['partnership']?['files']?.length ??
+                                        0) >
+                                    0), //kycStatus?.partnershipStatus,
                           ),
                         ),
                         InkWell(
@@ -236,7 +247,10 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             title: "Banking Details",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
-                            kycStatus: kycStatus?.bankStatementStatus,
+                            kycStatus:
+                                ((details?['bankStatement']?['files']?.length ??
+                                        0) >
+                                    0), //kycStatus?.bankStatementStatus,
                           ),
                         ),
                         Padding(
@@ -261,8 +275,20 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                 tileColor: Colours.white,
                                 title: Row(
                                   children: [
-                                    KycStatus.kycStatusToIcon(
-                                        kycStatus?.financialStatus),
+                                    // KycStatus.kycStatusToIcon(
+                                    //     kycStatus?.financialStatus),
+
+                                    ((details?['financial']?['files']?.length ??
+                                                0) >
+                                            0)
+                                        ? const Icon(
+                                            Icons.check_circle_rounded,
+                                            color: Colors.green,
+                                          )
+                                        : const Icon(
+                                            Icons.remove_circle,
+                                            color: Colors.red,
+                                          ),
                                     SizedBox(
                                       width: w1p * 3,
                                     ),
@@ -307,8 +333,20 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                 tileColor: Colours.white,
                                 title: Row(
                                   children: [
-                                    KycStatus.kycStatusToIcon(
-                                        kycStatus?.storeImagesStatus),
+                                    // KycStatus.kycStatusToIcon(
+                                    //     kycStatus?.storeImagesStatus),
+                                    (details?['storeImages']?['files']
+                                                    ?.length ??
+                                                0) >
+                                            0
+                                        ? const Icon(
+                                            Icons.check_circle_rounded,
+                                            color: Colors.green,
+                                          )
+                                        : const Icon(
+                                            Icons.remove_circle,
+                                            color: Colors.red,
+                                          ),
                                     SizedBox(
                                       width: w1p * 3,
                                     ),

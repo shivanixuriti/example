@@ -9,7 +9,7 @@ class KycDetails extends StatelessWidget {
   final double maxWidth;
   final double maxHeight;
   String? subtitle;
-  String? kycStatus;
+  bool? kycStatus;
 
   KycDetails(
       {required this.title,
@@ -42,7 +42,16 @@ class KycDetails extends StatelessWidget {
             tileColor: Colours.white,
             title: Row(
               children: [
-                KycStatus.kycStatusToIcon(kycStatus),
+                // KycStatus.kycStatusToIcon(kycStatus),
+                kycStatus ?? false
+                    ? const Icon(
+                        Icons.check_circle_rounded,
+                        color: Colors.green,
+                      )
+                    : const Icon(
+                        Icons.remove_circle,
+                        color: Colors.red,
+                      ),
                 SizedBox(
                   width: w1p * 3,
                 ),
