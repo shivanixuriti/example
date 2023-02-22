@@ -103,19 +103,19 @@ class KycSubmission extends StatelessWidget {
                           topRight: Radius.circular(10),
                         )),
                     child: ListView(children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: h10p * 2),
-                        child: Center(
-                            child: Image.asset(
-                                "assets/images/kycImages/thumbs-up.png")),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: h10p * 2),
+                      //   child: Center(
+                      //       child: Image.asset(
+                      //           "assets/images/kycImages/thumbs-up.png")),
+                      // ),
                       Center(
                           child: Padding(
                         padding: EdgeInsets.symmetric(
                           vertical: h1p * 3,
                         ),
                         child: Text(
-                          "Thank you!",
+                          "KYC In Progress!",
                           style: TextStyles.textStyle125,
                         ),
                       )),
@@ -124,20 +124,24 @@ class KycSubmission extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: w10p * 1),
                             child: Text(
-                                "We received your KYC verification details.We ",
-                                style: TextStyles.textStyle126),
+                              "We received your KYC verification details. ",
+                              style: TextStyles.textStyle126,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           Padding(
                             padding:
                                 EdgeInsets.symmetric(horizontal: w10p * 1.5),
                             child: Text(
-                                "will let you know the deails in 2-3 days",
+                                "Verification of the documents will take 2-3 days",
+                                textAlign: TextAlign.center,
                                 style: TextStyles.textStyle126),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: w10p * 1),
                             child: Text(
-                                "Please re-upload any document if the verification of that document has failed",
+                                "Please upload all documents and re-upload any document if the verification of that document has failed",
+                                textAlign: TextAlign.center,
                                 style: TextStyles.textStyle126),
                           ),
                         ],
@@ -167,7 +171,7 @@ class KycSubmission extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'prev',
+                              'PREV',
                               style: TextStyles.textStyle44,
                             ),
                           ],

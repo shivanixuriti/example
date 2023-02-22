@@ -10,7 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/service_locator.dart';
 
 class DioClient {
+  // final String baseUrl = "https://biz.xuriti.app/api";
   final String baseUrl = "https://biz.xuriti.app/api";
+  //final String baseUrl = "https://uat.xuriti.app/api";
 
   postFormData(String endUrl, FormData data, String? token) async {
     BaseOptions options = new BaseOptions(
@@ -44,6 +46,41 @@ class DioClient {
       print(e);
     }
   }
+  // postFormData(String endUrl, FormData data, String? token) async {
+  //   BaseOptions options = new BaseOptions(
+  //       baseUrl: baseUrl,
+  //       receiveDataWhenStatusError: true,
+  //       connectTimeout: 60 * 1000, // 60 seconds
+  //       receiveTimeout: 120 * 1000 // 60 seconds
+  //       );
+  //   String url = baseUrl + endUrl;
+  //   var dio = Dio();
+  //   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+  //       (HttpClient client) {
+  //     client.badCertificateCallback =
+  //         (X509Certificate cert, String host, int port) => true;
+  //     return client;
+  //   };
+  //   try {
+  //     if (token == null) {
+  //       Response response = await dio.post(url, data: data);
+
+  //       return response.data;
+  //     }
+  //     if (token != null) {
+  //       print('/////////// no err11111');
+  //       Response response = await dio.post(url,
+  //           data: data,
+  //           options: Options(headers: {'Authorization': 'Bearer $token'}));
+  //       print('/////////// no err222222222222');
+  //       print(response);
+  //       return response.data;
+  //     }
+  //   } catch (e) {
+  //     print('///////////errrrr');
+  //     print(e);
+  //   }
+  // }
 
   post(String endUrl, Map<String, dynamic> data, String? token) async {
     var dio = Dio();
@@ -142,6 +179,17 @@ class DioClient {
     } catch (e) {}
   }
 
+  // download(link, String fileName) async {
+  //   String savePath = await getIt<TransactionManager>().getFilePath(fileName);
+  //   var dio = Dio();
+  // try{
+  //   Response response = await dio.download(link, savePath);
+  //   return response.statusCode;
+  // }catch (e){
+  //   print(e);
+  // }
+  //
+  // }
   KycDetails(String companyid) async {
     var dio = Dio();
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -157,6 +205,19 @@ class DioClient {
 
     String url = baseUrl + endUrl;
     final uri = Uri.parse(url);
+    // if (token == null) {
+    //   final response = await http.get(uri);
+    // }
+    // if (token != null) {
+    //   final response = await http.get(uri);
+    // if (response.statusCode == 200) {
+    //   final docs = json.decode(response.body);
+
+    //   print('docs....data....pan...holder....$docs');
+
+    //   // final tokenLower = doc.tokenNo.toString();
+    //   // final searchLower = query.toLowerCase();
+    // }
 
     try {
       print(token.toString());
@@ -200,6 +261,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
+          // Fluttertoast.showToast(
+          //     msg: 'Aadhaar api successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -235,6 +304,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
+          // Fluttertoast.showToast(
+          //     msg: 'Pan api successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         print(response);
         return response.data;
@@ -271,6 +348,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
+          // Fluttertoast.showToast(
+          //     msg: 'Pan api successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -298,6 +383,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
+          // Fluttertoast.showToast(
+          //     msg: 'generate otp successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -325,6 +418,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
+          // Fluttertoast.showToast(
+          //     msg: 'otp verified successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -354,6 +455,7 @@ class DioClient {
         return response.data;
       }
     } catch (e) {
+      // print(e);
     }
   }
 
@@ -376,6 +478,14 @@ class DioClient {
             data: data,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
+          // Fluttertoast.showToast(
+          //     msg: 'otp verified successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }
@@ -404,6 +514,14 @@ class DioClient {
             options: Options(headers: {'Authorization': 'Bearer $token'}));
         if (response.statusCode == 200) {
           print("OTP Verified...");
+          // Fluttertoast.showToast(
+          //     msg: 'otp verified successful....',
+          //     toastLength: Toast.LENGTH_LONG,
+          //     gravity: ToastGravity.CENTER,
+          //     timeInSecForIosWeb: 3,
+          //     backgroundColor: Color.fromARGB(255, 253, 153, 33),
+          //     textColor: Colors.white,
+          //     fontSize: 12.0);
         }
         return response.data;
       }

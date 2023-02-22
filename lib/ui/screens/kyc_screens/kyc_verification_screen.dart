@@ -51,8 +51,8 @@ class _KycVerificationState extends State<KycVerification> {
   }
 
   Future init() async {
-    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
-    dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
+    var companyId = getIt<SharedPreferences>().getString('companyId');
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId!);
     final details = responseData?['data'] ?? <String, dynamic>{};
 
     setState(() {
@@ -293,7 +293,7 @@ class _KycVerificationState extends State<KycVerification> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: const [
                                 Text(
-                                  'next',
+                                  'NEXT',
                                   style: TextStyles.textStyle44,
                                 ),
                                 Align(
