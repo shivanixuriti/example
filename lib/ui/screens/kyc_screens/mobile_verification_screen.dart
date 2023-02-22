@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/util/loaderWidget.dart';
 
+import '../../../Model/KycDetails.dart';
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../models/core/mobile_verification_model.dart';
 import '../../../models/helper/service_locator.dart';
+import '../../../models/services/dio_service.dart';
 import '../../theme/constants.dart';
 import '../../widgets/appbar/app_bar_widget.dart';
 import '../../widgets/kyc_widgets/document_uploading.dart';
@@ -21,6 +24,28 @@ class MobileVerification extends StatefulWidget {
 class _MobileVerificationState extends State<MobileVerification> {
   TextEditingController numberController = TextEditingController();
   TextEditingController otpController = TextEditingController();
+
+  var mobno;
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future init() async {
+    var companyId = getIt<SharedPreferences>().getString('companyId');
+    print('Mobile- $companyId');
+    //final docs = DioClient().KycDetails(companyId);
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId!);
+    final details = responseData['data'];
+    Mobile Docdetails = Mobile.fromJson(details['mobile']);
+    var mobno = Docdetails.number;
+    setState(() {
+      this.mobno = mobno;
+    });
+    numberController.text = '${mobno}';
+  }
 
   @override
   Widget build(BuildContext context) {
