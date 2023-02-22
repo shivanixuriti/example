@@ -53,7 +53,7 @@ class _KycVerificationState extends State<KycVerification> {
   Future init() async {
     var companyId = getIt<SharedPreferences>().getString('companyId');
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId!);
-     details = responseData?['data'] ?? <String, dynamic>{};
+    details = responseData?['data'] ?? <String, dynamic>{};
 
     setState(() {
       kycStatus = KycStatus.fromJson(details);
@@ -185,8 +185,19 @@ class _KycVerificationState extends State<KycVerification> {
                           padding: EdgeInsets.only(
                               left: w1p * 3, top: h1p * 4, right: w1p * 3),
                           child: InkWell(
-                            onTap: () {
+                            onTap: () async {
                               Navigator.pushNamed(context, panDetails);
+
+                              var companyId = getIt<SharedPreferences>()
+                                  .getString('companyId');
+                              dynamic responseData = await getIt<DioClient>()
+                                  .KycDetails(companyId!);
+
+                              setState(() {
+                                details = responseData?['data'] ??
+                                    <String, dynamic>{};
+                                kycStatus = KycStatus.fromJson(details);
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -256,6 +267,16 @@ class _KycVerificationState extends State<KycVerification> {
                             //   context,
                             //   aadhaarCard,
                             // );
+                            var companyId = getIt<SharedPreferences>()
+                                .getString('companyId');
+                            dynamic responseData =
+                                await getIt<DioClient>().KycDetails(companyId!);
+
+                            setState(() {
+                              details =
+                                  responseData?['data'] ?? <String, dynamic>{};
+                              kycStatus = KycStatus.fromJson(details);
+                            });
                           },
                           // onTap: () {
                           //   Navigator.pushNamed(context, aadhaarCard);
@@ -265,25 +286,37 @@ class _KycVerificationState extends State<KycVerification> {
                               //subtitle: " (Any one of the following)",
                               maxHeight: maxHeight,
                               maxWidth: maxWidth,
+                              isMandatory: true,
                               // kycStatus: kycStatus?.aadharStatus,
-                              kycStatus: details?['aadhar']?['verified'] ??
-                                      false ),
+                              kycStatus:
+                                  details?['aadhar']?['verified'] ?? false),
                         ),
                         // Padding(
                         //   padding: EdgeInsets.only(
                         //       left: w1p * 3, top: h1p * 4, right: w1p * 3),
                         //   child:
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             Navigator.pushNamed(context, mobileVerification);
+                            var companyId = getIt<SharedPreferences>()
+                                .getString('companyId');
+                            dynamic responseData =
+                                await getIt<DioClient>().KycDetails(companyId!);
+
+                            setState(() {
+                              details =
+                                  responseData?['data'] ?? <String, dynamic>{};
+                              kycStatus = KycStatus.fromJson(details);
+                            });
                           },
                           child: KycDetails(
                               title: "Mobile Verification",
                               //  subtitle: " (Any one of the following)",
                               maxHeight: maxHeight,
                               maxWidth: maxWidth,
-                              kycStatus: details?['mobile']?['verified'] ??
-                                      false ),
+                              isMandatory: true,
+                              kycStatus:
+                                  details?['mobile']?['verified'] ?? false),
                         ),
                         SizedBox(
                           height: h1p * 3,

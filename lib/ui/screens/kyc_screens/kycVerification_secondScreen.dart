@@ -184,28 +184,50 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                         // ),
                         //),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             Navigator.pushNamed(context, businessProof);
+                            var companyId = getIt<SharedPreferences>()
+                                .getString('companyId');
+                            dynamic responseData =
+                                await getIt<DioClient>().KycDetails(companyId!);
+
+                            setState(() {
+                              details =
+                                  responseData?['data'] ?? <String, dynamic>{};
+                              kycStatus = KycStatus.fromJson(details);
+                            });
                           },
                           child: KycDetails(
                             title: "Business Proof",
                             subtitle: " (Any one of the following)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            isMandatory: true,
                             kycStatus:
                                 ((details?['business']?['files']?.length ?? 0) >
                                     0), //kycStatus?.businessStatus,
                           ),
                         ),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             Navigator.pushNamed(context, ownershipProof);
+                            var companyId = getIt<SharedPreferences>()
+                                .getString('companyId');
+                            dynamic responseData =
+                                await getIt<DioClient>().KycDetails(companyId!);
+
+                            setState(() {
+                              details =
+                                  responseData?['data'] ?? <String, dynamic>{};
+                              kycStatus = KycStatus.fromJson(details);
+                            });
                           },
                           child: KycDetails(
                             title: "Ownership Proof",
                             subtitle: " (Business/Residence- any one)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            isMandatory: true,
                             kycStatus:
                                 ((details?['ownership']?['files']?.length ??
                                         0) >
@@ -213,26 +235,48 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             Navigator.pushNamed(context, vintageProof);
+                            var companyId = getIt<SharedPreferences>()
+                                .getString('companyId');
+                            dynamic responseData =
+                                await getIt<DioClient>().KycDetails(companyId!);
+
+                            setState(() {
+                              details =
+                                  responseData?['data'] ?? <String, dynamic>{};
+                              kycStatus = KycStatus.fromJson(details);
+                            });
                           },
                           child: KycDetails(
                             title: "Vintage Proof",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            isMandatory: true,
                             kycStatus:
                                 ((details?['vintage']?['files']?.length ?? 0) >
                                     0), //kycStatus?.vintageStatus,
                           ),
                         ),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             Navigator.pushNamed(context, firmDetails);
+                            var companyId = getIt<SharedPreferences>()
+                                .getString('companyId');
+                            dynamic responseData =
+                                await getIt<DioClient>().KycDetails(companyId!);
+
+                            setState(() {
+                              details =
+                                  responseData?['data'] ?? <String, dynamic>{};
+                              kycStatus = KycStatus.fromJson(details);
+                            });
                           },
                           child: KycDetails(
                             title: "Firm/Partnership Details",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            isMandatory: true,
                             kycStatus:
                                 ((details?['partnership']?['files']?.length ??
                                         0) >
@@ -240,13 +284,24 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             Navigator.pushNamed(context, bankDetails);
+                            var companyId = getIt<SharedPreferences>()
+                                .getString('companyId');
+                            dynamic responseData =
+                                await getIt<DioClient>().KycDetails(companyId!);
+
+                            setState(() {
+                              details =
+                                  responseData?['data'] ?? <String, dynamic>{};
+                              kycStatus = KycStatus.fromJson(details);
+                            });
                           },
                           child: KycDetails(
                             title: "Banking Details",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            isMandatory: true,
                             kycStatus:
                                 ((details?['bankStatement']?['files']?.length ??
                                         0) >
@@ -257,8 +312,18 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                           padding: EdgeInsets.only(
                               left: w1p * 3, top: h1p * 4, right: w1p * 3),
                           child: InkWell(
-                            onTap: () {
+                            onTap: () async {
                               Navigator.pushNamed(context, finGstDetails);
+                              var companyId = getIt<SharedPreferences>()
+                                  .getString('companyId');
+                              dynamic responseData = await getIt<DioClient>()
+                                  .KycDetails(companyId!);
+
+                              setState(() {
+                                details = responseData?['data'] ??
+                                    <String, dynamic>{};
+                                kycStatus = KycStatus.fromJson(details);
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -297,6 +362,10 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                       style: TextStyles.textStyle44,
                                     ),
                                     Text(
+                                      "* ",
+                                      style: TextStyles.textStyle118,
+                                    ),
+                                    Text(
                                       "(Upto 24 Months)",
                                       style: TextStyles.textStyle119,
                                     ),
@@ -315,8 +384,18 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                           padding: EdgeInsets.only(
                               left: w1p * 3, top: h1p * 4, right: w1p * 3),
                           child: InkWell(
-                            onTap: () {
+                            onTap: () async {
                               Navigator.pushNamed(context, storeImages);
+                              var companyId = getIt<SharedPreferences>()
+                                  .getString('companyId');
+                              dynamic responseData = await getIt<DioClient>()
+                                  .KycDetails(companyId!);
+
+                              setState(() {
+                                details = responseData?['data'] ??
+                                    <String, dynamic>{};
+                                kycStatus = KycStatus.fromJson(details);
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -353,6 +432,10 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                     Text(
                                       "Upload Store Images ",
                                       style: TextStyles.textStyle44,
+                                    ),
+                                    Text(
+                                      "* ",
+                                      style: TextStyles.textStyle118,
                                     ),
                                     // Text(
                                     //   "(Upto 24 Months)",

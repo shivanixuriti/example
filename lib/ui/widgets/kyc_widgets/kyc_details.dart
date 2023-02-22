@@ -10,13 +10,15 @@ class KycDetails extends StatelessWidget {
   final double maxHeight;
   String? subtitle;
   bool? kycStatus;
+  bool isMandatory = false;
 
   KycDetails(
       {required this.title,
       required this.maxWidth,
       required this.maxHeight,
       this.subtitle,
-      this.kycStatus});
+      this.kycStatus,
+      this.isMandatory = false});
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,12 @@ class KycDetails extends StatelessWidget {
                   title,
                   style: TextStyles.textStyle44,
                 ),
+                isMandatory
+                    ? Text(
+                        "* ",
+                        style: TextStyles.textStyle118,
+                      )
+                    : Text(" "),
                 Text(
                   subtitle ?? "",
                   style: TextStyles.textStyle119,

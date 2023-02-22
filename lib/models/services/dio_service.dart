@@ -10,8 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/service_locator.dart';
 
 class DioClient {
-  final String baseUrl = "https://dev.xuriti.app/api";
-  // final String baseUrl = "https://biz.xuriti.app/api";
+  // final String baseUrl = "https://dev.xuriti.app/api";
+  final String baseUrl = "https://biz.xuriti.app/api";
   //final String baseUrl = "https://uat.xuriti.app/api";
 
   postFormData(String endUrl, FormData data, String? token) async {
