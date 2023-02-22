@@ -365,7 +365,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                         height: 50,
                         child: ListView.separated(
                           separatorBuilder: (context, index) => SizedBox(
-                            width: 120,
+                            width: 220,
                           ),
                           scrollDirection: Axis.horizontal,
                           itemCount: imgfiles.length,
@@ -428,7 +428,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                                               child: Image.network(
                                                 // ignore: unnecessary_string_interpolations
                                                 '$doc',
-                                                fit: BoxFit.fill,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           );
@@ -799,30 +799,32 @@ class _AadhaarCardState extends State<AadhaarCard> {
           children: [
             Text(
               'Name: $name',
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 15),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.width * 0.05,
+              height: MediaQuery.of(context).size.width * 0.1,
             ),
             Text(
               'Address: $address',
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 15),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.width * 0.05,
+              height: MediaQuery.of(context).size.width * 0.1,
             ),
             Text(
               'DOB: $dob',
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 15),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.width * 0.05,
+              height: MediaQuery.of(context).size.width * 0.1,
             ),
             Text(
               'Gender: $gender',
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 15),
             ),
-            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.1,
+            ),
           ],
         ),
       );
@@ -834,7 +836,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
             child: Image.file(
               //to show image, you type like this.
               File(path),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width * 0.38,
               height: 200,
             ),

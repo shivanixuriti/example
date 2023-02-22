@@ -38,7 +38,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:354278273865:android:606481e5296e86f09b2098",
         "android_client_info": {
-          "package_name": "com.xuriti.app"
+          "package_name": "com.example.xuriti_buyer_app"
         }
       },
       "oauth_client": [

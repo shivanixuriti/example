@@ -41,10 +41,10 @@ class _BussinessProofState extends State<BussinessProof> {
   }
 
   Future init() async {
-    var companyId = getIt<SharedPreferences>().getString('companyId');
-    print('Business Proof --- $companyId');
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+
     //final docs = DioClient().KycDetails(companyId);
-    dynamic responseData = await getIt<DioClient>().KycDetails(companyId!);
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
     final details = responseData['data'];
     Business Docdetails = Business.fromJson(details['business']);
     setState(() {
@@ -387,7 +387,7 @@ class _BussinessProofState extends State<BussinessProof> {
                                                     height: maxHeight * 0.5,
                                                     child: Image.network(
                                                       '$doc',
-                                                      fit: BoxFit.fill,
+                                                      fit: BoxFit.cover,
                                                     ),
                                                   ),
                                                 );
@@ -429,40 +429,27 @@ class _BussinessProofState extends State<BussinessProof> {
                           ),
                           ((businessProofImages?.length ?? 0) != 0 &&
                                   businessProofImages?.first != null)
-                              ? Column(
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.38,
-                                      height: 200,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5),
-                                        child: Center(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(1),
-                                            child: Image.file(
-                                              businessProofImages!.first!,
-                                              fit: BoxFit.fill,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.38,
-                                              height: 200,
-                                            ),
-                                          ),
+                              ? SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.38,
+                                  height: 200,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(1),
+                                        child: Image.file(
+                                          businessProofImages!.first!,
+                                          fit: BoxFit.cover,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.38,
+                                          height: 200,
                                         ),
                                       ),
                                     ),
-                                    Text(
-                                      businessProofImages!.first!.path
-                                          .split('/')
-                                          .last,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                      // style: const TextStyle(fontWeight: FontWeight.bold),
-                                    )
-                                  ],
+                                  ),
                                 )
                               : SizedBox()
                         ],
