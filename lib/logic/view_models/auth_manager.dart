@@ -147,8 +147,8 @@ class AuthManager extends ChangeNotifier {
           uInfo = userDetails;
           await getIt<UserInfoService>().addData(userDetails);
 
-          //String? userId = userDetails?.user!.sId;
-          //String? token = userDetails?.token;
+          String? userId = userDetails?.user!.sId;
+          String? token = userDetails?.token;
           String? useName = userDetails!.user!.name;
           getIt<SharedPreferences>().setString('token', responseData["token"]);
           getIt<SharedPreferences>().setString('userName', useName!);
@@ -196,6 +196,7 @@ class AuthManager extends ChangeNotifier {
 
         return response;
         // notifyListeners();
+
       }
     } else {
       response = {
@@ -210,8 +211,8 @@ class AuthManager extends ChangeNotifier {
     String? id = getIt<SharedPreferences>().getString('id');
     String url = "/auth/logout";
     Map<String, dynamic> data = {"userID": id};
-
-    await getIt<DioClient>().post(url, data, null);
+    Map<String, dynamic> responseData =
+        await getIt<DioClient>().post(url, data, null);
     if (getIt<SharedPreferences>().getBool('isgLogin') == true) {
       await googleSignIn.signOut();
     }

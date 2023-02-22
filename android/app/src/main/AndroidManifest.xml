@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xuriti.app">
+    package="com.example.xuriti_buyer_app">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Xuriti Buyer App"
+        android:label="xuriti_buyer_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

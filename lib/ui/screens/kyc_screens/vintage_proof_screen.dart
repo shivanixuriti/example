@@ -42,7 +42,7 @@ class _VintageProofState extends State<VintageProof> {
     //final docs = DioClient().KycDetails(companyId);
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
     final details = responseData['data'];
-    Vintage Docdetails = Vintage.fromJson(details['vintage']);
+    Vintage Docdetails = Vintage.fromJson(details['business']);
     setState(() {
       List<String> imgfiles = Docdetails.files;
       this.imgfiles = imgfiles;
@@ -213,7 +213,7 @@ class _VintageProofState extends State<VintageProof> {
                                               child: Image.network(
                                                 // ignore: unnecessary_string_interpolations
                                                 '$doc',
-                                                fit: BoxFit.fill,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           );
@@ -252,35 +252,24 @@ class _VintageProofState extends State<VintageProof> {
                     ),
                     ((vintageImages?.length ?? 0) != 0 &&
                             vintageImages?.first != null)
-                        ? Column(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.38,
-                                height: 200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Center(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(1),
-                                      child: Image.file(
-                                        vintageImages!.first!,
-                                        fit: BoxFit.fill,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.38,
-                                        height: 200,
-                                      ),
-                                    ),
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.38,
+                            height: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.file(
+                                    vintageImages!.first!,
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.38,
+                                    height: 200,
                                   ),
                                 ),
                               ),
-                              Text(
-                                vintageImages!.first!.path.split('/').last,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                // style: const TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
+                            ),
                           )
                         : SizedBox(),
                     InkWell(

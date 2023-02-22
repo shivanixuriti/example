@@ -205,7 +205,7 @@ class _StoreImagesState extends State<StoreImages> {
                                               child: Image.network(
                                                 // ignore: unnecessary_string_interpolations
                                                 '$doc',
-                                                fit: BoxFit.fill,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           );
@@ -241,10 +241,9 @@ class _StoreImagesState extends State<StoreImages> {
                       maxHeight: maxHeight,
                       flag: true,
                       onFileSelection: (filesObjects) {
-                        // if ((storeImages?.length ?? 0) == 0 && ) {
-                        //   storeImages = filesObjects;
-                        // } else
-                        if (((storeImages?.length ?? 0) +
+                        if ((storeImages?.length ?? 0) == 0) {
+                          storeImages = filesObjects;
+                        } else if (((storeImages?.length ?? 0) +
                                 (filesObjects?.length ?? 0)) <=
                             3) {
                           storeImages?.addAll(filesObjects!);
@@ -259,7 +258,7 @@ class _StoreImagesState extends State<StoreImages> {
 
                     ///List separator
                     SizedBox(
-                      height: 220,
+                      height: 200,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           primary: false,
@@ -268,31 +267,22 @@ class _StoreImagesState extends State<StoreImages> {
                           itemBuilder: (contxt, index) {
                             return SizedBox(
                               width: MediaQuery.of(context).size.width * 0.38,
-                              height: 220,
+                              height: 200,
                               child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Column(children: [
-                                    Center(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(1),
-                                        child: Image.file(
-                                          storeImages![index]!,
-                                          fit: BoxFit.cover,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.38,
-                                          height: 190,
-                                        ),
-                                      ),
+                                padding: const EdgeInsets.all(5),
+                                child: Center(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(1),
+                                    child: Image.file(
+                                      storeImages![index]!,
+                                      fit: BoxFit.cover,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.38,
+                                      height: 200,
                                     ),
-                                    Text(
-                                      storeImages![index]!.path.split('/').last,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                      // style: const TextStyle(fontWeight: FontWeight.bold),
-                                    )
-                                  ])),
+                                  ),
+                                ),
+                              ),
                             );
                           }),
                     )

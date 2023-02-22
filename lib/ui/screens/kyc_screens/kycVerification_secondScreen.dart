@@ -352,7 +352,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                       ),
                                     ),
                                     Text(
-                                      'PREV',
+                                      'prev',
                                       style: TextStyles.textStyle44,
                                     ),
                                   ],
@@ -372,7 +372,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: const [
                                       Text(
-                                        'NEXT',
+                                        'next',
                                         style: TextStyles.textStyle44,
                                       ),
                                       Align(

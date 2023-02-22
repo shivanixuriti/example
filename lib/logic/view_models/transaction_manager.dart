@@ -14,7 +14,7 @@ import 'package:xuriti/models/core/invoice_model.dart';
 
 import 'package:xuriti/models/core/seller_list_model.dart';
 import 'package:xuriti/models/services/dio_service.dart';
-import 'package:open_file_safe/open_file_safe.dart';
+import 'package:open_file/open_file.dart';
 
 import 'package:xuriti/ui/routes/router.dart';
 
