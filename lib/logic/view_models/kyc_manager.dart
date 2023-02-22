@@ -24,7 +24,8 @@ class KycManager extends ChangeNotifier {
   bool? flag;
   dynamic captcha;
 
-  dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+  var companyId = getIt<SharedPreferences>().getString('companyId');
+
   dynamic userID = getIt<SharedPreferences>().getString('id');
 
   var captchasessionId;
@@ -59,6 +60,8 @@ class KycManager extends ChangeNotifier {
   }
 
   Future<List<File?>?> selectFile(bool? flag) async {
+    print('KYC MANAGER --- $companyId');
+
     final result =
         await FilePicker.platform.pickFiles(allowMultiple: flag ?? false);
     print("filepath:----$result");
@@ -100,19 +103,20 @@ class KycManager extends ChangeNotifier {
     String url = "/kyc/document-verify/pan-ocr";
     String verifyPanUrl = "/kyc/document-verify/pan";
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
 
     final panNumberRegex = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$');
     if ((panfile != "") &&
         pan_no.isNotEmpty &&
         panNumberRegex.hasMatch(panNo)) {
       var body = new Map<String, dynamic>();
-      body['company_id'] = companyId;
+      body['company_id'] = compId;
       body['pan_number'] = pan_no;
       FormData formData = FormData.fromMap(body);
 
       // pan ocr
       var ocr = new Map<String, dynamic>();
-      ocr['company_id'] = companyId;
+      ocr['company_id'] = compId;
       ocr['pan'] = await MultipartFile.fromFile(panfile);
       FormData panocr = FormData.fromMap(ocr);
 
@@ -168,6 +172,8 @@ class KycManager extends ChangeNotifier {
     String url = "/kyc/ekyc-verifyCaptcha";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
+
     // Map<String, dynamic> data = kycModel.toJson();
     if (uid != null &&
         security_code.isNotEmpty &&
@@ -223,6 +229,8 @@ class KycManager extends ChangeNotifier {
     String url = "/entity/onboard";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
+
     // Map<String, dynamic> data = kycModel.toJson();
     final allowedDocCharacters = RegExp(r'^[a-zA-Z0-9_-]*$');
     if (docNo != null &&
@@ -231,7 +239,7 @@ class KycManager extends ChangeNotifier {
         allowedDocCharacters.hasMatch(docNo)) {
       var map = new Map<String, dynamic>();
 
-      map['companyId'] = companyId;
+      map['companyId'] = compId;
       map['ownershipDocType'] = docType;
       map['ownershipDocNumber'] = docNo;
       map['propertyOwnership'] = await MultipartFile.fromFile(filePath);
@@ -287,6 +295,8 @@ class KycManager extends ChangeNotifier {
     String url = "/entity/onboard";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
+    print('CompId ---------------------------------------------->$compId');
     // Map<String, dynamic> data = kycModel.toJson();
     final allowedDocCharacters = RegExp(r'^[a-zA-Z0-9_-]*$');
     if (docNo != null &&
@@ -295,7 +305,7 @@ class KycManager extends ChangeNotifier {
         allowedDocCharacters.hasMatch(docNo)) {
       var map = new Map<String, dynamic>();
       print('    1   ///////////');
-      map['companyId'] = companyId;
+      map['companyId'] = compId;
       map['businessDocType'] = docType;
       map['businessDocNumber'] = docNo;
       map['BusinessProof'] = await MultipartFile.fromFile(filePath);
@@ -305,7 +315,7 @@ class KycManager extends ChangeNotifier {
       dynamic responseData =
           await getIt<DioClient>().postFormData(url, formData, token);
 
-      print('     err?//???  ///////////');
+      print('     err?//???  ///////////$responseData');
 
       if (responseData != null && responseData.runtimeType != String) {
         if (responseData['status'] == true) {
@@ -358,10 +368,12 @@ class KycManager extends ChangeNotifier {
     String url = "/entity/onboard";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
+
     // Map<String, dynamic> data = kycModel.toJson();
     var map = new Map<String, dynamic>();
 
-    map['companyId'] = companyId;
+    map['companyId'] = compId;
     map['VintageProof'] = await MultipartFile.fromFile(filePath);
     FormData formData = FormData.fromMap(map);
 
@@ -401,11 +413,13 @@ class KycManager extends ChangeNotifier {
     String url = "/entity/onboard";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
+
     // Map<String, dynamic> data = kycModel.toJson();
     var map = new Map<String, dynamic>();
 
-    map['companyId'] = companyId;
-    map['companyId'] = companyId;
+    map['companyId'] = compId;
+    // map['companyId'] = compId;
     map['PartnershipDetails'] = await MultipartFile.fromFile(filePath);
 
     FormData formData = FormData.fromMap(map);
@@ -448,7 +462,7 @@ class KycManager extends ChangeNotifier {
     String? token = getIt<SharedPreferences>().getString('token');
     // Map<String, dynamic> data = kycModel.toJson();
     var map = new Map<String, dynamic>();
-
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
     map['companyId'] = companyId;
     map['BankStatementDetails'] =
         await MultipartFile.fromFile(bankStatementImage);
@@ -479,6 +493,53 @@ class KycManager extends ChangeNotifier {
     }
   }
 
+  // storeBankDetails({required String bankStatementImage}) async {
+  //   if (bankStatementImage == "") {
+  //     Map<String, dynamic> errorMessage = {
+  //       'msg': 'Please upload image',
+  //       'error': true
+  //     };
+  //     return errorMessage;
+  //   }
+  //   kycModel.bankStatementDetails = bankStatementImage;
+  //   String url = "/entity/onboard";
+  //   print(url);
+  //   String? compId = getIt<SharedPreferences>().getString('CompanyId');
+  //   String? token = getIt<SharedPreferences>().getString('token');
+  //   // Map<String, dynamic> data = kycModel.toJson();
+  //   var map = new Map<String, dynamic>();
+
+  //   map['companyId'] = compId;
+  //   map['BankStatementDetails'] =
+  //       await MultipartFile.fromFile(bankStatementImage);
+
+  //   FormData formData = FormData.fromMap(map);
+
+  //   dynamic responseData =
+  //       await getIt<DioClient>().postFormData(url, formData, token);
+  //   print('KYCMANAGER------------------------------------->$compId');
+  //   if (responseData != null && responseData.runtimeType != String) {
+  //     if (responseData['status'] == true) {
+  //       Map<String, dynamic> successMessage = {
+  //         'msg': 'Details saved successfully',
+  //         'error': false
+  //       };
+  //       return successMessage;
+  //     } else {
+  //       Map<String, dynamic> errorMessage = {
+  //         'msg': 'Enter all mandatory fields',
+  //         'error': true
+  //       };
+  //       return errorMessage;
+  //     }
+  //   } else {
+  //     Map<String, dynamic> errorMessage = {
+  //       'msg': 'Unable to proceed, please try again later.',
+  //     };
+  //     return errorMessage;
+  //   }
+  // }
+
   storeGstDetails(
       {
       //   required List<String> gstImage,
@@ -498,12 +559,13 @@ class KycManager extends ChangeNotifier {
     String url = "/entity/onboard";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
     // Map<String, dynamic> data = kycModel.toJson();
     var map = new Map<String, dynamic>();
     List uploadImages = [];
     List uploadImages1 = [];
     map['_id'] = userID;
-    map['companyId'] = companyId;
+    map['companyId'] = compId;
     map['userID'] = userID;
     int indexCounter = 0;
     // for (; indexCounter < filePath.length;) {
@@ -642,12 +704,12 @@ class KycManager extends ChangeNotifier {
   ) async {
     String url = "/kyc/phone-verification/verify-otp";
     String? token = getIt<SharedPreferences>().getString('token');
-
+    String? compId = getIt<SharedPreferences>().getString('companyId');
     KycModel kycModel = KycModel();
 
     Map data = {
       'mobile_number': this.mobile,
-      'company_id': companyId,
+      'company_id': compId,
       'otp': otp,
       'referenceId': this.otpReferenceId
     };
@@ -684,12 +746,13 @@ class KycManager extends ChangeNotifier {
     String front = frontFile.path;
     String back = backFile.path;
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
     KycModel kycModel = KycModel();
     //Map<String, dynamic> data = kycModel.toJson();
 
     var map = new Map<String, dynamic>();
 
-    map['company_id'] = companyId;
+    map['company_id'] = compId;
     map['front'] = await MultipartFile.fromFile(front);
     // await MultipartFile.fromFile(front as String);
     map['back'] = await MultipartFile.fromFile(back);
@@ -731,11 +794,12 @@ class KycManager extends ChangeNotifier {
     String url = "/entity/onboard";
     print(url);
     String? token = getIt<SharedPreferences>().getString('token');
+    String? compId = getIt<SharedPreferences>().getString('companyId');
     // Map<String, dynamic> data = kycModel.toJson();
     var map = new Map<String, dynamic>();
     List uploadImages = [];
     map['_id'] = userID;
-    map['companyId'] = companyId;
+    map['companyId'] = compId;
     map['userID'] = userID;
     int indexCounter = 0;
     // for (; indexCounter < filePath.length;) {
