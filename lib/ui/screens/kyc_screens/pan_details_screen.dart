@@ -50,6 +50,7 @@ class _PanDetailsState extends State<PanDetails> {
       this.panfiles = panfiles;
       this.panNo = panNo;
     });
+    panController.text = '${panNo}';
     print('panfiles...))))))))))))${panfiles[0].toString()}');
     print('the response data of kyc"""""""""$responseData');
     // setState(() {
@@ -122,8 +123,12 @@ class _PanDetailsState extends State<PanDetails> {
                           color: Colours.paleGrey,
                         ),
                         child: TextFormField(
-                            controller: panController =
-                                TextEditingController(text: '${this.panNo}'),
+                            controller: panController = TextEditingController(
+                                text: '${panController.text}'),
+                            onChanged: (value) {
+                              // documentNoController.clear();
+                              value = panController.text;
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: w1p * 6, vertical: h1p * .5),
