@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xuriti/util/loaderWidget.dart';
 
 import '../../../Model/KycDetails.dart';
 import '../../../logic/view_models/kyc_manager.dart';
@@ -112,30 +116,96 @@ class _FirmDetailsState extends State<FirmDetails> {
                       child: SizedBox(
                         width: maxWidth,
                         height: 50,
-                        child: ListView.builder(
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 8,
+                          ),
                           scrollDirection: Axis.horizontal,
                           itemCount: imgfiles.length,
                           itemBuilder: (context, index) {
                             final doc = imgfiles[index];
 
-                            return GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                          child: Container(
-                                            width: 220,
-                                            height: 200,
-                                            child: Image.network(
-                                              '$doc',
-                                              fit: BoxFit.cover,
+                            print('the whole filepath  >>>>>>>>$doc');
+
+                            List doc1 = doc.split("?");
+                            List doc2 = doc1[0].split(".");
+                            List fpath = doc2;
+                            print('doc1.>>>>>>>>$doc1');
+
+                            print('fpath.>>>>>>>>$fpath');
+                            final fp = doc2.last;
+                            String filepath = fp.toString();
+                            print('filepath.>>>>>>>>$filepath');
+
+                            Future<File?> downloadFile(
+                                String url, String name) async {
+                              final appStorage =
+                                  await getApplicationDocumentsDirectory();
+                              final file = File('${appStorage.path}/$name');
+                              try {
+                                final response = await Dio().get(url,
+                                    options: Options(
+                                        responseType: ResponseType.bytes,
+                                        followRedirects: false,
+                                        receiveTimeout: 0));
+                                final raf = file.openSync(mode: FileMode.write);
+                                raf.writeFromSync(response.data);
+                                await raf.close();
+                                return file;
+                              } catch (e) {
+                                return null;
+                              }
+                            }
+
+                            Future openFile(
+                                {required String url, String? filename}) async {
+                              final file = await downloadFile(url, filename!);
+                              if (file == null) return;
+                              print(
+                                  'path for pdf file++++++++++++ ${file.path}');
+                              OpenFile.open(file.path);
+                            }
+
+                            // filepath != 'pdf'
+                            //     ?
+                            if (filepath != 'pdf') {
+                              print('object++++====');
+                              return GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: SizedBox(
+                                              width: maxWidth * 5,
+                                              height: maxHeight * 0.5,
+                                              child: Image.network(
+                                                // ignore: unnecessary_string_interpolations
+                                                '$doc',
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      });
-                                },
-                                child: imageDialog(doc));
+                                          );
+                                        });
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: w1p * 6, right: w1p * 6),
+                                    child: imageDialog(doc),
+                                  ));
+                            } else {
+                              return GestureDetector(
+                                  onTap: () {
+                                    openFile(url: doc, filename: 'firm.pdf');
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: w1p * 6,
+                                      // right: w1p * 6,
+                                    ),
+                                    child: imageDialog(doc),
+                                  ));
+                            }
                           },
                         ),
                       ),
@@ -145,13 +215,49 @@ class _FirmDetailsState extends State<FirmDetails> {
                       maxHeight: maxHeight,
                       onFileSelection: (files) {
                         firmDetails = files;
+                        setState(() {});
                       },
                     ),
+                    ((firmDetails?.length ?? 0) != 0 &&
+                            firmDetails?.first != null)
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.38,
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(1),
+                                      child: Image.file(
+                                        firmDetails!.first!,
+                                        fit: BoxFit.fill,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        height: 200,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                firmDetails!.first!.path.split('/').last,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                // style: const TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        : SizedBox(),
                     InkWell(
                       onTap: () async {
+                        context.showLoader();
                         Map<String, dynamic> storeFirmDetails =
                             await getIt<KycManager>().storeFirmDetails(
                                 filePath: firmDetails?.first?.path ?? "");
+                        context.hideLoader();
                         Fluttertoast.showToast(msg: storeFirmDetails['msg']);
                         if (storeFirmDetails['error'] == false) {
                           Navigator.pop(context);

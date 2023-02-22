@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:xuriti/util/loaderWidget.dart';
 
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../models/core/mobile_verification_model.dart';
@@ -102,10 +103,11 @@ class _MobileVerificationState extends State<MobileVerification> {
                     // ),
                     InkWell(
                       onTap: () async {
+                        context.showLoader();
                         print("mobile----${numberController.text}");
                         Map<String, dynamic> kyc = await getIt<KycManager>()
                             .generateOTP(numberController.text);
-
+                        context.hideLoader();
                         //    progress.dismiss();
                         //    print("doc---- $kyc");
                         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -165,7 +167,11 @@ class _MobileVerificationState extends State<MobileVerification> {
                     // ),
                     InkWell(
                       onTap: () async {
-                       Map<String, dynamic> otpDetails = await getIt<KycManager>().verifyOTP(otpController.text);
+                        context.showLoader();
+                        Map<String, dynamic> otpDetails =
+                            await getIt<KycManager>()
+                                .verifyOTP(otpController.text);
+                        context.hideLoader();
                         Fluttertoast.showToast(msg: otpDetails['msg']);
                         //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         //         behavior: SnackBarBehavior.floating,
@@ -173,7 +179,7 @@ class _MobileVerificationState extends State<MobileVerification> {
                         //           otpDetails['msg'],
                         //           style: const TextStyle(color: Colors.green),
                         //         )));
-                        if(otpDetails['error'] == false){
+                        if (otpDetails['error'] == false) {
                           Navigator.pop(context);
                         }
                       },

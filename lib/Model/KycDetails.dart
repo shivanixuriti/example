@@ -1,16 +1,18 @@
 // To parse this JSON data, do
 //
-//     final adhaarCapture = adhaarCaptureFromJson(jsonString);
+//     final KYCDetails = KYCDetailsFromJson(jsonString);
 
 import 'dart:convert';
 
-AdhaarCapture adhaarCaptureFromJson(String str) =>
-    AdhaarCapture.fromJson(json.decode(str));
+import 'package:flutter/material.dart';
 
-String adhaarCaptureToJson(AdhaarCapture data) => json.encode(data.toJson());
+KYCDetails KYCDetailsFromJson(String str) =>
+    KYCDetails.fromJson(json.decode(str));
 
-class AdhaarCapture {
-  AdhaarCapture({
+String KYCDetailsToJson(KYCDetails data) => json.encode(data.toJson());
+
+class KYCDetails {
+  KYCDetails({
     required this.data,
     required this.status,
   });
@@ -18,9 +20,9 @@ class AdhaarCapture {
   Data data;
   bool status;
 
-  factory AdhaarCapture.fromJson(Map<String, dynamic> json) => AdhaarCapture(
+  factory KYCDetails.fromJson(Map<String, dynamic> json) => KYCDetails(
         data: Data.fromJson(json["data"]),
-        status: json["status"],
+        status: json["status"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,19 +63,19 @@ class Data {
   StoreImage storeImages;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        pan: Pan.fromJson(json["pan"]),
-        aadhar: Aadhar.fromJson(json["aadhar"]),
-        mobile: Mobile.fromJson(json["mobile"]),
-        faceMatch: FaceMatch.fromJson(json["faceMatch"]),
-        address: Address.fromJson(json["address"]),
-        bankStatement: Banking.fromJson(json["bankStatement"]),
-        business: Business.fromJson(json["business"]),
-        financial: Financial.fromJson(json["financial"]),
-        gst: Gst.fromJson(json["gst"]),
-        ownership: Business.fromJson(json["ownership"]),
-        partnership: Partnership.fromJson(json["partnership"]),
-        vintage: Vintage.fromJson(json["vintage"]),
-        storeImages: StoreImage.fromJson(json["storeImages"]),
+        pan: Pan.fromJson(json["pan"] ?? ""),
+        aadhar: Aadhar.fromJson(json["aadhar"] ?? ""),
+        mobile: Mobile.fromJson(json["mobile"] ?? ""),
+        faceMatch: FaceMatch.fromJson(json["faceMatch"] ?? ""),
+        address: Address.fromJson(json["address"] ?? ""),
+        bankStatement: Banking.fromJson(json["bankStatement"] ?? ""),
+        business: Business.fromJson(json["business"] ?? ""),
+        financial: Financial.fromJson(json["financial"] ?? ""),
+        gst: Gst.fromJson(json["gst"] ?? ""),
+        ownership: Business.fromJson(json["ownership"] ?? ""),
+        partnership: Partnership.fromJson(json["partnership"] ?? ""),
+        vintage: Vintage.fromJson(json["vintage"] ?? ""),
+        storeImages: StoreImage.fromJson(json["storeImages"] ?? ""),
       );
 
   Map<String, dynamic> toJson() => {
@@ -90,6 +92,131 @@ class Data {
         "partnership": partnership.toJson(),
         "vintage": vintage.toJson(),
         "storeImages": storeImages.toJson(),
+      };
+}
+
+class KycStatus {
+  KycStatus({
+    required this.panStatus,
+    required this.aadharStatus,
+    required this.mobileStatus,
+    required this.faceMatchStatus,
+    required this.addressStatus,
+    required this.bankStatementStatus,
+    required this.businessStatus,
+    required this.financialStatus,
+    required this.gstStatus,
+    required this.ownershipStatus,
+    required this.partnershipStatus,
+    required this.vintageStatus,
+    required this.storeImagesStatus,
+  });
+
+  String panStatus;
+  String aadharStatus;
+  String mobileStatus;
+  String faceMatchStatus;
+  String addressStatus;
+  String bankStatementStatus;
+  String businessStatus;
+  String financialStatus;
+  String gstStatus;
+  String ownershipStatus;
+  String partnershipStatus;
+  String vintageStatus;
+  String storeImagesStatus;
+
+  factory KycStatus.fromJson(Map<String, dynamic> json) => KycStatus(
+        panStatus: json['pan']?['status'] ?? 'Unknown', //'Pending',
+        aadharStatus: json['aadhar']?['status'] ?? 'Unknown', //'Pending',
+        mobileStatus: json['mobile']?['status'] ?? 'Unknown', //'Pending',
+        faceMatchStatus: json['faceMatch']?['status'] ?? 'Unknown', //'Pending',
+        addressStatus: json['address']?['status'] ?? 'Unknown', //'Pending',
+        bankStatementStatus:
+            json['bankStatement']?['status'] ?? 'Unknown', //'Pending',
+        businessStatus: json['business']?['status'] ?? 'Unknown', //'Pending',
+        financialStatus: json['financial']?['status'] ?? 'Unknown', //'Pending',
+        gstStatus: json['gst']?['status'] ?? 'Unknown', //'Pending',
+        ownershipStatus: json['ownership']?['status'] ?? 'Unknown', //'Pending',
+        partnershipStatus:
+            json['partnership']?['status'] ?? 'Unknown', //'Pending',
+        vintageStatus: json['vintage']?['status'] ?? 'Unknown', //'Pending',
+        storeImagesStatus:
+            json['storeImages']?['status'] ?? 'Unknown', //'Pending',
+      );
+
+  static Widget kycStatusToIcon(String? status) {
+    switch (status) {
+      case 'In-Progress':
+        {
+          return const Icon(
+            Icons.access_time_filled,
+            color: Colors.yellow,
+          );
+        }
+      case 'Approved':
+        {
+          return const Icon(
+            Icons.check_circle_rounded,
+            color: Colors.green,
+          );
+        }
+      case 'Rejected':
+        {
+          return const Icon(
+            Icons.remove_circle,
+            color: Colors.red,
+          );
+        }
+      default:
+        {
+          print('unknown status of kyc');
+          return const Icon(
+            Icons.circle_outlined,
+            color: Colors.black,
+          );
+        }
+    }
+  }
+
+  static bool isKycStatusVerified(KycStatus? status) {
+    if (status == null) {
+      return false;
+    } else if (status.panStatus == 'Approved' &&
+        status.aadharStatus == 'Approved' &&
+        status.mobileStatus == 'Approved' &&
+        status.bankStatementStatus == 'Approved' &&
+        status.businessStatus == 'Approved' &&
+        status.financialStatus == 'Approved' &&
+        status.gstStatus == 'Approved' &&
+        status.ownershipStatus == 'Approved' &&
+        status.partnershipStatus == 'Approved' &&
+        status.vintageStatus == 'Approved' &&
+        status.storeImagesStatus == 'Approved') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Map<String, dynamic> toJson() => {
+        "pan": panStatus,
+        "aadhar": aadharStatus,
+        "mobile": mobileStatus,
+        "faceMatch": faceMatchStatus,
+
+        ///check if needed
+        "address": addressStatus,
+
+        ///check if needed
+        "bankStatement": bankStatementStatus,
+        "business": businessStatus,
+        "financial": financialStatus,
+        "gst": gstStatus,
+        "ownership": ownershipStatus,
+        "partnership": partnershipStatus,
+        "vintage": vintageStatus,
+        "storeImages": storeImagesStatus,
       };
 }
 
@@ -155,9 +282,9 @@ class Address {
   List<String> files;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-        status: json["status"],
-        comment: json["comment"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        verified: json["verified"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -185,10 +312,10 @@ class Business {
   List<String> files;
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
-        documentNumber: json["documentNumber"],
-        documentType: json["documentType"],
-        status: json["status"],
-        verified: json["verified"],
+        documentNumber: json["documentNumber"] ?? "",
+        documentType: json["documentType"] ?? "",
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -217,10 +344,10 @@ class Ownership {
   List<String> files;
 
   factory Ownership.fromJson(Map<String, dynamic> json) => Ownership(
-        documentNumber: json["documentNumber"],
-        documentType: json["documentType"],
-        status: json["status"],
-        verified: json["verified"],
+        documentNumber: json["documentNumber"] ?? "",
+        documentType: json["documentType"] ?? "",
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -245,8 +372,8 @@ class Partnership {
   List<String> files;
 
   factory Partnership.fromJson(Map<String, dynamic> json) => Partnership(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -269,8 +396,8 @@ class Vintage {
   List<String> files;
 
   factory Vintage.fromJson(Map<String, dynamic> json) => Vintage(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -293,8 +420,8 @@ class StoreImage {
   List<String> files;
 
   factory StoreImage.fromJson(Map<String, dynamic> json) => StoreImage(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -317,8 +444,8 @@ class Banking {
   List<String> files;
 
   factory Banking.fromJson(Map<String, dynamic> json) => Banking(
-        status: json["status"],
-        verified: json["verified"],
+        status: json["status"] ?? "",
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -351,13 +478,13 @@ class FaceMatch {
   List<String> files;
 
   factory FaceMatch.fromJson(Map<String, dynamic> json) => FaceMatch(
-        verified: json["verified"],
-        status: json["status"],
-        comment: json["comment"],
-        holder: json["holder"],
+        verified: json["verified"] ?? "",
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        holder: json["holder"] ?? "",
         matchPercentage: json["matchPercentage"],
-        message: json["message"],
-        dob: json["dob"],
+        message: json["message"] ?? "",
+        dob: json["dob"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -383,7 +510,7 @@ class Financial {
   List<String> files;
 
   factory Financial.fromJson(Map<String, dynamic> json) => Financial(
-        verified: json["verified"],
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -403,7 +530,7 @@ class Gst {
   List<String> files;
 
   factory Gst.fromJson(Map<String, dynamic> json) => Gst(
-        verified: json["verified"],
+        verified: json["verified"] ?? false,
         files: List<String>.from(json["files"].map((x) => x)),
       );
 
@@ -435,14 +562,14 @@ class Mobile {
   String email;
 
   factory Mobile.fromJson(Map<String, dynamic> json) => Mobile(
-        verified: json["verified"],
-        status: json["status"],
-        comment: json["comment"],
-        number: json["number"],
-        countryCode: json["countryCode"],
-        holder: json["holder"],
-        address: json["address"],
-        email: json["email"],
+        verified: json["verified"] ?? "",
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        number: json["number"] ?? "",
+        countryCode: json["countryCode"] ?? "",
+        holder: json["holder"] ?? "",
+        address: json["address"] ?? "",
+        email: json["email"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -475,11 +602,11 @@ class Pan {
   List<String> files;
 
   factory Pan.fromJson(Map<String, dynamic> json) => Pan(
-        verified: json["verified"],
-        status: json["status"],
-        comment: json["comment"],
-        holder: json["holder"],
-        number: json["number"],
+        verified: json["verified"] ?? "",
+        status: json["status"] ?? "",
+        comment: json["comment"] ?? "",
+        holder: json["holder"] ?? "",
+        number: json["number"] ?? "",
         files: List<String>.from(json["files"].map((x) => x)),
       );
 

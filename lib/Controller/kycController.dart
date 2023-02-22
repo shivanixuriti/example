@@ -1,16 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../Model/AdhaarCapture.dart';
-import '../models/core/kyc_model.dart';
 import '../models/helper/service_locator.dart';
-import 'package:http/http.dart' as http;
 
 import '../models/services/dio_service.dart';
 
@@ -18,7 +10,7 @@ class KycController {
   adhaarDetails(String? companyId, File front, File back) async {
     String url = "/kyc/document-verify/aadhaar";
     String? token = getIt<SharedPreferences>().getString('token');
-    KycModel kycModel = KycModel();
+    //KycModel kycModel = KycModel();
     //Map<String, dynamic> data = kycModel.toJson();
 
     var map = new Map<String, dynamic>();

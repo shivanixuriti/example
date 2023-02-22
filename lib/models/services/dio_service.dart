@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../helper/service_locator.dart';
 
 class DioClient {
+  // final String baseUrl = "https://biz.xuriti.app/api";
   final String baseUrl = "https://biz.xuriti.app/api";
   //final String baseUrl = "https://uat.xuriti.app/api";
 
@@ -45,6 +46,41 @@ class DioClient {
       print(e);
     }
   }
+  // postFormData(String endUrl, FormData data, String? token) async {
+  //   BaseOptions options = new BaseOptions(
+  //       baseUrl: baseUrl,
+  //       receiveDataWhenStatusError: true,
+  //       connectTimeout: 60 * 1000, // 60 seconds
+  //       receiveTimeout: 120 * 1000 // 60 seconds
+  //       );
+  //   String url = baseUrl + endUrl;
+  //   var dio = Dio();
+  //   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+  //       (HttpClient client) {
+  //     client.badCertificateCallback =
+  //         (X509Certificate cert, String host, int port) => true;
+  //     return client;
+  //   };
+  //   try {
+  //     if (token == null) {
+  //       Response response = await dio.post(url, data: data);
+
+  //       return response.data;
+  //     }
+  //     if (token != null) {
+  //       print('/////////// no err11111');
+  //       Response response = await dio.post(url,
+  //           data: data,
+  //           options: Options(headers: {'Authorization': 'Bearer $token'}));
+  //       print('/////////// no err222222222222');
+  //       print(response);
+  //       return response.data;
+  //     }
+  //   } catch (e) {
+  //     print('///////////errrrr');
+  //     print(e);
+  //   }
+  // }
 
   post(String endUrl, Map<String, dynamic> data, String? token) async {
     var dio = Dio();

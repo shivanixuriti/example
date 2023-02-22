@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/models/core/CompanyInfo_model.dart';
@@ -161,7 +159,6 @@ class CompanyDetailsManager extends ChangeNotifier {
 
       // "errors": {"message": "Entity GSTIN Already Exist"},
       // "status": false
-
     }
   }
 

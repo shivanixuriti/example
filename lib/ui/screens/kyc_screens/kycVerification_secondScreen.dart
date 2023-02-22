@@ -4,7 +4,10 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xuriti/Model/KycDetails.dart';
 import 'package:xuriti/models/helper/service_locator.dart';
+import 'package:xuriti/models/services/dio_service.dart';
+import 'package:xuriti/ui/screens/kyc_screens/kyc_submission_screen.dart';
 
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../../logic/view_models/transaction_manager.dart';
@@ -23,6 +26,27 @@ class KycVerificationNextStep extends StatefulWidget {
 }
 
 class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
+  KycStatus? kycStatus;
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future init() async {
+    dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
+    final details = responseData?['data'] ?? <String, dynamic>{};
+
+    setState(() {
+      kycStatus = KycStatus.fromJson(details);
+    });
+
+    print(kycStatus?.toJson());
+  }
+
   @override
   Widget build(BuildContext context) {
     GetCompany company = GetCompany();
@@ -167,6 +191,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             subtitle: " (Any one of the following)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            kycStatus: kycStatus?.businessStatus,
                           ),
                         ),
                         InkWell(
@@ -175,10 +200,10 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                           },
                           child: KycDetails(
                             title: "Ownership Proof",
-                            subtitle:
-                                " (Business/Residence) (Any one of the following)",
+                            subtitle: " (Business/Residence- any one)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            kycStatus: kycStatus?.ownershipStatus,
                           ),
                         ),
                         InkWell(
@@ -189,6 +214,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             title: "Vintage Proof",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            kycStatus: kycStatus?.vintageStatus,
                           ),
                         ),
                         InkWell(
@@ -199,6 +225,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             title: "Firm/Partnership Details",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            kycStatus: kycStatus?.partnershipStatus,
                           ),
                         ),
                         InkWell(
@@ -209,6 +236,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             title: "Banking Details",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            kycStatus: kycStatus?.bankStatementStatus,
                           ),
                         ),
                         Padding(
@@ -233,6 +261,11 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                 tileColor: Colours.white,
                                 title: Row(
                                   children: [
+                                    KycStatus.kycStatusToIcon(
+                                        kycStatus?.financialStatus),
+                                    SizedBox(
+                                      width: w1p * 3,
+                                    ),
                                     Text(
                                       "Financial & GST Details ",
                                       style: TextStyles.textStyle44,
@@ -274,6 +307,11 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                 tileColor: Colours.white,
                                 title: Row(
                                   children: [
+                                    KycStatus.kycStatusToIcon(
+                                        kycStatus?.storeImagesStatus),
+                                    SizedBox(
+                                      width: w1p * 3,
+                                    ),
                                     Text(
                                       "Upload Store Images ",
                                       style: TextStyles.textStyle44,
@@ -301,7 +339,8 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, kycVerification);
+                                  // Navigator.pushNamed(context, kycVerification);
+                                  Navigator.pop(context);
                                 },
                                 child: Row(
                                   children: const [
@@ -313,7 +352,7 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                                       ),
                                     ),
                                     Text(
-                                      'prev',
+                                      'PREV',
                                       style: TextStyles.textStyle44,
                                     ),
                                   ],
@@ -321,13 +360,19 @@ class _KycVerificationNextStepState extends State<KycVerificationNextStep> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, kycSubmission);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          KycSubmission(kycStatus: kycStatus),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: const [
                                       Text(
-                                        'next',
+                                        'NEXT',
                                         style: TextStyles.textStyle44,
                                       ),
                                       Align(

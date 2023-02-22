@@ -6,7 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xuriti/Model/KycDetails.dart';
 import 'package:xuriti/models/helper/service_locator.dart';
+import 'package:xuriti/models/services/dio_service.dart';
 import 'package:xuriti/ui/screens/kyc_screens/aadhaar_card_screen.dart';
 
 import '../../../logic/view_models/kyc_manager.dart';
@@ -31,6 +33,7 @@ class _KycVerificationState extends State<KycVerification> {
   double currentIndexPage = 1;
   List? details;
   int pageLength = 2;
+  KycStatus? kycStatus;
 
   // @override
   // void initState() {
@@ -41,6 +44,23 @@ class _KycVerificationState extends State<KycVerification> {
   //   });
   //   super.initState();
   // }
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future init() async {
+    var companyId = getIt<SharedPreferences>().getString('companyId');
+    dynamic responseData = await getIt<DioClient>().KycDetails(companyId!);
+    final details = responseData?['data'] ?? <String, dynamic>{};
+
+    setState(() {
+      kycStatus = KycStatus.fromJson(details);
+    });
+
+    print(kycStatus?.toJson());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +203,11 @@ class _KycVerificationState extends State<KycVerification> {
                                 tileColor: Colours.white,
                                 title: Row(
                                   children: [
+                                    KycStatus.kycStatusToIcon(
+                                        kycStatus?.panStatus),
+                                    SizedBox(
+                                      width: w1p * 3,
+                                    ),
                                     Text(
                                       "PAN Verification ",
                                       style: TextStyles.textStyle44,
@@ -223,10 +248,11 @@ class _KycVerificationState extends State<KycVerification> {
                           //   Navigator.pushNamed(context, aadhaarCard);
                           // },
                           child: KycDetails(
-                            title: "ADHAAR Verification",
+                            title: "AADHAAR Verification",
                             //subtitle: " (Any one of the following)",
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            kycStatus: kycStatus?.aadharStatus,
                           ),
                         ),
                         // Padding(
@@ -267,7 +293,7 @@ class _KycVerificationState extends State<KycVerification> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: const [
                                 Text(
-                                  'next',
+                                  'NEXT',
                                   style: TextStyles.textStyle44,
                                 ),
                                 Align(

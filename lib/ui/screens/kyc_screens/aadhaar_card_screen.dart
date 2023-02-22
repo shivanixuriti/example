@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controller/kycController.dart';
@@ -25,8 +28,12 @@ import 'package:http/http.dart' as http;
 class AadhaarCard extends StatefulWidget {
   var data;
   dynamic? url;
+  // final bool? flag;
+  // final Function(List<File?>? files) onFileSelection;
   // const AadhaarCard(data, {Key? key}, this.da) : super(key: key);
-  AadhaarCard(this.data) {
+  AadhaarCard(this.data)
+  // this.flag, this.onFileSelection)
+  {
     var response = data['data'];
     url = response.toString();
     print("URL --->$url");
@@ -43,7 +50,9 @@ class _AadhaarCardState extends State<AadhaarCard> {
   TextEditingController reCaptchaController = TextEditingController();
   File? frontImage;
   File? backImage;
-  String img = '';
+  String img1 = '';
+  String img2 = '';
+
   var data;
   var url;
   String imageUrl = "";
@@ -53,6 +62,10 @@ class _AadhaarCardState extends State<AadhaarCard> {
 
   String? companyId = getIt<SharedPreferences>().getString('companyId');
 
+  File? img;
+
+  String? imgpath;
+
   _AadhaarCardState(data) {
     response = data['data'];
     imageUrl = response != null ? response : "";
@@ -60,7 +73,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
     print("URL1 --->$url");
     print('Constructor Data1 ------> $data');
   }
-  int onPressed = 0;
+  bool onPressed = false;
   List imgfiles = [];
   @override
   void initState() {
@@ -70,6 +83,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
 
   Future init() async {
     dynamic companyId = getIt<SharedPreferences>().getString('companyId');
+    var data = await getIt<KycManager>().getCaptcha();
 
     //final docs = DioClient().KycDetails(companyId);
     dynamic responseData = await getIt<DioClient>().KycDetails(companyId);
@@ -79,8 +93,15 @@ class _AadhaarCardState extends State<AadhaarCard> {
       List<String> imgfiles = Docdetails.files;
       this.imgfiles = imgfiles;
     });
-    print('panfiles...))))))))))))${imgfiles[0].toString()}');
+    print('adhaar files...))))))))))))${imgfiles[0].toString()}');
   }
+
+  String name = '';
+  String address = '';
+
+  String dob = '';
+
+  String gender = '';
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +131,8 @@ class _AadhaarCardState extends State<AadhaarCard> {
                 topRight: Radius.circular(10),
               )),
           child: SingleChildScrollView(
-            child: Column(children: [
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
@@ -134,261 +156,399 @@ class _AadhaarCardState extends State<AadhaarCard> {
               ),
 
               SizedBox(
-                height: h1p * 3,
+                height: h1p * 1,
               ),
-              Row(
-                children: [
-                  InkWell(
-                      //  onTap: () => ({
+              // Card(
 
-                      //  }),
-                      onTap: () async {
-                        FilePickerResult? fileResult = (await FilePicker
-                            .platform
-                            .pickFiles(allowMultiple: false));
-                        String? path = fileResult != null
-                            ? fileResult.files.isNotEmpty
-                                ? fileResult.files[0].path
-                                : ""
-                            : "";
-                        final File selectFront = File(path as String);
-                        // print(selectFront.readAsBytesSync());
+              //   elevation: 3,
+              // child:
+              Card(
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8)),
+                elevation: 8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            //  onTap: () => ({
 
-                        setState(() {
-                          this.frontImage = selectFront;
-                          this.img = path.toString();
-                        });
-                        print("front img........$path");
-                      },
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: w1p * 6, right: w1p * 6, top: h1p * 1),
-                            child: Container(
-                                height: h1p * 6,
-                                width: w10p * 4,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: Colours.disabledText,
+                            //  }),
+                            onTap: () async {
+                              // List<File?>? fileSelection =
+                              //     await getIt<KycManager>().selectFile(widget.flag);
+
+                              // print('=====>File uploaded====>${fileSelection}');
+                              // if (fileSelection?.isEmpty == true ||
+                              //     fileSelection == null) {
+                              //   Fluttertoast.showToast(msg: "Please select file");
+                              //   return;
+                              // }
+
+                              // setState(() {
+                              //   img = fileSelection[0];
+                              //   imgpath = '${img?.path}'; //error
+                              // });
+                              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              //     behavior: SnackBarBehavior.floating,
+                              //     content: Text(
+                              //       fileSelection != null
+                              //           ? "Uploaded images ${fileSelection.first}"
+                              //           : "",
+                              //       style: TextStyle(
+                              //           color: fileSelection != null
+                              //               ? Colors.green
+                              //               : Colors.red),
+                              //     )));
+                              // widget.onFileSelection(fileSelection);
+                              FilePickerResult? fileResult = (await FilePicker
+                                  .platform
+                                  .pickFiles(allowMultiple: false));
+                              String? path = fileResult != null
+                                  ? fileResult.files.isNotEmpty
+                                      ? fileResult.files[0].path
+                                      : ""
+                                  : "";
+                              final File selectFront = File(path as String);
+                              // print(selectFront.readAsBytesSync());
+
+                              setState(() {
+                                this.frontImage = selectFront;
+                                this.img1 = path.toString();
+                              });
+                              print("front img........$path");
+                            },
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: w1p * 6,
+                                      right: w1p * 6,
+                                      top: h1p * 5),
+                                  child: Container(
+                                      height: h1p * 6,
+                                      width: w10p * 4,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        color: Colours.disabledText,
+                                      ),
+                                      child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: w1p * 2,
+                                              vertical: h1p * 2),
+                                          child: Row(children: [
+                                            InkWell(
+                                              onTap: () async {
+                                                // File? file = File("");
+                                                // String filePath = "";
+                                                XFile? fileResult =
+                                                    await ImagePicker()
+                                                        .pickImage(
+                                                            source: ImageSource
+                                                                .camera);
+                                                String? path = fileResult !=
+                                                        null
+                                                    ? fileResult.path.isNotEmpty
+                                                        ? fileResult.path
+                                                        : ""
+                                                    : "";
+
+                                                final File selectFront =
+                                                    File(path as String);
+                                                setState(() {
+                                                  this.frontImage = selectFront;
+                                                  this.img1 = path.toString();
+                                                });
+                                              },
+                                              child: Container(
+                                                child: Center(
+                                                  child: SvgPicture.asset(
+                                                      "assets/images/kycImages/camera.svg",
+                                                      height: h1p * 4),
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              'Upload Front Image',
+                                              style: TextStyles.textStyle121,
+                                            ),
+                                          ]))),
                                 ),
-                                child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: w1p * 2, vertical: h1p * 2),
-                                    child: Row(children: [
-                                      InkWell(
-                                        onTap: () async {
-                                          // File? file = File("");
-                                          // String filePath = "";
-                                          XFile? fileResult =
-                                              await ImagePicker().pickImage(
-                                                  source: ImageSource.camera);
-                                          String? path = fileResult != null
-                                              ? fileResult.path.isNotEmpty
-                                                  ? fileResult.path
-                                                  : ""
-                                              : "";
-
-                                          final File selectFront =
-                                              File(path as String);
-                                          setState(() {
-                                            this.frontImage = selectFront;
-                                            this.img = path.toString();
-                                          });
-                                        },
-                                        child: Container(
-                                          child: Center(
-                                            child: SvgPicture.asset(
+                                this.frontImage != null
+                                    ? showImage(img1)
+                                    : SizedBox()
+                              ],
+                            )),
+                        InkWell(
+                            onTap: () async {
+                              FilePickerResult? fileResult = (await FilePicker
+                                  .platform
+                                  .pickFiles(allowMultiple: false));
+                              String? path = fileResult != null
+                                  ? fileResult.files.isNotEmpty
+                                      ? fileResult.files[0].path
+                                      : ""
+                                  : "";
+                              final File selectBack = File(path as String);
+                              setState(() {
+                                this.backImage = selectBack;
+                                this.img2 = path.toString();
+                              });
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: w1p * 2, right: w1p * 3, top: h1p * 5),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: h1p * 6,
+                                    width: w10p * 4,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: Colours.disabledText,
+                                    ),
+                                    child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: w1p * 2,
+                                            vertical: h1p * 2),
+                                        child: Row(children: [
+                                          InkWell(
+                                            onTap: () async {
+                                              XFile? fileResult =
+                                                  await ImagePicker().pickImage(
+                                                      source:
+                                                          ImageSource.camera);
+                                              String? path = fileResult != null
+                                                  ? fileResult.path.isNotEmpty
+                                                      ? fileResult.path
+                                                      : ""
+                                                  : "";
+                                              final File selectBack =
+                                                  File(path as String);
+                                              setState(() {
+                                                this.backImage = selectBack;
+                                                this.img2 = path.toString();
+                                              });
+                                            },
+                                            child: Container(
+                                              child: SvgPicture.asset(
                                                 "assets/images/kycImages/camera.svg",
-                                                height: h1p * 4),
+                                                height: h1p * 4,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Text(
-                                        'Upload Front Image',
-                                        style: TextStyles.textStyle121,
-                                      ),
-                                    ]))),
+                                          // ),
+                                          Text(
+                                            'Upload Back Image',
+                                            style: TextStyles.textStyle121,
+                                          ),
+                                        ])),
+                                  ),
+                                  this.backImage != null
+                                      ? showImage(img2)
+                                      : SizedBox()
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w1p * 3,
+                        right: w1p * 6,
+                      ),
+                      child: SizedBox(
+                        width: maxWidth,
+                        height: 50,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 120,
                           ),
-                          this.frontImage != null ? showImage() : SizedBox()
-                        ],
-                      )),
-                  InkWell(
-                      onTap: () async {
-                        FilePickerResult? fileResult = (await FilePicker
-                            .platform
-                            .pickFiles(allowMultiple: false));
-                        String? path = fileResult != null
-                            ? fileResult.files.isNotEmpty
-                                ? fileResult.files[0].path
-                                : ""
-                            : "";
-                        final File selectBack = File(path as String);
-                        setState(() {
-                          this.backImage = selectBack;
-                          this.img = path.toString();
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: w1p * 2, right: w1p * 5, top: h1p * 1),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: h1p * 6,
-                              width: w10p * 4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: Colours.disabledText,
-                              ),
-                              child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: w1p * 2, vertical: h1p * 2),
-                                  child: Row(children: [
-                                    InkWell(
-                                      onTap: () async {
-                                        XFile? fileResult = await ImagePicker()
-                                            .pickImage(
-                                                source: ImageSource.camera);
-                                        String? path = fileResult != null
-                                            ? fileResult.path.isNotEmpty
-                                                ? fileResult.path
-                                                : ""
-                                            : "";
-                                        final File selectBack =
-                                            File(path as String);
-                                        setState(() {
-                                          this.backImage = selectBack;
-                                          this.img = path.toString();
+                          scrollDirection: Axis.horizontal,
+                          itemCount: imgfiles.length,
+                          itemBuilder: (context, index) {
+                            String doc = imgfiles[index];
+                            print('the whole filepath  >>>>>>>>$doc');
+
+                            List doc1 = doc.split("?");
+                            List doc2 = doc1[0].split(".");
+                            List fpath = doc2;
+                            print('doc1.>>>>>>>>$doc1');
+
+                            print('fpath.>>>>>>>>$fpath');
+                            final fp = doc2.last;
+                            String filepath = fp.toString();
+                            print('filepath.>>>>>>>>$filepath');
+
+                            Future<File?> downloadFile(
+                                String url, String name) async {
+                              final appStorage =
+                                  await getApplicationDocumentsDirectory();
+                              final file = File('${appStorage.path}/$name');
+                              try {
+                                final response = await Dio().get(url,
+                                    options: Options(
+                                        responseType: ResponseType.bytes,
+                                        followRedirects: false,
+                                        receiveTimeout: 0));
+                                final raf = file.openSync(mode: FileMode.write);
+                                raf.writeFromSync(response.data);
+                                await raf.close();
+                                return file;
+                              } catch (e) {
+                                return null;
+                              }
+                            }
+
+                            Future openFile(
+                                {required String url, String? filename}) async {
+                              final file = await downloadFile(url, filename!);
+                              if (file == null) return;
+                              print(
+                                  'path for pdf file++++++++++++ ${file.path}');
+                              OpenFile.open(file.path);
+                            }
+
+                            // filepath != 'pdf'
+                            //     ?
+                            if (filepath != 'pdf') {
+                              print('object++++====');
+                              return GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: SizedBox(
+                                              width: maxWidth * 5,
+                                              height: maxHeight * 0.5,
+                                              child: Image.network(
+                                                // ignore: unnecessary_string_interpolations
+                                                '$doc',
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                          );
                                         });
-                                      },
-                                      child: Container(
-                                        child: SvgPicture.asset(
-                                          "assets/images/kycImages/camera.svg",
-                                          height: h1p * 4,
-                                        ),
-                                      ),
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: w1p * 6, right: w1p * 6),
+                                    child: imageDialog(doc),
+                                  ));
+                            } else {
+                              return GestureDetector(
+                                  onTap: () {
+                                    openFile(
+                                        url: doc, filename: 'adhaarcard.pdf');
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: w1p * 6,
+                                      // right: w1p * 6,
                                     ),
-                                    // ),
-                                    Text(
-                                      'Upload Back Image',
-                                      style: TextStyles.textStyle121,
-                                    ),
-                                  ])),
-                            ),
-                            this.backImage != null ? showImage() : SizedBox()
-                          ],
-                        ),
-                      )),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: w1p * 3,
-                  right: w1p * 6,
-                ),
-                child: SizedBox(
-                  width: maxWidth,
-                  height: 50,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: imgfiles.length,
-                    itemBuilder: (context, index) {
-                      final doc = imgfiles[index];
-                      print('doc type is ${doc}');
-
-                      return GestureDetector(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Dialog(
-                                    child: Container(
-                                      width: 220,
-                                      height: 200,
-                                      child: Image.network(
-                                        '$doc',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  );
-                                });
+                                    child: imageDialog(doc),
+                                  ));
+                            }
                           },
-                          child: imageDialog());
-                    },
-                  ),
-                  //_checkController();
-                ),
-                //_checkController();
-              ),
-
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: w1p * 6, right: w1p * 6, top: h1p * 5),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: TextButton(
-                        onPressed: () async {
-                          Map<String, dynamic> aadhaar =
-                              await getIt<KycManager>().adhaarDetails(
-                                  companyId, frontImage!, backImage!);
-                          setState(() {
-                            this.onPressed == 1;
-                          });
-                          String adharmsg = aadhaar.toString();
-                          String adhaarmsg = adharmsg.substring(4);
-
-                          Fluttertoast.showToast(
-                              msg: adhaarmsg,
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 3,
-                              backgroundColor:
-                                  Color.fromARGB(255, 253, 153, 33),
-                              textColor: Colors.white,
-                              fontSize: 12.0);
-                        },
-                        child: Text(
-                          'CAPTURED',
-                          style: TextStyle(color: Colors.black),
                         ),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                              Color.fromARGB(255, 253, 153, 33),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              side: BorderSide(
-                                width: 1,
-                                color: Color.fromARGB(255, 150, 146, 146),
-                              ),
-                            ))),
+
+                        //_checkController();
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: maxWidth * 0.1,
-                  ),
-                  onPressed == 1
-                      ? Padding(
+                    Row(
+                      children: [
+                        Padding(
                           padding: EdgeInsets.only(
-                              left: w1p * 0.03, right: w1p * 1, top: h1p * 1),
-                          child: adhaarDetails(),
-                        )
-                      : const SizedBox()
-                ],
+                              left: w1p * 6,
+                              right: w1p * 6,
+                              top: h1p * 2,
+                              bottom: h1p),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: TextButton(
+                              onPressed: () async {
+                                print(
+                                    "aadharfront--${frontImage} backImg --- ${backImage}");
+                                dynamic aadhaar = await getIt<KycManager>()
+                                    .adhaarDetails(
+                                        companyId, frontImage!, backImage!);
+                                // final result = aadhaar['data'];
+
+                                AdhaarCapture adharDetails =
+                                    AdhaarCapture.fromJson(aadhaar);
+                                print('response data %%%%%%%%%%%% $aadhaar');
+
+                                setState(() {
+                                  this.onPressed = true;
+                                  this.name = adharDetails.data.name;
+                                  this.address = adharDetails.data.address;
+                                  this.dob = adharDetails.data.dob;
+                                  this.gender = adharDetails.data.gender;
+                                });
+                                String adharmsg = aadhaar.toString();
+                                String adhaarmsg = adharmsg.substring(4);
+
+                                Fluttertoast.showToast(
+                                    msg: adhaarmsg,
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 3,
+                                    backgroundColor:
+                                        Color.fromARGB(255, 253, 153, 33),
+                                    textColor: Colors.white,
+                                    fontSize: 12.0);
+                              },
+                              child: Text(
+                                'CAPTURED',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 253, 153, 33),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    side: BorderSide(
+                                      width: 1,
+                                      color: Color.fromARGB(255, 150, 146, 146),
+                                    ),
+                                  ))),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: maxWidth * 0.1,
+                        ),
+                        this.onPressed == true
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    left: w1p * 0.03,
+                                    right: w1p * 1,
+                                    top: h1p * 1),
+                                child: adhaarDetails(this.name, this.address,
+                                    this.dob, this.gender),
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
+                  ],
+                ),
               ),
+              // ),
 
               Padding(
                 padding: EdgeInsets.only(
-                    left: w1p * 6, right: w1p * 6, top: h1p * 3),
+                    left: w1p * 6, right: w1p * 6, top: h1p * 5),
                 child: Align(
-                  alignment: Alignment.topLeft,
+                  alignment: Alignment.topCenter,
                   child: Container(
-                    width: maxWidth * 0.45,
+                    width: maxWidth * 0.8,
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -408,7 +568,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           fillColor: Colours.paleGrey,
-                          hintText: "Aadhaar Number",
+                          hintText: "Enter Aadhaar Number",
                           hintStyle: TextStyles.textStyle120,
                         )),
                   ),
@@ -427,8 +587,11 @@ class _AadhaarCardState extends State<AadhaarCard> {
                   children: [
                     (imageUrl != null && imageUrl.isNotEmpty)
                         ? Container(
-                            width: maxWidth * 0.4,
-                            height: maxHeight * 0.05,
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 5, color: Colors.grey),
+                            ),
+                            width: maxWidth * 0.3,
+                            height: maxHeight * 0.07,
                             child: Image(
                                 image: Image.memory(Base64Decoder()
                                         .convert(imageUrl.split(",").last))
@@ -454,7 +617,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        width: maxWidth * 0.4,
+                        width: maxWidth * 0.3,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -474,12 +637,46 @@ class _AadhaarCardState extends State<AadhaarCard> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               fillColor: Colours.paleGrey,
-                              hintText: "Enter Captcha*",
+                              hintText: "Captcha*",
                               hintStyle: TextStyles.textStyle120,
                             )),
                       ),
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: h1p * 5),
+                child: Container(
+                  height: maxHeight * 0.06,
+                  width: maxWidth * w1p * 0.2,
+                  child: TextButton(
+                    onPressed: () async {
+                      // context.showLoader();
+                      Map<String, dynamic> aadharOtp = await getIt<KycManager>()
+                          .generateAdharOtp(
+                              aadhaarController.text, reCaptchaController.text);
+                      // AdhaarController.adhaarDetails(companyId, , back)
+                      Fluttertoast.showToast(msg: aadharOtp['msg']);
+                    },
+                    child: Text(
+                      'Generate OTP',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                          Color.fromARGB(255, 253, 153, 33),
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          side: BorderSide(
+                            width: 1,
+                            color: Color.fromARGB(255, 150, 146, 146),
+                          ),
+                        ))),
+                  ),
                 ),
               ),
 
@@ -490,47 +687,17 @@ class _AadhaarCardState extends State<AadhaarCard> {
               //generate otp
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                        left: w1p * 6, right: w1p * 6, top: h1p * 5),
-                    child: Container(
-                      height: maxHeight * 0.06,
-                      child: TextButton(
-                        onPressed: () async {
-                          Map<String, dynamic> aadharOtp =
-                              await getIt<KycManager>().generateAdharOtp(
-                                  aadhaarController.text,
-                                  reCaptchaController.text);
-                          // AdhaarController.adhaarDetails(companyId, , back)
-                          Fluttertoast.showToast(msg: aadharOtp['msg']);
-                        },
-                        child: Text(
-                          'Generate OTP',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                              Color.fromARGB(255, 253, 153, 33),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              side: BorderSide(
-                                width: 1,
-                                color: Color.fromARGB(255, 150, 146, 146),
-                              ),
-                            ))),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: w1p * 0.03, right: w1p * 2, top: h1p * 1),
+                        left: w1p * 10, right: w1p * 3, top: h1p * 5),
+                    // padding: EdgeInsets.only(
+                    //     left: w1p * 0.03, right: w1p * 2, top: h1p * 1),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        width: maxWidth * 0.45,
+                        width: maxWidth * 0.4,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -556,68 +723,67 @@ class _AadhaarCardState extends State<AadhaarCard> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(right: w1p * 9, top: h1p * 5),
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            height: maxHeight * 0.06,
+                            width: maxWidth * 0.35,
+                            child: TextButton(
+                              onPressed: () async {
+                                Map<String, dynamic> verifyAadharOtp =
+                                    await getIt<KycManager>().verifyAdharOtp(
+                                  otpController.text,
+                                );
+
+                                Fluttertoast.showToast(
+                                    msg: verifyAadharOtp['msg']);
+                                if (verifyAadharOtp['error'] == false) {
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Text(
+                                'Verify OTP',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 253, 153, 33),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    side: BorderSide(
+                                      width: 1,
+                                      color: Color.fromARGB(255, 150, 146, 146),
+                                    ),
+                                  ))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
-                height: w1p,
+                height: h1p * 4,
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: w1p * 6, right: w1p * 6, top: h1p * 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        height: maxHeight * 0.06,
-                        width: maxWidth * 0.25,
-                        child: TextButton(
-                          onPressed: () async {
-                            Map<String, dynamic> verifyAadharOtp =
-                                await getIt<KycManager>().verifyAdharOtp(
-                              otpController.text,
-                            );
-
-                            // AdhaarController.adhaarDetails(companyId, , back)
-                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            // behavior: SnackBarBehavior.floating,
-                            // content: Text(
-                            // verifyAadharOtp['msg'],
-                            // style: const TextStyle(color: Colors.green),
-                            // )));
-                            Fluttertoast.showToast(msg: verifyAadharOtp['msg']);
-                            if (verifyAadharOtp['error'] == false) {
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: Text(
-                            'Verify OTP',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                Color.fromARGB(255, 253, 153, 33),
-                              ),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                                side: BorderSide(
-                                  width: 1,
-                                  color: Color.fromARGB(255, 150, 146, 146),
-                                ),
-                              ))),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: w10p,
-                    ),
-                    Text('Verification Status:')
-                  ],
-                ),
-              ),
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: w1p * 9,
+                        right: w1p * 3,
+                        top: h1p * 2,
+                        bottom: h1p * 3),
+                    child: Text('Verification Status:'),
+                  ))
             ]),
           ),
         ),
@@ -625,58 +791,58 @@ class _AadhaarCardState extends State<AadhaarCard> {
     });
   }
 
-  Widget adhaarDetails() => Container(
+  Widget adhaarDetails(
+          String name, String address, String dob, String gender) =>
+      Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Name: ABC',
-              style: TextStyle(fontSize: 15),
+              'Name: $name',
+              style: TextStyle(fontSize: 10),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.width * 0.1,
+              height: MediaQuery.of(context).size.width * 0.05,
             ),
             Text(
-              'Address: 102,kothrud,Pune',
-              style: TextStyle(fontSize: 15),
+              'Address: $address',
+              style: TextStyle(fontSize: 10),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.width * 0.1,
+              height: MediaQuery.of(context).size.width * 0.05,
             ),
             Text(
-              'DOB: 19/08/1991',
-              style: TextStyle(fontSize: 15),
+              'DOB: $dob',
+              style: TextStyle(fontSize: 10),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.width * 0.1,
+              height: MediaQuery.of(context).size.width * 0.05,
             ),
             Text(
-              'Gender: Male',
-              style: TextStyle(fontSize: 15),
+              'Gender: $gender',
+              style: TextStyle(fontSize: 10),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.width * 0.1,
-            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           ],
         ),
       );
-//   Widget showImage() => Padding(
-//         padding: const EdgeInsets.all(5),
-//         child: Center(
-//           child: ClipRRect(
-//             borderRadius: BorderRadius.circular(1),
-//             child: Image.file(
-//               //to show image, you type like this.
-//               File(img),
-//               fit: BoxFit.cover,
-//               width: MediaQuery.of(context).size.width * 0.38,
-//               height: 200,
-//             ),
-//           ),
-//         ),
-//       );
-// }
+  Widget showImage(path) => Padding(
+        padding: const EdgeInsets.all(5),
+        child: Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(1),
+            child: Image.file(
+              //to show image, you type like this.
+              File(path),
+              fit: BoxFit.fill,
+              width: MediaQuery.of(context).size.width * 0.38,
+              height: 200,
+            ),
+          ),
+        ),
+      );
+}
 
-Widget imageDialog() {
+Widget imageDialog(path) {
   return Icon(Icons.edit_document);
 }

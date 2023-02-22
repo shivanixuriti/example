@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:xuriti/models/helper/service_locator.dart';
-
 import '../../../logic/view_models/kyc_manager.dart';
 import '../../theme/constants.dart';
 
@@ -45,21 +44,11 @@ class _DocumentUploadingState extends State<DocumentUploading> {
             children: [
               InkWell(
                 onTap: () async {
-                  Map<String, dynamic> fileSelection =
-                      await getIt<KycManager>().getImage();
-                  setState(() {
-                    img = fileSelection['File'];
-                    imgpath = '${img!.path}';
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      content: Text(
-                        fileSelection['msg'],
-                        style: TextStyle(
-                            color: fileSelection['status'] == true
-                                ? Colors.green
-                                : Colors.red),
-                      )));
+                  File? fileSelection =
+                      await getIt<KycManager>().getImage(context: context);
+                  if (fileSelection != null) {
+                    widget.onFileSelection([fileSelection]);
+                  }
                 },
                 child: Container(
                   height: h1p * 6,
@@ -93,17 +82,18 @@ class _DocumentUploadingState extends State<DocumentUploading> {
                     img = fileSelection[0];
                     imgpath = '${img?.path}'; //error
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      content: Text(
-                        fileSelection != null
-                            ? "Uploaded images ${fileSelection.first}"
-                            : "",
-                        style: TextStyle(
-                            color: fileSelection != null
-                                ? Colors.green
-                                : Colors.red),
-                      )));
+
+                  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //     behavior: SnackBarBehavior.floating,
+                  //     content: Text(
+                  //       fileSelection != null
+                  //           ? "Uploaded images ${fileSelection.first}"
+                  //           : "",
+                  //       style: TextStyle(
+                  //           color: fileSelection != null
+                  //               ? Colors.green
+                  //               : Colors.red),
+                  //     )));
                   widget.onFileSelection(fileSelection);
                 },
                 child: Container(
@@ -125,31 +115,31 @@ class _DocumentUploadingState extends State<DocumentUploading> {
               ),
             ],
           ),
-          imgpath.isNotEmpty ? showImage() : const SizedBox()
+          // imgpath.isNotEmpty ? showImage() : const SizedBox()
         ],
       ),
     );
   }
 
-  Widget showImage() => Padding(
-      padding: const EdgeInsets.all(8),
-      child: Center(
-          child: Column(children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.file(
-            //to show image, you type like this.
-            File(imgpath),
-            fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width * 0.5,
-            height: 200,
-          ),
-        ),
-        Text(
-          imgpath.split('/').last,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          // style: const TextStyle(fontWeight: FontWeight.bold),
-        )
-      ])));
+  // Widget showImage() => Padding(
+  //     padding: const EdgeInsets.all(8),
+  //     child: Center(
+  //         child: Column(children: [
+  //       ClipRRect(
+  //         borderRadius: BorderRadius.circular(8),
+  //         child: Image.file(
+  //           //to show image, you type like this.
+  //           File(imgpath),
+  //           fit: BoxFit.cover,
+  //           width: MediaQuery.of(context).size.width * 0.5,
+  //           height: 200,
+  //         ),
+  //       ),
+  //       Text(
+  //         imgpath.split('/').last,
+  //         textAlign: TextAlign.center,
+  //         overflow: TextOverflow.ellipsis,
+  //         // style: const TextStyle(fontWeight: FontWeight.bold),
+  //       )
+  //     ])));
 }
