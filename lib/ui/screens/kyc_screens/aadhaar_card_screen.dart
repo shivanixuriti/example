@@ -211,19 +211,24 @@ class _AadhaarCardState extends State<AadhaarCard> {
                               FilePickerResult? fileResult = (await FilePicker
                                   .platform
                                   .pickFiles(allowMultiple: false));
-                              String? path = fileResult != null
-                                  ? fileResult.files.isNotEmpty
-                                      ? fileResult.files[0].path
-                                      : ""
-                                  : "";
-                              final File selectFront = File(path as String);
-                              // print(selectFront.readAsBytesSync());
+//if the front image does not exist and we dont pick any image then we show message
+//else if we pick a image the image is saved
+                              if (frontImage == null &&
+                                  (fileResult == null ||
+                                      fileResult.files.isEmpty)) {
+                                Fluttertoast.showToast(
+                                    msg: "Please select file");
+                              } else if (fileResult != null &&
+                                  fileResult.files.isNotEmpty) {
+                                String? path = fileResult.files[0].path ?? "";
+                                final File selectFront = File(path as String);
 
-                              setState(() {
-                                this.frontImage = selectFront;
-                                this.img1 = path.toString();
-                              });
-                              print("front img........$path");
+                                setState(() {
+                                  this.frontImage = selectFront;
+                                  this.img1 = path.toString();
+                                });
+                                print("front img........$path");
+                              }
                             },
                             child: Column(
                               children: [
@@ -291,16 +296,22 @@ class _AadhaarCardState extends State<AadhaarCard> {
                               FilePickerResult? fileResult = (await FilePicker
                                   .platform
                                   .pickFiles(allowMultiple: false));
-                              String? path = fileResult != null
-                                  ? fileResult.files.isNotEmpty
-                                      ? fileResult.files[0].path
-                                      : ""
-                                  : "";
-                              final File selectBack = File(path as String);
-                              setState(() {
-                                this.backImage = selectBack;
-                                this.img2 = path.toString();
-                              });
+
+                              if (backImage == null &&
+                                  (fileResult == null ||
+                                      fileResult.files.isEmpty)) {
+                                Fluttertoast.showToast(
+                                    msg: "Please select file");
+                              } else if (fileResult != null &&
+                                  fileResult.files.isNotEmpty) {
+                                String? path = fileResult.files[0].path ?? "";
+
+                                final File selectBack = File(path as String);
+                                setState(() {
+                                  this.backImage = selectBack;
+                                  this.img2 = path.toString();
+                                });
+                              }
                             },
                             child: Padding(
                               padding: EdgeInsets.only(
@@ -595,8 +606,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                 child: isAadharNoCorrect
                     ? Container()
                     : Text('Please enter valid AADHAAR No',
-                        style: TextStyle(color: Colors.redAccent)
-                        ),
+                        style: TextStyle(color: Colors.redAccent)),
               ),
               SizedBox(
                 height: maxHeight * 0.03,
@@ -852,17 +862,26 @@ class _AadhaarCardState extends State<AadhaarCard> {
       );
   Widget showImage(path) => Padding(
         padding: const EdgeInsets.all(5),
-        child: Center(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(1),
-            child: Image.file(
-              //to show image, you type like this.
-              File(path),
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).size.width * 0.38,
-              height: 200,
+        child: Column(
+          children: [
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(1),
+                child: Image.file(
+                  //to show image, you type like this.
+                  File(path),
+                  fit: BoxFit.fill,
+                  width: MediaQuery.of(context).size.width * 0.38,
+                  height: 200,
+                ),
+              ),
             ),
-          ),
+            Text(
+              path?.split('/')?.last ?? '',
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            )
+          ],
         ),
       );
 }

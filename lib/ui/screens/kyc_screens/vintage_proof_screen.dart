@@ -245,6 +245,8 @@ class _VintageProofState extends State<VintageProof> {
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
+                      shouldPickFile:
+                                vintageImages?.isEmpty ?? true,
                       onFileSelection: (files) {
                         vintageImages = files;
                         setState(() {});

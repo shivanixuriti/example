@@ -12,12 +12,14 @@ class DocumentUploading extends StatefulWidget {
   final double maxHeight;
   final bool? flag;
   final Function(List<File?>? files) onFileSelection;
+  final bool shouldPickFile;
   //final String type;
   const DocumentUploading(
       {required this.maxWidth,
       required this.maxHeight,
       this.flag,
-      required this.onFileSelection});
+      required this.onFileSelection,
+      this.shouldPickFile = false});
 
   @override
   State<DocumentUploading> createState() => _DocumentUploadingState();
@@ -74,7 +76,9 @@ class _DocumentUploadingState extends State<DocumentUploading> {
 
                   print('=====>File uploaded====>${fileSelection}');
                   if (fileSelection?.isEmpty == true || fileSelection == null) {
-                    Fluttertoast.showToast(msg: "Please select file");
+                    if (widget.shouldPickFile) {
+                      Fluttertoast.showToast(msg: "Please select file");
+                    }
                     return;
                   }
 

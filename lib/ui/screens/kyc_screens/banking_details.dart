@@ -207,6 +207,8 @@ class _BankingDetailsState extends State<BankingDetails> {
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
+                       shouldPickFile:
+                                bankDetailsImages?.isEmpty ?? true,
                       onFileSelection: (files) {
                         bankDetailsImages = files;
                         setState(() {});

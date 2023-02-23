@@ -155,8 +155,7 @@ class _PanDetailsState extends State<PanDetails> {
                       child: isPanNoCorrect
                           ? Container()
                           : Text('Please enter valid PAN No',
-                              style: TextStyle(color: Colors.redAccent)
-                              ),
+                              style: TextStyle(color: Colors.redAccent)),
                     ),
                     SizedBox(
                       height: h1p * 3,
@@ -274,6 +273,7 @@ class _PanDetailsState extends State<PanDetails> {
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
+                      shouldPickFile: panDetailsImages?.isEmpty ?? true,
                       onFileSelection: (files) {
                         panDetailsImages = files;
                         setState(() {});

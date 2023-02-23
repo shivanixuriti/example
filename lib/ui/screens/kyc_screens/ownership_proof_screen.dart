@@ -322,6 +322,8 @@ class _OwnershipProofState extends State<OwnershipProof> {
                           DocumentUploading(
                             maxWidth: maxWidth,
                             maxHeight: maxHeight,
+                            shouldPickFile:
+                                ownershipImages?.isEmpty ?? true,
                             onFileSelection: (files) {
                               ownershipImages = files;
                               setState(() {});
