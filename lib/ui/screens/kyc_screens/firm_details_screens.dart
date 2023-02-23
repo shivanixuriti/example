@@ -213,6 +213,8 @@ class _FirmDetailsState extends State<FirmDetails> {
                     DocumentUploading(
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
+                      shouldPickFile:
+                                firmDetails?.isEmpty ?? true,
                       onFileSelection: (files) {
                         firmDetails = files;
                         setState(() {});

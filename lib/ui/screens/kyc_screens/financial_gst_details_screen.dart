@@ -231,6 +231,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
                       flag: true,
+                      shouldPickFile: financialImages?.isEmpty ?? true,
                       onFileSelection: (filesObjects) {
                         if ((financialImages?.length ?? 0) == 0) {
                           financialImages = filesObjects;
@@ -404,6 +405,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
                       flag: true,
+                      shouldPickFile: gstImages?.isEmpty ?? true,
                       onFileSelection: (files) {
                         gstImages = files;
                         setState(() {});

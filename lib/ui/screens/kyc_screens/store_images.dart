@@ -239,6 +239,7 @@ class _StoreImagesState extends State<StoreImages> {
                       maxWidth: maxWidth,
                       maxHeight: maxHeight,
                       flag: true,
+                      shouldPickFile: storeImages?.isEmpty ?? true,
                       onFileSelection: (filesObjects) {
                         if ((storeImages?.length ?? 0) == 0 &&
                             (filesObjects?.length ?? 0) <= 3) {

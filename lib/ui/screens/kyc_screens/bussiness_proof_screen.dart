@@ -434,6 +434,8 @@ class _BussinessProofState extends State<BussinessProof> {
                             maxWidth: maxWidth,
                             maxHeight: maxHeight,
                             flag: false,
+                            shouldPickFile:
+                                businessProofImages?.isEmpty ?? true,
                             onFileSelection: (files) {
                               businessProofImages = files;
                               setState(() {});
