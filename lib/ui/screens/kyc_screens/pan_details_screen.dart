@@ -31,6 +31,9 @@ class _PanDetailsState extends State<PanDetails> {
   List<File?>? panDetailsImages;
   List panfiles = [];
   var panNo;
+  bool isPanNoCorrect = true;
+  final panNumberRegex = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$');
+
   @override
   void initState() {
     init();
@@ -123,11 +126,14 @@ class _PanDetailsState extends State<PanDetails> {
                           color: Colours.paleGrey,
                         ),
                         child: TextFormField(
-                            controller: panController = TextEditingController(
-                                text: '${panController.text}'),
+                            controller: panController,
                             onChanged: (value) {
                               // documentNoController.clear();
                               value = panController.text;
+                              setState(() {
+                                isPanNoCorrect =
+                                    panNumberRegex.hasMatch(panController.text);
+                              });
                             },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
@@ -140,6 +146,17 @@ class _PanDetailsState extends State<PanDetails> {
                               hintStyle: TextStyles.textStyle120,
                             )),
                       ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w1p * 6,
+                        right: w1p * 6,
+                      ),
+                      child: isPanNoCorrect
+                          ? Container()
+                          : Text('Please enter valid PAN No',
+                              style: TextStyle(color: Colors.redAccent)
+                              ),
                     ),
                     SizedBox(
                       height: h1p * 3,

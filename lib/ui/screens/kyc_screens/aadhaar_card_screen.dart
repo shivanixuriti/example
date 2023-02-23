@@ -52,6 +52,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
   File? backImage;
   String img1 = '';
   String img2 = '';
+  bool isAadharNoCorrect = true;
 
   var data;
   var url;
@@ -563,11 +564,15 @@ class _AadhaarCardState extends State<AadhaarCard> {
                       color: Colours.paleGrey,
                     ),
                     child: TextFormField(
-                        controller: aadhaarController = TextEditingController(
-                            text: '${aadhaarController.text}'),
+                        controller: aadhaarController,
                         onChanged: (value) {
                           // documentNoController.clear();
                           value = aadhaarController.text;
+                          setState(() {
+                            isAadharNoCorrect =
+                                (int.tryParse(aadhaarController.text) != null &&
+                                    aadhaarController.text.length == 12);
+                          });
                         },
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -581,6 +586,17 @@ class _AadhaarCardState extends State<AadhaarCard> {
                         )),
                   ),
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: w1p * 6,
+                  right: w1p * 6,
+                ),
+                child: isAadharNoCorrect
+                    ? Container()
+                    : Text('Please enter valid AADHAAR No',
+                        style: TextStyle(color: Colors.redAccent)
+                        ),
               ),
               SizedBox(
                 height: maxHeight * 0.03,

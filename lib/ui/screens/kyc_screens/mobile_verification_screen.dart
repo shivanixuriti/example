@@ -26,6 +26,7 @@ class _MobileVerificationState extends State<MobileVerification> {
   TextEditingController otpController = TextEditingController();
 
   var mobno;
+  bool isMobileNoCorrect = true;
 
   @override
   void initState() {
@@ -111,6 +112,15 @@ class _MobileVerificationState extends State<MobileVerification> {
                         ),
                         child: TextFormField(
                             controller: numberController,
+                            onChanged: (value) {
+                              value = numberController.text;
+                              setState(() {
+                                isMobileNoCorrect =
+                                    (int.tryParse(numberController.text) !=
+                                            null &&
+                                        numberController.text.length == 10);
+                              });
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: w1p * 6, vertical: h1p * .5),
@@ -122,6 +132,18 @@ class _MobileVerificationState extends State<MobileVerification> {
                               hintStyle: TextStyles.textStyle120,
                             )),
                       ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w1p * 6,
+                        right: w1p * 6,
+                      ),
+                      child: isMobileNoCorrect
+                          ? Container()
+                          : Text('Please enter valid 10 digit Mobile No',
+                              style: TextStyle(color: Colors.redAccent)
+                              ),
                     ),
                     // SizedBox(
                     //   height: h1p * 3,
