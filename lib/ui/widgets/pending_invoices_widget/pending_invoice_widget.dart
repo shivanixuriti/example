@@ -567,7 +567,7 @@ class PendingInvoiceWidget extends StatelessWidget {
                                                       MainAxisSize.min,
                                                   children: [
                                                     Text(
-                                                        "I agree and  approve Xuriti and NBFC Ditya Finance Private Limited to disburse funds to yhe seller $companyName for invoice number -${fullDetails.invoiceNumber} on my behalf"),
+                                                        "I agree and  approve Xuriti and ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf."),
                                                     TextField(
                                                       controller:
                                                           acceptController,
