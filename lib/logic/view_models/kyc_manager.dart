@@ -108,6 +108,7 @@ class KycManager extends ChangeNotifier {
     final panNumberRegex = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$');
     if ((panfile != "") &&
         pan_no.isNotEmpty &&
+        pan_no != '' &&
         panNumberRegex.hasMatch(panNo)) {
       var body = new Map<String, dynamic>();
       body['company_id'] = compId;
@@ -234,6 +235,7 @@ class KycManager extends ChangeNotifier {
     // Map<String, dynamic> data = kycModel.toJson();
     final allowedDocCharacters = RegExp(r'^[a-zA-Z0-9_-]*$');
     if (docNo != null &&
+        docNo != '' &&
         docType != null &&
         filePath.isNotEmpty &&
         allowedDocCharacters.hasMatch(docNo)) {
@@ -300,6 +302,7 @@ class KycManager extends ChangeNotifier {
     // Map<String, dynamic> data = kycModel.toJson();
     final allowedDocCharacters = RegExp(r'^[a-zA-Z0-9_-]*$');
     if (docNo != null &&
+        docNo != '' &&
         docType != null &&
         filePath.isNotEmpty &&
         allowedDocCharacters.hasMatch(docNo)) {
