@@ -519,7 +519,8 @@ class _AadhaarCardState extends State<AadhaarCard> {
                               },
                               child: Text(
                                 'CAPTURED',
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255)),
                               ),
                               style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
@@ -556,7 +557,18 @@ class _AadhaarCardState extends State<AadhaarCard> {
                 ),
               ),
               // ),
+              SizedBox(height: maxHeight * 0.03),
 
+              Padding(
+                padding: EdgeInsets.only(left: 42.0),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    "Enter UID number",
+// textAlign: TextAlign.end,
+                  ),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(
                     left: w1p * 6, right: w1p * 6, top: h1p * 5),
@@ -651,7 +663,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        width: maxWidth * 0.3,
+                        width: maxWidth * 0.4,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -671,7 +683,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               fillColor: Colours.paleGrey,
-                              hintText: "Captcha*",
+                              hintText: "Enter Captcha*",
                               hintStyle: TextStyles.textStyle120,
                             )),
                       ),
@@ -694,8 +706,9 @@ class _AadhaarCardState extends State<AadhaarCard> {
                       Fluttertoast.showToast(msg: aadharOtp['msg']);
                     },
                     child: Text(
-                      'Generate OTP',
-                      style: TextStyle(color: Colors.black),
+                      'GENERATE OTP',
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                     ),
                     style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(
@@ -781,8 +794,9 @@ class _AadhaarCardState extends State<AadhaarCard> {
                                 }
                               },
                               child: Text(
-                                'Verify OTP',
-                                style: TextStyle(color: Colors.black),
+                                'VERIFY OTP',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255)),
                               ),
                               style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(

@@ -47,6 +47,7 @@ class Invoice {
   String? invoiceType;
   Buyer? seller;
   String? sellerGst;
+  String? nbfcName;
 
   Invoice(
       {this.billDetails,
@@ -70,7 +71,8 @@ class Invoice {
       this.invoiceDueDate,
       this.invoiceType,
       this.seller,
-      this.sellerGst});
+      this.sellerGst,
+      this.nbfcName});
 
   Invoice.fromJson(Map<String, dynamic> json) {
     billDetails = json['bill_details'] != null
@@ -98,6 +100,7 @@ class Invoice {
     invoiceType = json['invoice_type'];
     seller = json['seller'] != null ? new Buyer.fromJson(json['seller']) : null;
     sellerGst = json['seller_gst'];
+    nbfcName = json['nbfc_name'];
   }
 
   Map<String, dynamic> toJson() {
