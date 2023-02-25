@@ -101,14 +101,14 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
                                             height: h1p * 1,
                                           ),
                                           const Text(
-                                            "Total Credit Limit",
+                                            "Total Credit Limit / Credit Available",
                                             style: TextStyles.textStyle21,
                                           ),
                                           SizedBox(
-                                            height: h1p * 0.1,
+                                            height: h1p * 0.2,
                                           ),
                                           Text(
-                                            "₹ ${params.selectedCreditLimit.toString()}",
+                                            "₹ ${params.selectedCreditLimit} lacs/₹ ${params.availableCredit} lacs",
                                             style: TextStyles.textStyle22,
                                           ),
                                         ],

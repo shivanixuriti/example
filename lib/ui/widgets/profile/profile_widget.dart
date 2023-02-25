@@ -22,9 +22,6 @@ class ProfileWidget extends StatefulWidget {
 class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
-
-
-
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
       double maxWidth = constraints.maxWidth;
@@ -89,14 +86,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     height: h1p * 3.5,
                                   ),
                                   const Text(
-                                    "Total Credit Limit",
+                                    "Total Credit Limit / Credit Available",
                                     style: TextStyles.textStyle71,
                                   ),
                                   SizedBox(
-                                    height: h1p * 0.1,
+                                    height: h1p * 0.2,
                                   ),
                                   Text(
-                                    "₹ ${params.selectedCreditLimit}",
+                                    "₹ ${params.selectedCreditLimit} lacs/₹ ${params.availableCredit} lacs",
                                     style: TextStyles.textStyle22,
                                   ),
                                 ],

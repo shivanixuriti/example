@@ -24,7 +24,9 @@ import '../../models/helper/service_locator.dart';
 class TransactionManager extends ChangeNotifier {
   Invoices? invoices;
   Invoices? tempInvoice;
-  String? selectedCreditLimit = "0";
+  dynamic? selectedCreditLimit;
+  dynamic? availableCredit;
+  // dynamic credit;
   TransactionModel? transactionModel;
 
   List<Invoice> pendingInvoice = [];
@@ -116,13 +118,56 @@ class TransactionManager extends ChangeNotifier {
 
     if (responseData != null) {
       if (responseData['status'] == true && responseData['company'] != null) {
-        String credit = responseData['company']['creditLimit'].toString();
+        dynamic totalcredit = responseData['company']['creditLimit'];
+        dynamic availCredit = responseData['company']['avail_credit'];
 
-        selectedCreditLimit = double.parse(credit).toStringAsFixed(2);
+        dynamic credit = availCredit / 100000;
+        totalcredit = totalcredit / 100000;
 
+        totalcredit = totalcredit.toString();
+        credit = credit.toString();
+        credit = double.parse(credit).toStringAsFixed(2); // available credit
+
+        print("credit in lacs ---->$credit");
+
+        selectedCreditLimit =
+            double.parse(totalcredit).toStringAsFixed(2); // total credit
+
+        availableCredit = credit;
+        // availableCredit = double.parse(credit).toStringAsFixed(2);
+
+        print("Credit Limit--------------------->$availableCredit");
         notifyListeners();
       }
-      return selectedCreditLimit;
+
+      return '$availableCredit, $selectedCreditLimit';
+    }
+  }
+
+  getAvailableCreditLimit(
+    token,
+  ) async {
+    // String? gstNo = getIt<SharedPreferences>().getString("gstIn");
+    String? companyId = getIt<SharedPreferences>().getString('companyId');
+
+    String url = "/entity/entity/$companyId";
+
+    dynamic responseData = await getIt<DioClient>().get(url, token: token);
+
+    if (responseData != null) {
+      if (responseData['status'] == true && responseData['company'] != null) {
+        //  String credit = responseData['company']['creditLimit'].toString();
+        String availCredit = responseData['company']['avail_credit'];
+
+        //  selectedCreditLimit = double.parse(credit).toStringAsFixed(2);
+        availableCredit = double.parse(availCredit).toStringAsFixed(2);
+
+        dynamic credit = availableCredit / 100000;
+
+        print("Available Credit Limit--------------------->$availableCredit");
+        notifyListeners();
+      }
+      return availableCredit;
     }
   }
 
@@ -205,7 +250,7 @@ class TransactionManager extends ChangeNotifier {
     String? token = getIt<SharedPreferences>().getString('token');
     dynamic responseData =
         await getIt<DioClient>().patch(url, data, token: token);
-    print(responseData);
+    print("responseData confirm ----$responseData");
     if (responseData != null && responseData['status'] == true) {
       String message = responseData["message"];
 
