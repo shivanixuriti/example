@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xuriti/ui/screens/kyc_screens/store_images.dart';
 import 'package:xuriti/ui/widgets/kyc_widgets/previouslyUploadedDocuments.dart';
 import 'package:xuriti/util/loaderWidget.dart';
 
@@ -125,44 +126,7 @@ class _FirmDetailsState extends State<FirmDetails> {
                         setState(() {});
                       },
                     ),
-                    ((firmDetails?.length ?? 0) != 0 &&
-                            firmDetails?.first != null)
-                        ? Padding(
-                            padding: EdgeInsets.only(top: w1p * 3),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.38,
-                                  height: 200,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Center(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(1),
-                                        child: Image.file(
-                                          firmDetails!.first!,
-                                          fit: BoxFit.fill,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.38,
-                                          height: 200,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  firmDetails!.first!.path.split('/').last,
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  // style: const TextStyle(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          )
-                        : SizedBox(),
+                    getImagesWidget(context: context, storeImages: firmDetails),
                     InkWell(
                       onTap: () async {
                         context.showLoader();

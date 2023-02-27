@@ -4,6 +4,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:xuriti/ui/screens/invoices_screens/pending_invoices_screen/all_pending_invoices.dart';
 import 'package:xuriti/ui/screens/invoices_screens/pending_invoices_screen/pending_invoice_report.dart';
@@ -566,8 +567,12 @@ class PendingInvoiceWidget extends StatelessWidget {
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
-                                                    Text(
-                                                        "I agree and  approve Xuriti and ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf."),
+                                                    fullDetails.invoiceType ==
+                                                            "IN"
+                                                        ? Text(
+                                                            "I agree and  approve Xuriti and ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf.")
+                                                        : Text(
+                                                            "I agree and approve that credit note ${fullDetails.invoiceNumber} is correct. Xuriti and it's financing partner ${fullDetails.nbfcName} is authorised to adjust the credit note amount towards the upcoming invoices and disburse the remaining balance to $companyName.}"),
                                                     TextField(
                                                       controller:
                                                           acceptController,
@@ -609,15 +614,19 @@ class PendingInvoiceWidget extends StatelessWidget {
                                                           String? message = await getIt<
                                                                   TransactionManager>()
                                                               .changeInvoiceStatus(
-                                                                  invoiceId,
-                                                                  "Confirmed",
-                                                                  index,
-                                                                  fullDetails,
-                                                                  timeStamp,
-                                                                  userConsentGiven,
-                                                                  acceptController
-                                                                      .text,
-                                                                  "I agree and approve Xuriti and ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf.");
+                                                            invoiceId,
+                                                            "Confirmed",
+                                                            index,
+                                                            fullDetails,
+                                                            timeStamp,
+                                                            userConsentGiven,
+                                                            acceptController
+                                                                .text,
+                                                            fullDetails.invoiceType ==
+                                                                    "IN"
+                                                                ? "I agree and  approve Xuriti and it's financing partner ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf."
+                                                                : "I agree and approve that credit note ${fullDetails.invoiceNumber} is correct. Xuriti and it's financing partner ${fullDetails.nbfcName} is authorised to adjust the credit note amount towards the upcoming invoices and disburse the remaining balance to $companyName.",
+                                                          );
                                                           progress.dismiss();
                                                           if (refreshingMethod !=
                                                               null) {
