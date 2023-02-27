@@ -270,47 +270,7 @@ class _StoreImagesState extends State<StoreImages> {
                     ),
 
                     ///List separator
-                    SizedBox(
-                      height: 220,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: storeImages?.length ?? 0,
-                          itemBuilder: (contxt, index) {
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.38,
-                              height: 220,
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Column(
-                                  children: [
-                                    Center(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(1),
-                                        child: Image.file(
-                                          storeImages![index]!,
-                                          fit: BoxFit.cover,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.38,
-                                          height: 190,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      storeImages![index]!.path.split('/').last,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                      // style: const TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
+                    getImagesWidget(context: context, storeImages: storeImages),
                     InkWell(
                       onTap: () async {
                         context.showLoader();
@@ -336,6 +296,48 @@ class _StoreImagesState extends State<StoreImages> {
                   ]))));
     });
   }
+}
+
+SizedBox getImagesWidget(
+    {required BuildContext context, List<File?>? storeImages}) {
+  return SizedBox(
+    height: 220,
+    child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        primary: false,
+        shrinkWrap: true,
+        itemCount: storeImages?.length ?? 0,
+        itemBuilder: (contxt, index) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width * 0.38,
+            height: 220,
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Column(
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(1),
+                      child: Image.file(
+                        storeImages![index]!,
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width * 0.38,
+                        height: 190,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    storeImages![index]!.path.split('/').last,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    // style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }),
+  );
 }
 
 Widget imageDialog(path) {

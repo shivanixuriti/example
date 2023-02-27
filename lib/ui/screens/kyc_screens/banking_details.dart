@@ -8,6 +8,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xuriti/logic/view_models/kyc_manager.dart';
+import 'package:xuriti/ui/screens/kyc_screens/store_images.dart';
 import 'package:xuriti/util/loaderWidget.dart';
 
 import '../../../Model/KycDetails.dart';
@@ -298,39 +299,42 @@ class _BankingDetailsState extends State<BankingDetails> {
                         setState(() {});
                       },
                     ),
-                    ((bankDetailsImages?.length ?? 0) != 0 &&
-                            bankDetailsImages?.first != null)
-                        ? Column(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.38,
-                                height: 200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Center(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(1),
-                                      child: Image.file(
-                                        bankDetailsImages!.first!,
-                                        fit: BoxFit.fill,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.38,
-                                        height: 200,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                bankDetailsImages!.first!.path.split('/').last,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                // style: const TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          )
-                        : SizedBox(),
+
+                    getImagesWidget(
+                        context: context, storeImages: bankDetailsImages),
+                    // ((bankDetailsImages?.length ?? 0) != 0 &&
+                    //         bankDetailsImages?.first != null)
+                    //     ? Column(
+                    //         children: [
+                    //           SizedBox(
+                    //             width: MediaQuery.of(context).size.width * 0.38,
+                    //             height: 200,
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.all(5),
+                    //               child: Center(
+                    //                 child: ClipRRect(
+                    //                   borderRadius: BorderRadius.circular(1),
+                    //                   child: Image.file(
+                    //                     bankDetailsImages!.first!,
+                    //                     fit: BoxFit.fill,
+                    //                     width:
+                    //                         MediaQuery.of(context).size.width *
+                    //                             0.38,
+                    //                     height: 200,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           Text(
+                    //             bankDetailsImages!.first!.path.split('/').last,
+                    //             textAlign: TextAlign.center,
+                    //             overflow: TextOverflow.ellipsis,
+                    //             // style: const TextStyle(fontWeight: FontWeight.bold),
+                    //           )
+                    //         ],
+                    //       )
+                    //     : SizedBox(),
                     InkWell(
                       onTap: () async {
                         context.showLoader();
