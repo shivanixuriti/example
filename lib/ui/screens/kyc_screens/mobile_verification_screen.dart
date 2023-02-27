@@ -27,7 +27,7 @@ class _MobileVerificationState extends State<MobileVerification> {
   TextEditingController otpController = TextEditingController();
 
   var mobno;
-  bool isMobileNoCorrect = true;
+  bool isMobileNoCorrect = false;
   bool isOtpNoCorrect =
       false; //these are validations only for format(only no allowed 4 digits) and not actual correctness of otp
   @override
