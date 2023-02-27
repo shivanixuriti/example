@@ -20,22 +20,18 @@ class _AllGuideScreenState extends State<AllGuideScreen> {
       List<String> guideTitle = [
         "Save More",
         "Get Rewarded",
-        "Extend Credit",
       ];
       List<String> guideImage = [
         "assets/images/all-guide1.png",
         "assets/images/all-guide2.png",
-        "assets/images/all-guide3.png",
       ];
       List<String> guideSimage = [
         "assets/images/guideImages/guide-simage1.png",
         "assets/images/guideImages/guide-simage2.png",
-        "assets/images/guideImages/guide-simage3.png",
       ];
       List<String> guideSubTitle = [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+        "Discounts on prompt payment",
+        "Pay on time to get rewards",
       ];
       double maxHeight = constraints.maxHeight;
       double maxWidth = constraints.maxWidth;
@@ -71,7 +67,7 @@ class _AllGuideScreenState extends State<AllGuideScreen> {
                     child: Container(
                       width: maxWidth,
                       child: ListView.builder(
-                        itemCount: 3,
+                        itemCount: 2,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, index) {
                           return Padding(
@@ -167,25 +163,26 @@ class _AllGuideScreenState extends State<AllGuideScreen> {
                                     ],
                                   ),
                                 ),
-                                (index <2)?
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: w10p * 1),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Opacity(
-                                        opacity: 0.6000000238418579,
-                                        child: Container(
-                                          height: h10p * .8,
-                                          width: w10p * .07,
-                                          color: Colours.gey,
+                                (index < 1)
+                                    ? Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: w10p * 1),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Opacity(
+                                              opacity: 0.6000000238418579,
+                                              child: Container(
+                                                height: h10p * .8,
+                                                width: w10p * .07,
+                                                color: Colours.gey,
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       )
-                                    ],
-                                  ),
-                                ):
-                                    Container()
+                                    : Container()
                               ],
                             ),
                           );
@@ -194,7 +191,6 @@ class _AllGuideScreenState extends State<AllGuideScreen> {
                     ),
                   ),
                 ),
-
               ],
             )),
       );
