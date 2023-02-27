@@ -28,7 +28,7 @@ class VintageProof extends StatefulWidget {
 
 class _VintageProofState extends State<VintageProof> {
   List<File?>? vintageImages;
-  String? firm;
+  String? firm = "Business Vintage Proof";
   var _formKey = GlobalKey<FormState>();
   List imgfiles = [];
   var docType;
