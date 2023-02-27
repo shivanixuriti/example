@@ -263,6 +263,24 @@ class _VintageProofState extends State<VintageProof> {
                                                                     '$doc',
                                                                     fit: BoxFit
                                                                         .fill,
+                                                                    loadingBuilder:
+                                                                        (context,
+                                                                            child,
+                                                                            loadingProgress) {
+                                                                      if (loadingProgress ==
+                                                                          null)
+                                                                        return child;
+                                                                      return Center(
+                                                                        child:
+                                                                            CircularProgressIndicator(
+                                                                          color:
+                                                                              Colours.tangerine,
+                                                                          value: loadingProgress.expectedTotalBytes != null
+                                                                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                                                              : null,
+                                                                        ),
+                                                                      );
+                                                                    },
                                                                   ),
                                                                 ),
                                                               ],

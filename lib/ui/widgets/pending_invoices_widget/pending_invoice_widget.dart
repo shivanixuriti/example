@@ -27,7 +27,7 @@ class PendingInvoiceWidget extends StatelessWidget {
   Invoice fullDetails;
   int index;
   bool userConsentGiven = false;
-
+  List<Invoice> pendingInvoice = [];
   final String companyName;
   PendingInvoiceWidget(
       {required this.fullDetails,
@@ -617,7 +617,7 @@ class PendingInvoiceWidget extends StatelessWidget {
                                                                   userConsentGiven,
                                                                   acceptController
                                                                       .text,
-                                                                  "This invoice has been confirmed and Xuriti and its financing partner is authorised to disburse funds to the seller as per the invoice generated on my behalf");
+                                                                  "I agree and approve Xuriti and ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf.");
                                                           progress.dismiss();
                                                           if (refreshingMethod !=
                                                               null) {
