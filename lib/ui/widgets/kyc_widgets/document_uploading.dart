@@ -37,6 +37,17 @@ class _DocumentUploadingState extends State<DocumentUploading> {
     double w1p = widget.maxWidth * 0.01;
 
     // late final img;
+    bool isFilesTypeCorrect(List<File?>? fileSelection) {
+      List<String> allowedTypes = ['pdf', 'png', 'jpeg', 'xlsx', 'jpg'];
+      for (dynamic file in fileSelection!) {
+        String str1 = file?.path?.split('?').first;
+        String str2 = str1.split('.').last;
+        if (!allowedTypes.contains(str2)) {
+          return false;
+        }
+      }
+      return true;
+    }
 
     return Padding(
       padding: EdgeInsets.only(left: w1p * 6, right: w1p * 6, top: h1p * 1),
@@ -79,6 +90,11 @@ class _DocumentUploadingState extends State<DocumentUploading> {
                     if (widget.shouldPickFile) {
                       Fluttertoast.showToast(msg: "Please select file");
                     }
+                    return;
+                  } else if (!isFilesTypeCorrect(fileSelection)) {
+                    Fluttertoast.showToast(
+                        msg:
+                            "Please select file of type- pdf, png, jpeg, xlsx");
                     return;
                   }
 

@@ -211,8 +211,8 @@ class _AadhaarCardState extends State<AadhaarCard> {
                               FilePickerResult? fileResult = (await FilePicker
                                   .platform
                                   .pickFiles(allowMultiple: false));
-//if the front image does not exist and we dont pick any image then we show message
-//else if we pick a image the image is saved
+                              //if the front image does not exist and we dont pick any image then we show message
+                              //else if we pick a image the image is saved
                               if (frontImage == null &&
                                   (fileResult == null ||
                                       fileResult.files.isEmpty)) {
@@ -909,11 +909,11 @@ class _AadhaarCardState extends State<AadhaarCard> {
                 ),
               ),
             ),
-            Text(
-              path?.split('/')?.last ?? '',
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            )
+            // Text(
+            //   path?.split('/')?.last ?? '',
+            //   textAlign: TextAlign.center,
+            //   overflow: TextOverflow.ellipsis,
+            // )
           ],
         ),
       );
