@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,8 @@ class _MobileVerificationState extends State<MobileVerification> {
 
   var mobno;
   bool isMobileNoCorrect = true;
-
+  bool isOtpNoCorrect =
+      false; //these are validations only for format(only no allowed 4 digits) and not actual correctness of otp
   @override
   void initState() {
     init();
@@ -111,6 +113,11 @@ class _MobileVerificationState extends State<MobileVerification> {
                           color: Colours.paleGrey,
                         ),
                         child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]')),
+                            ],
                             controller: numberController,
                             onChanged: (value) {
                               value = numberController.text;
@@ -120,6 +127,11 @@ class _MobileVerificationState extends State<MobileVerification> {
                                             null &&
                                         numberController.text.length == 10);
                               });
+                              if (isMobileNoCorrect == true &&
+                                  numberController.text.length == 10) {
+                                FocusScope.of(context).unfocus();
+                                //init generate otp???
+                              }
                             },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
@@ -142,39 +154,28 @@ class _MobileVerificationState extends State<MobileVerification> {
                       child: isMobileNoCorrect
                           ? Container()
                           : Text('Please enter valid 10 digit Mobile No',
-                              style: TextStyle(color: Colors.redAccent)
-                              ),
+                              style: TextStyle(color: Colors.redAccent)),
                     ),
                     // SizedBox(
                     //   height: h1p * 3,
                     // ),
                     InkWell(
                       onTap: () async {
-                        context.showLoader();
-                        print("mobile----${numberController.text}");
-                        Map<String, dynamic> kyc = await getIt<KycManager>()
-                            .generateOTP(numberController.text);
-                        context.hideLoader();
-                        //    progress.dismiss();
-                        //    print("doc---- $kyc");
-                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //     behavior: SnackBarBehavior.floating,
-                        //     content: Text(
-                        //       kyc['msg'],
-                        //       style: TextStyle(
-                        //           color: kyc['status'] == true
-                        //               ? Colors.green
-                        //               : Colors.green),
-                        //     )));
-                        Fluttertoast.showToast(msg: kyc['msg']);
-                        // Navigator.pop(context);
+                        if (isMobileNoCorrect) {
+                          context.showLoader();
+                          print("mobile----${numberController.text}");
+                          Map<String, dynamic> kyc = await getIt<KycManager>()
+                              .generateOTP(numberController.text);
+                          context.hideLoader();
+                          Fluttertoast.showToast(msg: kyc['msg']);
+                        }
                       },
                       child: Submitbutton(
-                        maxWidth: maxWidth,
-                        maxHeight: maxHeight,
-                        content: "Generate OTP",
-                        isKyc: true,
-                      ),
+                          maxWidth: maxWidth,
+                          maxHeight: maxHeight,
+                          content: "Generate OTP",
+                          isKyc: true,
+                          active: isMobileNoCorrect),
                     ),
 
                     // SizedBox(
@@ -196,7 +197,27 @@ class _MobileVerificationState extends State<MobileVerification> {
                           color: Colours.paleGrey,
                         ),
                         child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]')),
+                            ],
                             controller: otpController,
+                            onChanged: (value) {
+                              value = otpController.text;
+                              setState(() {
+                                isOtpNoCorrect =
+                                    (int.tryParse(otpController.text) != null &&
+                                        otpController.text.length >= 4 &&
+                                        otpController.text.length <= 6);
+                              });
+                              if (isOtpNoCorrect == true &&
+                                  otpController.text.length >= 4 &&
+                                  otpController.text.length <= 6) {
+                                // FocusScope.of(context).unfocus();
+                                //init generate otp???
+                              }
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: w1p * 6, vertical: h1p * .5),
@@ -214,20 +235,16 @@ class _MobileVerificationState extends State<MobileVerification> {
                     // ),
                     InkWell(
                       onTap: () async {
-                        context.showLoader();
-                        Map<String, dynamic> otpDetails =
-                            await getIt<KycManager>()
-                                .verifyOTP(otpController.text);
-                        context.hideLoader();
-                        Fluttertoast.showToast(msg: otpDetails['msg']);
-                        //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //         behavior: SnackBarBehavior.floating,
-                        //         content: Text(
-                        //           otpDetails['msg'],
-                        //           style: const TextStyle(color: Colors.green),
-                        //         )));
-                        if (otpDetails['error'] == false) {
-                          Navigator.pop(context);
+                        if (isMobileNoCorrect && isOtpNoCorrect) {
+                          context.showLoader();
+                          Map<String, dynamic> otpDetails =
+                              await getIt<KycManager>()
+                                  .verifyOTP(otpController.text);
+                          context.hideLoader();
+                          Fluttertoast.showToast(msg: otpDetails['msg']);
+                          if (otpDetails['error'] == false) {
+                            Navigator.pop(context);
+                          }
                         }
                       },
                       child: Submitbutton(
@@ -235,6 +252,7 @@ class _MobileVerificationState extends State<MobileVerification> {
                         maxHeight: maxHeight,
                         isKyc: true,
                         content: "Verify OTP",
+                        active: isMobileNoCorrect && isOtpNoCorrect,
                       ),
                     ),
                   ]))));
