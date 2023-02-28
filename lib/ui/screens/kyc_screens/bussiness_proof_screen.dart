@@ -331,6 +331,7 @@ class _BussinessProofState extends State<BussinessProof> {
                             imgfiles: imgfiles,
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            docHeadingName: 'business',
                           ),
                           DocumentUploading(
                             maxWidth: maxWidth,

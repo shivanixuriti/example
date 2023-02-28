@@ -132,6 +132,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       imgfiles: financefiles,
                       maxHeight: maxHeight,
                       maxWidth: maxWidth,
+                      docHeadingName: 'finantial',
                     ),
                     DocumentUploading(
                       maxWidth: maxWidth,
@@ -212,6 +213,7 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                       imgfiles: GSTfiles,
                       maxHeight: maxHeight,
                       maxWidth: maxWidth,
+                      docHeadingName: 'gst',
                     ),
 
                     DocumentUploading(

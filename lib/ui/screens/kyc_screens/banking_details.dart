@@ -116,6 +116,7 @@ class _BankingDetailsState extends State<BankingDetails> {
                       imgfiles: imgfiles,
                       maxHeight: maxHeight,
                       maxWidth: maxWidth,
+                      docHeadingName: 'banking',
                     ),
                     DocumentUploading(
                       maxWidth: maxWidth,

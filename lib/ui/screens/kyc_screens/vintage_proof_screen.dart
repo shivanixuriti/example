@@ -145,6 +145,7 @@ class _VintageProofState extends State<VintageProof> {
                       imgfiles: imgfiles,
                       maxHeight: maxHeight,
                       maxWidth: maxWidth,
+                      docHeadingName: 'vintage',
                     ),
                     DocumentUploading(
                       maxWidth: maxWidth,

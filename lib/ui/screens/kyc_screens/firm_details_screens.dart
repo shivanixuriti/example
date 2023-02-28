@@ -116,6 +116,7 @@ class _FirmDetailsState extends State<FirmDetails> {
                       imgfiles: imgfiles,
                       maxHeight: maxHeight,
                       maxWidth: maxWidth,
+                      docHeadingName: 'firm',
                     ),
                     DocumentUploading(
                       maxWidth: maxWidth,
