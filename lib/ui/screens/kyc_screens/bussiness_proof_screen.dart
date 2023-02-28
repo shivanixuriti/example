@@ -344,9 +344,53 @@ class _BussinessProofState extends State<BussinessProof> {
                               setState(() {});
                             },
                           ),
-                          getImagesWidget(
-                              context: context,
-                              storeImages: businessProofImages),
+                          // getImagesWidget(
+                          //     context: context,
+                          //     storeImages: businessProofImages),
+                          ((businessProofImages?.length ?? 0) != 0 &&
+                                  businessProofImages?.first != null)
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    top: w1p * 3,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        height: 200,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Center(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(1),
+                                              child: Image.file(
+                                                businessProofImages!.first!,
+                                                fit: BoxFit.fill,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.38,
+                                                height: 200,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        businessProofImages!.first!.path
+                                            .split('/')
+                                            .last,
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        // style: const TextStyle(fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : SizedBox()
                         ],
                       ),
                     ),

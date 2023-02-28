@@ -164,8 +164,41 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                     //   },
                     //   //type: "Financial Details"
                     // ),
-                    getImagesWidget(
-                        context: context, storeImages: financialImages),
+                    ((financialImages?.length ?? 0) != 0 &&
+                            financialImages?.first != null)
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.38,
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(1),
+                                      child: Image.file(
+                                        financialImages!.first!,
+                                        fit: BoxFit.fill,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        height: 200,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                financialImages!.first!.path.split('/').last,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                // style: const TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        : SizedBox(),
+                    // getImagesWidget(
+                    //     context: context, storeImages: financialImages),
                     // ((financialImages?.length ?? 0) != 0 &&
                     //         financialImages?.first != null)
                     //     ? Column(
@@ -226,8 +259,39 @@ class _FinancialGstDetailsState extends State<FinancialGstDetails> {
                         setState(() {});
                       },
                     ),
-                    getImagesWidget(context: context, storeImages: gstImages),
-
+                    // getImagesWidget(context: context, storeImages: gstImages),
+                    ((gstImages?.length ?? 0) != 0 && gstImages?.first != null)
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.38,
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(1),
+                                      child: Image.file(
+                                        gstImages!.first!,
+                                        fit: BoxFit.fill,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        height: 200,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                gstImages!.first!.path.split('/').last,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                // style: const TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        : SizedBox(),
                     // Padding(
                     //   padding: EdgeInsets.symmetric(
                     //       horizontal: w1p * 6, vertical: h1p * 3),
