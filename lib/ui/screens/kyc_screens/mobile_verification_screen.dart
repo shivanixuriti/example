@@ -27,7 +27,8 @@ class _MobileVerificationState extends State<MobileVerification> {
   TextEditingController otpController = TextEditingController();
 
   var mobno;
-  bool isMobileNoCorrect = true;
+  bool startedInputForMobileNo = false;
+  bool isMobileNoCorrect = false;
   bool isOtpNoCorrect =
       false; //these are validations only for format(only no allowed 4 digits) and not actual correctness of otp
   @override
@@ -126,6 +127,7 @@ class _MobileVerificationState extends State<MobileVerification> {
                                     (int.tryParse(numberController.text) !=
                                             null &&
                                         numberController.text.length == 10);
+                                startedInputForMobileNo = true;
                               });
                               if (isMobileNoCorrect == true &&
                                   numberController.text.length == 10) {
@@ -151,7 +153,7 @@ class _MobileVerificationState extends State<MobileVerification> {
                         left: w1p * 6,
                         right: w1p * 6,
                       ),
-                      child: isMobileNoCorrect
+                      child: isMobileNoCorrect || !startedInputForMobileNo
                           ? Container()
                           : Text('Please enter valid 10 digit Mobile No',
                               style: TextStyle(color: Colors.redAccent)),

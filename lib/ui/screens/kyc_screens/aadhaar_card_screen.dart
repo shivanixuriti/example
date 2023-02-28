@@ -287,7 +287,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                                           ]))),
                                 ),
                                 this.frontImage != null
-                                    ? showImage(img1)
+                                    ? showImage(img1, w10p * 4)
                                     : SizedBox()
                               ],
                             )),
@@ -363,7 +363,7 @@ class _AadhaarCardState extends State<AadhaarCard> {
                                         ])),
                                   ),
                                   this.backImage != null
-                                      ? showImage(img2)
+                                      ? showImage(img2, w10p * 4)
                                       : SizedBox()
                                 ],
                               ),
@@ -893,28 +893,31 @@ class _AadhaarCardState extends State<AadhaarCard> {
           ],
         ),
       );
-  Widget showImage(path) => Padding(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(1),
-                child: Image.file(
-                  //to show image, you type like this.
-                  File(path),
-                  fit: BoxFit.fill,
-                  width: MediaQuery.of(context).size.width * 0.38,
-                  height: 200,
+  Widget showImage(path, width) => Padding(
+        padding: const EdgeInsets.only(top: 5, bottom: 5, left: 1, right: 1),
+        child: SizedBox(
+          width: width,
+          child: Column(
+            children: [
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(1),
+                  child: Image.file(
+                    //to show image, you type like this.
+                    File(path),
+                    fit: BoxFit.fill,
+                    width: MediaQuery.of(context).size.width * 0.38,
+                    height: 200,
+                  ),
                 ),
               ),
-            ),
-            // Text(
-            //   path?.split('/')?.last ?? '',
-            //   textAlign: TextAlign.center,
-            //   overflow: TextOverflow.ellipsis,
-            // )
-          ],
+              Text(
+                path?.split('/')?.last ?? '',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
         ),
       );
 }

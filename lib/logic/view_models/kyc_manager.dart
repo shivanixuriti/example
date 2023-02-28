@@ -549,9 +549,9 @@ class KycManager extends ChangeNotifier {
       // required List<String> financialDetailsImage,
       required List<String> filePath,
       required List<String> filePath1}) async {
-    if (filePath.isEmpty && filePath1.isEmpty) {
+    if (filePath.isEmpty || filePath1.isEmpty) {
       Map<String, dynamic> errorMessage = {
-        'msg': 'atleast 1 image is needed for either category',
+        'msg': 'atleast 1 image is needed for both categories',
         'error': true
       };
       print("failed ");
@@ -738,6 +738,7 @@ class KycManager extends ChangeNotifier {
     } else {
       Map<String, dynamic> errorMessage = {
         'msg': 'Unable to proceed, please try again later.',
+        'error': true
       };
       print('msg: $errorMessage');
       return errorMessage;
