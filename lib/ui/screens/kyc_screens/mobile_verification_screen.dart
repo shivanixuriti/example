@@ -7,12 +7,10 @@ import 'package:xuriti/util/loaderWidget.dart';
 
 import '../../../Model/KycDetails.dart';
 import '../../../logic/view_models/kyc_manager.dart';
-import '../../../models/core/mobile_verification_model.dart';
 import '../../../models/helper/service_locator.dart';
 import '../../../models/services/dio_service.dart';
 import '../../theme/constants.dart';
 import '../../widgets/appbar/app_bar_widget.dart';
-import '../../widgets/kyc_widgets/document_uploading.dart';
 import '../../widgets/kyc_widgets/submitt_button.dart';
 
 class MobileVerification extends StatefulWidget {
@@ -27,7 +25,6 @@ class _MobileVerificationState extends State<MobileVerification> {
   TextEditingController otpController = TextEditingController();
 
   var mobno;
-  bool startedInputForMobileNo = false;
   bool isMobileNoCorrect = false;
   bool isOtpNoCorrect =
       false; //these are validations only for format(only no allowed 4 digits) and not actual correctness of otp
@@ -49,6 +46,8 @@ class _MobileVerificationState extends State<MobileVerification> {
       this.mobno = mobno;
     });
     numberController.text = '${mobno}';
+    isMobileNoCorrect = (int.tryParse(numberController.text) != null &&
+        numberController.text.length == 10);
   }
 
   @override
@@ -127,7 +126,6 @@ class _MobileVerificationState extends State<MobileVerification> {
                                     (int.tryParse(numberController.text) !=
                                             null &&
                                         numberController.text.length == 10);
-                                startedInputForMobileNo = true;
                               });
                               if (isMobileNoCorrect == true &&
                                   numberController.text.length == 10) {
@@ -153,7 +151,7 @@ class _MobileVerificationState extends State<MobileVerification> {
                         left: w1p * 6,
                         right: w1p * 6,
                       ),
-                      child: isMobileNoCorrect || !startedInputForMobileNo
+                      child: isMobileNoCorrect
                           ? Container()
                           : Text('Please enter valid 10 digit Mobile No',
                               style: TextStyle(color: Colors.redAccent)),
