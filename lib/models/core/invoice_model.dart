@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 class Invoices {
   List<Invoice>? invoice;
   bool? status;
@@ -32,7 +35,6 @@ class Invoice {
   String? invoiceStatus;
   // String? extraCreditFlag;
   String? invoiceFile;
-  bool? emandateRaised;
   String? invoiceNumber;
   num? paidDiscount;
   num? paidInterest;
@@ -57,7 +59,6 @@ class Invoice {
       this.invoiceStatus,
       // this.extraCreditFlag,
       this.invoiceFile,
-      this.emandateRaised,
       this.invoiceNumber,
       this.createdAt,
       this.updatedAt,
@@ -75,18 +76,17 @@ class Invoice {
       this.nbfcName});
 
   Invoice.fromJson(Map<String, dynamic> json) {
-    billDetails = json['bill_details'] != null
-        ? BillDetails.fromJson(json['bill_details'])
-        : null;
+    billDetails =
+        json['bill_details'] != null ? BillDetails.fromJson(json) : null;
     sId = json['_id'];
     outstandingAmount = json['outstanding_amount'].toString();
     itemizedData = (json['itemized_data'] == null)
         ? json['itemized_data']
         : json['itemized_data'].cast<String>();
+
     invoiceStatus = json['invoice_status'];
     // extraCreditFlag = json['extra_credit_flag'];
     invoiceFile = json['invoice_file'];
-    emandateRaised = json['emandate_raised'];
     invoiceNumber = json['invoice_number'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -98,7 +98,7 @@ class Invoice {
     invoiceDate = json['invoice_date'];
     invoiceDueDate = json['invoice_due_date'];
     invoiceType = json['invoice_type'];
-    seller = json['seller'] != null ? new Buyer.fromJson(json['seller']) : null;
+    seller = json['seller'] != null ? Buyer.fromJson(json['seller']) : null;
     sellerGst = json['seller_gst'];
     nbfcName = json['nbfc_name'];
   }
@@ -111,7 +111,6 @@ class Invoice {
     data['invoice_status'] = this.invoiceStatus;
     // data['extra_credit_flag'] = this.extraCreditFlag;
     data['invoice_file'] = this.invoiceFile;
-    data['emandate_raised'] = this.emandateRaised;
     data['invoice_number'] = this.invoiceNumber;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
