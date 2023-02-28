@@ -313,12 +313,7 @@ class _AllPaymentDetailsState extends State<AllPaymentDetails> {
                                 "Payment Date",
                                 style: TextStyles.textStyle62,
                               ),
-                              paymentDate == null
-                                  ? Text("")
-                                  : Text(
-                                      paymentDate.substring(0, 10),
-                                      style: TextStyles.textStyle140,
-                                    ),
+                              Text(paymentDate),
                             ],
                           ),
                         ],

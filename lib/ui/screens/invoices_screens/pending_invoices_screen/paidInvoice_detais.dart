@@ -40,16 +40,19 @@ class _PaidInvoiceDetailsState extends State<PaidInvoiceDetails> {
     double inv = double.parse(invoice.outstandingAmount ?? "");
     num discount = double.parse(invoice.paidDiscount.toString());
     num interest = double.parse(invoice.paidInterest.toString());
-    String gst = invoice.billDetails!.gstSummary!.totalTax ?? "";
-    if (gst != "undefined") {
+    String gst = invoice.billDetails!.gstSummary?.totalTax ?? "";
+    if (gst != "undefined" && gst.runtimeType == num) {
       gstAmt = double.parse(gst);
     } else {
       gstAmt = 0;
     }
-    gstAmt = double.parse(invoice.billDetails!.gstSummary!.totalTax ?? "");
-    double invAmt = double.parse(invoice.invoiceAmount ?? "");
+    if (invoice.billDetails?.gstSummary?.totalTax != null &&
+        invoice.billDetails?.gstSummary?.totalTax == num) {
+      gstAmt = double.tryParse((invoice.billDetails?.gstSummary?.totalTax)!)!;
+    }
+    double invAmt = double.tryParse((invoice.invoiceAmount)!)!;
     double payableAMt = invAmt + gstAmt - inv;
-    double paidAmt = invAmt - inv;
+    // double paidAmt = invAmt?? 0 - inv;
 
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;

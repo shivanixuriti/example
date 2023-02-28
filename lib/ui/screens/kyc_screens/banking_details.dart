@@ -126,9 +126,41 @@ class _BankingDetailsState extends State<BankingDetails> {
                         setState(() {});
                       },
                     ),
-
-                    getImagesWidget(
-                        context: context, storeImages: bankDetailsImages),
+                    ((bankDetailsImages?.length ?? 0) != 0 &&
+                            bankDetailsImages?.first != null)
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.38,
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(1),
+                                      child: Image.file(
+                                        bankDetailsImages!.first!,
+                                        fit: BoxFit.fill,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        height: 200,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                bankDetailsImages!.first!.path.split('/').last,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                // style: const TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        : SizedBox(),
+                    // getImagesWidget(
+                    //     context: context, storeImages: bankDetailsImages),
                     // ((bankDetailsImages?.length ?? 0) != 0 &&
                     //         bankDetailsImages?.first != null)
                     //     ? Column(

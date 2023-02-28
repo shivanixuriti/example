@@ -299,8 +299,48 @@ class _PanDetailsState extends State<PanDetails> {
                         setState(() {});
                       },
                     ),
-                    getImagesWidget(
-                        context: context, storeImages: panDetailsImages),
+                    // getImagesWidget(
+                    //     context: context, storeImages: panDetailsImages),
+                    ((panDetailsImages?.length ?? 0) != 0 &&
+                            panDetailsImages?.first != null)
+                        ? Expanded(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.32,
+                                  height: 200,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(1),
+                                        child: Image.file(
+                                          panDetailsImages!.first!,
+                                          fit: BoxFit.fill,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.38,
+                                          height: 200,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  panDetailsImages!.first!.path.split('/').last,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  // style: const TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
 
                     //   ],
                     // ),

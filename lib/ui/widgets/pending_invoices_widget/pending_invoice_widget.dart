@@ -570,7 +570,7 @@ class PendingInvoiceWidget extends StatelessWidget {
                                                     fullDetails.invoiceType ==
                                                             "IN"
                                                         ? Text(
-                                                            "I agree and  approve Xuriti and ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf.")
+                                                            "I agree and  approve Xuriti and it's financing partner ${fullDetails.nbfcName} is authorised to disburse funds to the Seller $companyName for invoice -${fullDetails.invoiceNumber} on my behalf.")
                                                         : Text(
                                                             "I agree and approve that credit note ${fullDetails.invoiceNumber} is correct. Xuriti and it's financing partner ${fullDetails.nbfcName} is authorised to adjust the credit note amount towards the upcoming invoices and disburse the remaining balance to $companyName."),
                                                     TextField(

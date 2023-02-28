@@ -38,8 +38,9 @@ class _UpcomingDetailsState extends State<UpcomingDetails> {
 
     double outstandingAmt = double.parse(invoice.outstandingAmount ?? "");
     double invAmt = double.parse(invoice.invoiceAmount ?? "");
-    if (invoice.billDetails!.gstSummary!.totalTax != "undefined") {
-      gstAmt = double.parse(invoice.billDetails!.gstSummary!.totalTax ?? "");
+    if (invoice.billDetails?.gstSummary?.totalTax != "undefined") {
+      gstAmt =
+          double.tryParse(invoice.billDetails?.gstSummary?.totalTax ?? "0")!;
     } else {
       gstAmt = 0;
     }

@@ -178,9 +178,9 @@ class _PInvoicesState extends State<PaidInvoices> {
                               companyName: buyr!.companyName ?? "",
                               savedAmount: "500",
                               gst: paidInvoice[index]
-                                      .billDetails!
-                                      .gstSummary!
-                                      .totalTax ??
+                                      .billDetails
+                                      ?.gstSummary
+                                      ?.totalTax ??
                                   "",
                               isOverdue: false,
                               invoiceAmount:
