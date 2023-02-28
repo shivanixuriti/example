@@ -134,6 +134,7 @@ class _StoreImagesState extends State<StoreImages> {
                       imgfiles: imgfiles,
                       maxHeight: maxHeight,
                       maxWidth: maxWidth,
+                      docHeadingName: 'store',
                     ),
                     DocumentUploading(
                       maxWidth: maxWidth,
@@ -254,7 +255,7 @@ SizedBox getImagesWidget(
                         child: GestureDetector(
                           onTap: () {
                             OpenFile.open(storeImages![index]!
-                                .path); // openFile(url: doc, filename: 'vintage.pdf');
+                                .path);
                           },
                           child: Padding(
                             padding: EdgeInsets.only(

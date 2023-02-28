@@ -11,6 +11,7 @@ class PreviouslyUploadedDocuments extends StatefulWidget {
   final BoxConstraints constraints;
   final double maxWidth;
   final double maxHeight;
+  final String docHeadingName;
 
   //final String type;
   const PreviouslyUploadedDocuments({
@@ -18,6 +19,7 @@ class PreviouslyUploadedDocuments extends StatefulWidget {
     required this.constraints,
     required this.maxWidth,
     required this.maxHeight,
+    required this.docHeadingName,
   });
 
   @override
@@ -195,7 +197,7 @@ class _PreviouslyUploadedDocumentsState
                           } else {
                             return GestureDetector(
                                 onTap: () {
-                                  openFile(url: doc, filename: 'vintage.pdf');
+                                  openFile(url: doc, filename: '${widget.docHeadingName}.pdf');
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(

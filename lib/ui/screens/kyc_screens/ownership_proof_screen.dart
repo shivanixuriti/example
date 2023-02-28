@@ -218,6 +218,7 @@ class _OwnershipProofState extends State<OwnershipProof> {
                             imgfiles: imgfiles,
                             maxHeight: maxHeight,
                             maxWidth: maxWidth,
+                            docHeadingName: 'ownership',
                           ),
                           DocumentUploading(
                             maxWidth: maxWidth,
