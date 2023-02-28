@@ -658,13 +658,13 @@ class TextStyles {
       fontStyle: FontStyle.normal,
       fontSize: 15.0);
   static const textStyle142 = TextStyle(
-      color: Colours.emerald,
+      color: Colours.paleRed,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
       fontStyle: FontStyle.normal,
       fontSize: 15.0);
   static const textStyle143 = TextStyle(
-      color: Colours.failPrimary,
+      color: Colours.mediumGreen,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins",
       fontStyle: FontStyle.normal,

@@ -80,6 +80,9 @@ class GuideWidget extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
                                       Text(
                                         guideTitle[index],
                                         style: TextStyles.subHeading,
@@ -101,7 +104,7 @@ class GuideWidget extends StatelessWidget {
                                 children: [
                                   Expanded(
                                       child: Text(
-                                    guideSubTitle[index],
+                                    " \n \n",
                                     style: TextStyles.guideSubTitle,
                                   )),
                                   Row(
