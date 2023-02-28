@@ -153,7 +153,7 @@ class _MobileVerificationState extends State<MobileVerification> {
                         left: w1p * 6,
                         right: w1p * 6,
                       ),
-                      child: isMobileNoCorrect && !startedInputForMobileNo
+                      child: isMobileNoCorrect || !startedInputForMobileNo
                           ? Container()
                           : Text('Please enter valid 10 digit Mobile No',
                               style: TextStyle(color: Colors.redAccent)),
