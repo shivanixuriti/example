@@ -13,12 +13,18 @@ import '../../../theme/constants.dart';
 class HomeUpcoming extends StatefulWidget {
   String companyName;
   Invoice fullDetails;
+
   String amount;
   String invoiceDate;
   String dueDate;
   String invoiceNumber;
-  HomeUpcoming({required this.invoiceNumber,
-    required this.fullDetails,required this.companyName,required this.amount,required this.invoiceDate,required this.dueDate}) ;
+  HomeUpcoming(
+      {required this.invoiceNumber,
+      required this.fullDetails,
+      required this.companyName,
+      required this.amount,
+      required this.invoiceDate,
+      required this.dueDate});
 
   @override
   State<HomeUpcoming> createState() => _HomeUpcomingState();
@@ -32,15 +38,19 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
 
     DateTime currentDate = DateTime.now();
     Duration dif = dd.difference(currentDate);
-    int daysLeft = dif.inDays;
+    Duration dif1 = id.difference(currentDate);
+    int daysLeft = dif.inDays.abs();
 
     String dueDate = DateFormat("dd-MMM-yyyy").format(dd);
     String invDate = DateFormat("dd-MMM-yyyy").format(id);
 
-    // String invId = widget.invoiceNumber.substring(widget.invoiceNumber.length-4,widget.invoiceNumber.length);
-        // "# ${fullDetails.sId!.substring(fullDetails.sId!.length-4,fullDetails.sId!.length)} ",
-    String amount = double.parse(widget.amount).toStringAsFixed(2);
+    if (currentDate.isBefore(dueDate as DateTime)) {
+      // ;int daysPassed =
+    }
 
+    // String invId = widget.invoiceNumber.substring(widget.invoiceNumber.length-4,widget.invoiceNumber.length);
+    // "# ${fullDetails.sId!.substring(fullDetails.sId!.length-4,fullDetails.sId!.length)} ",
+    String amount = double.parse(widget.amount).toStringAsFixed(2);
 
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
@@ -48,8 +58,7 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
       double h1p = maxHeight * 0.01;
       double h10p = maxHeight * 0.1;
       double w10p = maxWidth * 0.1;
-      return
-        ExpandableNotifier(
+      return ExpandableNotifier(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: w10p * .5, vertical: 10),
           child: Expandable(
@@ -59,7 +68,9 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colours.offWhite,
+                      color: widget.fullDetails.invoiceType == "IN"
+                          ? Colours.offWhite
+                          : Color(0xfffcdcb4),
                     ),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,16 +80,15 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                             children: [
                               Row(
                                 children: [
-                                   AutoSizeText(
-                                     widget.invoiceNumber,
-
+                                  AutoSizeText(
+                                    widget.invoiceNumber,
                                     style: TextStyles.textStyle6,
                                   ),
                                   SvgPicture.asset(
                                       "assets/images/home_images/arrow-circle-right.svg"),
                                 ],
                               ),
-                               Text(
+                              Text(
                                 widget.companyName,
                                 style: TextStyles.companyName,
                               ),
@@ -86,9 +96,9 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children:  [
+                            children: [
                               Text(
-                                " ${daysLeft.toString()} days left" ,
+                                " ${daysLeft.toString()} days left",
                                 style: TextStyles.textStyle57,
                               ),
                               Text(
@@ -119,16 +129,15 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                                 children: [
                                   Row(
                                     children: [
-                                       Text(
-                                         widget.invoiceNumber,
-
+                                      Text(
+                                        widget.invoiceNumber,
                                         style: TextStyles.textStyle6,
                                       ),
                                       SvgPicture.asset(
                                           "assets/images/home_images/rightArrow.svg"),
                                     ],
                                   ),
-                                   Text(
+                                  Text(
                                     widget.companyName,
                                     style: TextStyles.companyName,
                                   ),
@@ -136,15 +145,13 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children:  [
+                                children: [
                                   Text(
-
-                                   " ${daysLeft.toString()} days left" ,
+                                    " ${daysLeft.toString()} days left",
                                     style: TextStyles.textStyle57,
                                   ),
                                   Text(
                                     "₹ $amount",
-
                                     style: TextStyles.textStyle58,
                                   ),
                                 ],
@@ -162,7 +169,7 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:  [
+                            children: [
                               SizedBox(
                                 height: 4,
                               ),
@@ -171,7 +178,7 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                                 style: TextStyles.textStyle62,
                               ),
                               Text(
-                                 invDate,
+                                invDate,
                                 style: TextStyles.textStyle63,
                               ),
                               // Text(
@@ -183,7 +190,7 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                           SvgPicture.asset("assets/images/arrow.svg"),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children:  [
+                            children: [
                               SizedBox(
                                 height: 4,
                               ),
@@ -216,7 +223,7 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children:  [
+                                children: [
                                   SizedBox(
                                     height: 4,
                                   ),
@@ -233,7 +240,7 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children:  [
+                                children: [
                                   SizedBox(
                                     height: 4,
                                   ),
@@ -253,7 +260,9 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
                             padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: GestureDetector(
                                 onTap: () {
-                                  getIt<TransactionManager>().changeSelectedInvoice(widget.fullDetails);
+                                  getIt<TransactionManager>()
+                                      .changeSelectedInvoice(
+                                          widget.fullDetails);
                                   Navigator.pushNamed(context, upcomingDetails);
                                 },
                                 child: Image.asset(
@@ -270,4 +279,3 @@ class _HomeUpcomingState extends State<HomeUpcoming> {
     });
   }
 }
-
