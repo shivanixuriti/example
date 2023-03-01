@@ -74,7 +74,9 @@ class PendingInvoiceWidget extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colours.offWhite,
+                      color: fullDetails.invoiceType == "IN"
+                          ? Colours.offWhite
+                          : Color(0xfffcdcb4),
                     ),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -31,13 +31,13 @@ class _SavemoreDetailsState extends State<SavemoreDetails> {
     Duration dif = dd.difference(currentDate);
     num discount = double.parse(invoice.paidDiscount.toString());
     num interest = double.parse(invoice.paidInterest.toString());
-    String gst = invoice.billDetails!.gstSummary!.totalTax ?? "";
+    String gst = invoice.billDetails!.gstSummary?.totalTax ?? "";
     double invAmt = double.parse(invoice.invoiceAmount ?? "");
     double inv = double.parse(invoice.outstandingAmount ?? "");
     double paidAmt = invAmt - inv;
     int daysLeft = dif.inDays;
     double gstAmt;
-    if (gst != "undefined") {
+    if (gst != "undefined" && gst.runtimeType == num) {
       gstAmt = double.parse(gst);
     } else {
       gstAmt = 0;

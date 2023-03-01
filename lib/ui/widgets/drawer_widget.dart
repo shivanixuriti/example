@@ -71,10 +71,21 @@ class DrawerWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      "assets/images/kycImages/avatar.png",
-                      height: h1p * 6,
-                      width: w10p * 2,
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(width: 1, color: Colors.white)
+                          //more than 50% of width makes circle
+                          ),
+                      child: Icon(
+                        Icons.business_center,
+                        color: Colours.tangerine,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     Expanded(
                       child: Column(

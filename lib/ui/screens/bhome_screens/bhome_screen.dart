@@ -135,16 +135,23 @@ class _BhomeScreenState extends State<BhomeScreen> {
                         ],
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, homeCompanyList);
-                        },
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colours.black,
-                          child:
-                              Image.asset("assets/images/kycImages/avatar.png"),
-                        ),
-                      )
+                          onTap: () {
+                            Navigator.pushNamed(context, homeCompanyList);
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                border:
+                                    Border.all(width: 1, color: Colors.white)
+                                //more than 50% of width makes circle
+                                ),
+                            child: Icon(
+                              Icons.business_center,
+                              color: Colours.tangerine,
+                            ),
+                          ))
                     ],
                   ),
                 ),
